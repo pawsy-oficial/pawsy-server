@@ -41,6 +41,7 @@ CREATE TABLE clinica
  pw_clinica VARCHAR(255) NOT NULL,  
  id_endereco INT NOT NULL,  
  cd_crmv INT NOT NULL,  
+ url_imagem VARCHAR(300) not null,
  constraint primary key (id_clinica, cd_crmv),  
  UNIQUE (cnpj_clinica,email_clinica,tl_clinica),
  CONSTRAINT fk_endereco
@@ -60,6 +61,7 @@ CREATE TABLE medico
  id_especialidade INT,
  id_endereco INT,  
  cd_crmv INT NOT NULL,
+ url_imagem VARCHAR(300) not null,
  PRIMARY KEY (id_medico, cd_crmv),
  UNIQUE (cd_cpf,nm_email,num_celular),
  CONSTRAINT fk_especialidade
@@ -80,6 +82,7 @@ CREATE TABLE tutor
     num_celular CHAR(11) NOT NULL UNIQUE,  
     pw_tutor VARCHAR(255) NOT NULL,  
     id_endereco INT,  
+    url_imagem VARCHAR(300) not null,
     CONSTRAINT pk_tutor PRIMARY KEY (id_tutor),
     CONSTRAINT fk_tutor_endereco
         FOREIGN KEY (id_endereco)
@@ -124,7 +127,7 @@ CREATE TABLE pet
     resumo INT,  
     img_pet VARCHAR(255),  
     nm_pet VARCHAR(255) NOT NULL,  
-    url_img VARCHAR(255),
+    url_img VARCHAR(300),
     CONSTRAINT fk_pet_tutor
         FOREIGN KEY (id_tutor)
         REFERENCES tutor (id_tutor),
@@ -332,7 +335,8 @@ insert into animal (nm_animal) values ("cachorro"), ("gato");
 insert into sexo (nm_sexo) values ("macho"), ("fêmea");
 
 insert into especialidade (nm_especialidade)
-values ("Dermatologia"),
+values 
+	("Dermatologia"),
     ("Oftalmologia"),
     ("Cardiologia"),
     ("Ortopedia"),

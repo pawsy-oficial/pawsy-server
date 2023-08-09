@@ -1,11 +1,12 @@
-CREATE DATABASE pawsy_dump;
+CREATE DATABASE pawsy_database;
 
-USE pawsy_dump;
+USE pawsy_database;
 
 CREATE TABLE especialidade 
 ( 
-    id_especialidade INT PRIMARY KEY AUTO_INCREMENT,  
-    nm_especialidade VARCHAR(255) NOT NULL
+    id_especialidade INT AUTO_INCREMENT,  
+    nm_especialidade VARCHAR(255) NOT NULL,
+    constraint pk_especialidade primary key (id_especialidade)
 );
 
 CREATE TABLE cep 
@@ -15,18 +16,19 @@ CREATE TABLE cep
     nm_estado VARCHAR(255) NOT NULL,  
     nm_bairro VARCHAR(255) NOT NULL,  
     nm_rua VARCHAR(255) NOT NULL,
-    primary key(cd_cep)
+    constraint pk_cep primary key (cd_cep)
 ); 
 
 CREATE TABLE endereco 
 ( 
-    id_endereco INT PRIMARY KEY AUTO_INCREMENT,  
+    id_endereco INT AUTO_INCREMENT,  
     cd_cep char(8),  
     num_residencia INT NOT NULL,  
     complemento VARCHAR(255),  
     latitude DECIMAL(10, 6) NOT NULL,  
     longitude DECIMAL(10, 6) NOT NULL,
-    FOREIGN KEY (cd_cep) REFERENCES cep(cd_cep)
+    CONSTRAINT pk_endereco PRIMARY KEY (id_endereco),
+    CONSTRAINT FOREIGN KEY (cd_cep) REFERENCES cep(cd_cep)
 ); 
 
 CREATE TABLE clinica 
@@ -39,7 +41,7 @@ CREATE TABLE clinica
  pw_clinica VARCHAR(255) NOT NULL,  
  id_endereco INT NOT NULL,  
  cd_crmv INT NOT NULL,  
- PRIMARY KEY (id_clinica, cd_crmv),  
+ constraint primary key (id_clinica, cd_crmv),  
  UNIQUE (cnpj_clinica,email_clinica,tl_clinica),
  CONSTRAINT fk_endereco
     FOREIGN KEY (id_endereco) 
@@ -70,15 +72,15 @@ CREATE TABLE medico
 
 CREATE TABLE tutor 
 ( 
-    id_tutor INT PRIMARY KEY AUTO_INCREMENT,  
+    id_tutor INT AUTO_INCREMENT,  
     nm_tutor VARCHAR(255) NOT NULL,  
-    cd_cpf CHAR(11) NOT NULL,  
+    cd_cpf CHAR(11) NOT NULL UNIQUE,  
     dt_nascimento DATE NOT NULL,  
-    nm_email VARCHAR(255),  
-    num_celular CHAR(11) NOT NULL,  
+    nm_email VARCHAR(255) UNIQUE,  
+    num_celular CHAR(11) NOT NULL UNIQUE,  
     pw_tutor VARCHAR(255) NOT NULL,  
     id_endereco INT,  
-    UNIQUE (cd_cpf, nm_email, num_celular),
+    CONSTRAINT pk_tutor PRIMARY KEY (id_tutor),
     CONSTRAINT fk_tutor_endereco
         FOREIGN KEY (id_endereco)
         REFERENCES endereco (id_endereco)
@@ -87,7 +89,8 @@ CREATE TABLE tutor
 CREATE TABLE raca 
 ( 
     id_raca INT PRIMARY KEY AUTO_INCREMENT,  
-    nm_raca VARCHAR(255) NOT NULL
+    nm_raca VARCHAR(255) NOT NULL,
+    tp_raca VARCHAR(3) NOT NULL
 ); 
 
 CREATE TABLE pelagem 
@@ -249,9 +252,10 @@ CREATE TABLE pacientes
 
 CREATE TABLE vacinas 
 ( 
-    id_vacina INT PRIMARY KEY,  
+    id_vacina INT auto_increment,  
     nm_vacina VARCHAR(255) NOT NULL,  
-    bool_especie INT NOT NULL
+    tp_vacina VARCHAR(3) NOT NULL,
+    CONSTRAINT pk_vacina primary key (id_vacina)
 );
 
 CREATE TABLE carteira_vacinas 
@@ -287,3 +291,72 @@ CREATE TABLE carteira_vermifugo
         FOREIGN KEY (id_medico)
         REFERENCES medico (id_medico)
 );
+
+
+INSERT INTO raca (nm_raca, tp_raca)
+VALUES
+    ("BullDog", "dog"),
+    ("Pitbull", "dog"),
+    ("Beagle", "dog"),
+    ("Poodle", "dog"),
+    ("Husky", "dog"),
+    ("Dachshund", "dog"),
+    ("Pug", "dog"),
+    ("Shih Tzu", "dog"),
+    ("Pastor Alemão", "dog"),
+    ("Rottweiler", "dog"),
+    ("Labrador", "dog"),
+    ("Pinscher", "dog"),
+    ("Golden Retriever", "dog"),
+    ("Maltes", "dog"),
+    ("Chihuahua", "dog"),
+    
+    ("Persa", "cat"),
+    ("Siamês", "cat"),
+    ("Maine Coon", "cat"),
+    ("Angorá", "cat"),
+    ("Sphynx", "cat"),
+    ("Ragdoll", "cat"),
+    ("Ashera", "cat"),
+    ("American Shorthair", "cat"),
+    ("Exótico", "cat");
+
+insert into pelagem (nm_pelagem)
+values
+	("Curto"),
+	("Médio"),
+	("Grande");
+    
+insert into animal (nm_animal) values ("cachorro"), ("gato");
+
+insert into sexo (nm_sexo) values ("macho"), ("fêmea");
+
+insert into especialidade (nm_especialidade)
+values ("Dermatologia"),
+    ("Oftalmologia"),
+    ("Cardiologia"),
+    ("Ortopedia"),
+    ("Neurologia"),
+    ("Oncologia"),
+    ("Anestesiologia"),
+    ("Radiologia"),
+    ("Nutrição"),
+    ("Comportamento Animal"),
+    ("Reprodução"),
+    ("Odontologia"),
+    ("Cirurgião");
+
+
+insert into vacinas ( nm_vacina, tp_vacina ) 
+values 
+	("V08", "dog"),
+    ("V10", "dog"),
+    ("V12", "dog"),
+    ("V03", "cat"),
+    ("V04", "cat"),
+    ("V05", "cat"),
+    ("antirrábica", "all"),
+    ("leishmaniose", "dog"),
+    ("gripe canina", "dog"),
+    ("giárdia ", "dog");
+

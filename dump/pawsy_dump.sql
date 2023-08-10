@@ -11,18 +11,18 @@ CREATE TABLE especialidade
 
 CREATE TABLE cep 
 ( 
-    cd_cep char(8),  
+    cd_cep char(9),  
     nm_cidade VARCHAR(255) NOT NULL,  
     nm_estado VARCHAR(255) NOT NULL,  
     nm_bairro VARCHAR(255) NOT NULL,  
     nm_rua VARCHAR(255) NOT NULL,
     constraint pk_cep primary key (cd_cep)
-); 
+);
 
 CREATE TABLE endereco 
 ( 
     id_endereco INT AUTO_INCREMENT,  
-    cd_cep char(8),  
+    cd_cep char(9),  
     num_residencia INT NOT NULL,  
     complemento VARCHAR(255),  
     latitude DECIMAL(10, 6) NOT NULL,  
@@ -99,7 +99,7 @@ CREATE TABLE raca
 CREATE TABLE pelagem 
 ( 
     id_pelagem INT PRIMARY KEY AUTO_INCREMENT,  
-    nm_pelagem VARCHAR(255) NOT NULL
+    tp_pelagem VARCHAR(255) NOT NULL
 ); 
 
 CREATE TABLE sexo 
@@ -124,7 +124,7 @@ CREATE TABLE pet
     id_animal INT,  
     num_peso INT,  
     dt_nascimento DATE,  
-    resumo INT,  
+    resumo VARCHAR(255),      
     img_pet VARCHAR(255),  
     nm_pet VARCHAR(255) NOT NULL,  
     url_img VARCHAR(300),
@@ -192,11 +192,12 @@ CREATE TABLE agenda
 
 CREATE TABLE historico 
 ( 
-    cd_historico INT PRIMARY KEY AUTO_INCREMENT,  
+    cd_historico INT AUTO_INCREMENT,  
     id_pet INT NOT NULL,  
     descricao VARCHAR(255) NOT NULL,  
     dt_visita DATE NOT NULL,  
     id_clinica INT,
+    CONSTRAINT pk_historico PRIMARY KEY (cd_historico),
     CONSTRAINT fk_historico_pet
         FOREIGN KEY (id_pet)
         REFERENCES pet (id_pet),
@@ -324,7 +325,7 @@ VALUES
     ("American Shorthair", "cat"),
     ("Exótico", "cat");
 
-insert into pelagem (nm_pelagem)
+insert into pelagem (tp_pelagem)
 values
 	("Curto"),
 	("Médio"),
@@ -364,3 +365,4 @@ values
     ("gripe canina", "dog"),
     ("giárdia ", "dog");
 
+-- 10-08-2023

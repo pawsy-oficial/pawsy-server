@@ -31,9 +31,20 @@ CREATE TABLE endereco
     CONSTRAINT FOREIGN KEY (cd_cep) REFERENCES cep(cd_cep)
 ); 
 
+CREATE TABLE redes(
+	cd_rede int not null auto_increment,
+    user_tiktok varchar(64) unique,
+    user_insta varchar(64) unique,
+    num_whats varchar(13) unique,
+    url_facebook varchar(200),
+    
+    
+    CONSTRAINT pk_rede PRIMARY KEY (cd_rede)
+);
+
 CREATE TABLE clinica 
 ( 
- id_clinica INT NOT NULL,  
+ id_clinica INT NOT NULL auto_increment,  
  nm_clinica VARCHAR(255) NOT NULL,  
  cnpj_clinica CHAR(14) NOT NULL,  
  email_clinica VARCHAR(255) NOT NULL,  
@@ -42,11 +53,18 @@ CREATE TABLE clinica
  id_endereco INT NOT NULL,  
  cd_crmv INT NOT NULL,  
  url_imagem VARCHAR(300) not null,
+ 
+ ds_sobre varchar(680),
+ cd_rede int not null,
+ 
  constraint primary key (id_clinica, cd_crmv),  
  UNIQUE (cnpj_clinica,email_clinica,tl_clinica),
  CONSTRAINT fk_endereco
     FOREIGN KEY (id_endereco) 
-    REFERENCES endereco (id_endereco)
+    REFERENCES endereco (id_endereco),
+ CONSTRAINT fk_rede 
+	FOREIGN KEY (cd_rede) 
+    REFERENCES redes(cd_rede)
 );
 
 CREATE TABLE medico 
@@ -71,6 +89,20 @@ CREATE TABLE medico
     FOREIGN KEY (id_endereco)
     REFERENCES endereco (id_endereco)
 );
+
+CREATE TABLE trabalho(
+	cd_trabalho int not null auto_increment,
+    cd_medico int not null,
+    cd_clinica int not null,
+    
+    CONSTRAINT pk_trabalho PRIMARY KEY (cd_trabalho),
+    CONSTRAINT fk_medico FOREIGN KEY ( cd_medico ) REFERENCES medico(id_medico),
+    CONSTRAINT fk_clinica FOREIGN KEY ( cd_clinica ) REFERENCES clinica(id_clinica)
+);
+
+
+
+
 
 CREATE TABLE tutor 
 ( 
@@ -143,6 +175,18 @@ CREATE TABLE pet
     CONSTRAINT fk_pet_animal
         FOREIGN KEY (id_animal)
 			REFERENCES animal(id_animal) 
+);
+
+CREATE TABLE vacinados(
+	cd_aplicacao int not null auto_increment,
+    cd_pet int not null,
+    cd_clinica int not null,
+    
+    CONSTRAINT pk_aplicacao PRIMARY KEY (cd_aplicacao),
+    CONSTRAINT fk_pet 
+		FOREIGN KEY (cd_pet) 
+        REFERENCES pet(id_pet),
+	CONSTRAINT fk_clinica_responsavel FOREIGN KEY ( cd_clinica ) REFERENCES clinica(id_clinica)
 );
 
 CREATE TABLE saude 
@@ -244,11 +288,12 @@ CREATE TABLE dias_semanais
 CREATE TABLE pacientes 
 ( 
     id_paciente INT PRIMARY KEY AUTO_INCREMENT,  
-    id_tutor INT NOT NULL, 
     id_pet INT NOT NULL,
-    CONSTRAINT fk_pacientes_tutor
-        FOREIGN KEY (id_tutor)
-        REFERENCES tutor (id_tutor),
+    
+    id_clinica int not null,
+    
+    constraint fk_paciente foreign key (id_clinica) references clinica(id_clinica),
+
     CONSTRAINT fk_pacientes_pet
         FOREIGN KEY (id_pet)
         REFERENCES pet (id_pet)

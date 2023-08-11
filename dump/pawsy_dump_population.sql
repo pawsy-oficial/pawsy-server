@@ -34,8 +34,6 @@ values
     ("14000-000", "669", "SP", "12.3456", "-45.6789"),
     ("15000-000", "13", "SP", "12.3456", "-45.6789");
 
-select * from cep;  
-
 insert into tutor (nm_tutor, cd_cpf, dt_nascimento, nm_email, num_celular, pw_tutor, id_endereco, url_imagem) 
 values 
 	("Tutor 1", "12345678901", "1990-01-01", "tutor1@email.com", "1234567890", "senha1", 1, "https://pawsy.com/caminho/imagem/tutor.jpg"),
@@ -53,6 +51,8 @@ values
 select tt.nm_tutor, tt.cd_cpf, tt.dt_nascimento, tt.nm_email, tt.num_celular, tt.pw_tutor, CONCAT(cp.nm_rua, ", ",en.num_residencia, " " ,en.complemento) as endereco, tt.url_imagem from tutor tt 
 	inner join endereco en ON tt.id_endereco = en.id_endereco
 	inner join cep cp ON cp.cd_cep = en.cd_cep;
+
+-- cadastro novo pet
 
 insert into pet (id_tutor, id_raca, id_pelagem, id_sexo, id_animal, num_peso, dt_nascimento, resumo, nm_pet, url_img ) 
 	values 
@@ -80,4 +80,44 @@ select pt.nm_pet, pt.url_img, pt.resumo, pt.dt_nascimento, pt.num_peso, an.nm_an
     inner join raca rc ON rc.id_raca = pt.id_raca
     inner join tutor tt ON tt.id_tutor = pt.id_tutor;
 
-insert into clinica (nm_clinica, cnpj_clinica, email_clinica, tl_clinica, pw_clinica, id_endereco, cd_crmv, url_imagem) values ();
+-- cadastro nova clinica
+
+insert into redes (user_tiktok, user_insta, num_whats, url_facebook) values 
+("@tiktokuser1", "@instauser1", "1234567890", "https://www.facebook.com/page1"),
+    ("@tiktokuser2", "@instauser2", "2345678901", "https://www.facebook.com/page2"),
+    ("@tiktokuser3", "@instauser3", "3456789012", "https://www.facebook.com/page3"),
+    ("@tiktokuser4", "@instauser4", "4567890123", "https://www.facebook.com/page4"),
+    ("@tiktokuser5", "@instauser5", "5678901234", "https://www.facebook.com/page5"),
+    ("@tiktokuser6", "@instauser6", "6789012345", "https://www.facebook.com/page6"),
+    ("@tiktokuser7", "@instauser7", "7890123456", "https://www.facebook.com/page7"),
+    ("@tiktokuser8", "@instauser8", "8901234567", "https://www.facebook.com/page8"),
+    ("@tiktokuser9", "@instauser9", "9012345678", "https://www.facebook.com/page9"),
+    ("@tiktokuser10", "@instauser10", "0123456789", "https://www.facebook.com/page10");
+
+insert into clinica (nm_clinica, cnpj_clinica, email_clinica, tl_clinica, pw_clinica, id_endereco, cd_crmv, url_imagem, ds_sobre, cd_rede) 
+	values
+		("Clínica VetCare", "12345678901234", "contato@vetcare.com", "1234567890", "senha1", 1, "12345", "url_imagem1.jpg", "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Magni officia recusandae inventore dolorem est eligendi aliquam totam beatae labore dignissimos cumque hic magnam id nobis ut quae, earum facilis praesentium! Earum officia mollitia at eius hic inventore nulla vitae officiis velit beatae aspernatur et, quo veniam dolore dignissimos consequatur. Harum eius eligendi, expedita iusto doloribus quod inventore sapiente numquam obcaecati.Sed fugit similique dolore impedit cumque quaerat amet, repudiandae libero, ut ratione natus, culpa eligendi provident incidunt iste harum dignissimos nobis. Aliquid ipsa laborum quis molestiae illo quidem atque beatae!", 1),
+		("Clínica PetHealth", "23456789012345", "atendimento@pethealth.com", "2345678901", "senha2", 2, "23456", "url_imagem2.jpg", "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Magni officia recusandae inventore dolorem est eligendi aliquam totam beatae labore dignissimos cumque hic magnam id nobis ut quae, earum facilis praesentium! Earum officia mollitia at eius hic inventore nulla vitae officiis velit beatae aspernatur et, quo veniam dolore dignissimos consequatur. Harum eius eligendi, expedita iusto doloribus quod inventore sapiente numquam obcaecati.Sed fugit similique dolore impedit cumque quaerat amet, repudiandae libero, ut ratione natus, culpa eligendi provident incidunt iste harum dignissimos nobis. Aliquid ipsa laborum quis molestiae illo quidem atque beatae!", 2),
+		("Clínica AnimalCare", "34567890123456", "suporte@animalcare.com", "3456789012", "senha3", 3, "34567", "url_imagem3.jpg", "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Magni officia recusandae inventore dolorem est eligendi aliquam totam beatae labore dignissimos cumque hic magnam id nobis ut quae, earum facilis praesentium! Earum officia mollitia at eius hic inventore nulla vitae officiis velit beatae aspernatur et, quo veniam dolore dignissimos consequatur. Harum eius eligendi, expedita iusto doloribus quod inventore sapiente numquam obcaecati.Sed fugit similique dolore impedit cumque quaerat amet, repudiandae libero, ut ratione natus, culpa eligendi provident incidunt iste harum dignissimos nobis. Aliquid ipsa laborum quis molestiae illo quidem atque beatae!", 3),
+		("Clínica VetWorld", "45678901234567", "info@vetworld.com", "4567890123", "senha4", 4, "45678", "url_imagem4.jpg", "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Magni officia recusandae inventore dolorem est eligendi aliquam totam beatae labore dignissimos cumque hic magnam id nobis ut quae, earum facilis praesentium! Earum officia mollitia at eius hic inventore nulla vitae officiis velit beatae aspernatur et, quo veniam dolore dignissimos consequatur. Harum eius eligendi, expedita iusto doloribus quod inventore sapiente numquam obcaecati.Sed fugit similique dolore impedit cumque quaerat amet, repudiandae libero, ut ratione natus, culpa eligendi provident incidunt iste harum dignissimos nobis. Aliquid ipsa laborum quis molestiae illo quidem atque beatae!", 4),
+		("Clínica PetClinic", "56789012345678", "contato@petclinic.com", "5678901234", "senha5", 5, "56789", "url_imagem5.jpg", "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Magni officia recusandae inventore dolorem est eligendi aliquam totam beatae labore dignissimos cumque hic magnam id nobis ut quae, earum facilis praesentium! Earum officia mollitia at eius hic inventore nulla vitae officiis velit beatae aspernatur et, quo veniam dolore dignissimos consequatur. Harum eius eligendi, expedita iusto doloribus quod inventore sapiente numquam obcaecati.Sed fugit similique dolore impedit cumque quaerat amet, repudiandae libero, ut ratione natus, culpa eligendi provident incidunt iste harum dignissimos nobis. Aliquid ipsa laborum quis molestiae illo quidem atque beatae!", 5),
+		("Clínica AnimalMed", "67890123456789", "atendimento@animalmed.com", "6789012345", "senha6", 6, "67890", "url_imagem6.jpg", "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Magni officia recusandae inventore dolorem est eligendi aliquam totam beatae labore dignissimos cumque hic magnam id nobis ut quae, earum facilis praesentium! Earum officia mollitia at eius hic inventore nulla vitae officiis velit beatae aspernatur et, quo veniam dolore dignissimos consequatur. Harum eius eligendi, expedita iusto doloribus quod inventore sapiente numquam obcaecati.Sed fugit similique dolore impedit cumque quaerat amet, repudiandae libero, ut ratione natus, culpa eligendi provident incidunt iste harum dignissimos nobis. Aliquid ipsa laborum quis molestiae illo quidem atque beatae!", 6),
+		("Clínica VetLife", "78901234567890", "suporte@vetlife.com", "7890123456", "senha7", 7, "78901", "url_imagem7.jpg", "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Magni officia recusandae inventore dolorem est eligendi aliquam totam beatae labore dignissimos cumque hic magnam id nobis ut quae, earum facilis praesentium! Earum officia mollitia at eius hic inventore nulla vitae officiis velit beatae aspernatur et, quo veniam dolore dignissimos consequatur. Harum eius eligendi, expedita iusto doloribus quod inventore sapiente numquam obcaecati.Sed fugit similique dolore impedit cumque quaerat amet, repudiandae libero, ut ratione natus, culpa eligendi provident incidunt iste harum dignissimos nobis. Aliquid ipsa laborum quis molestiae illo quidem atque beatae!", 7),
+		("Clínica PetCure", "89012345678901", "info@petcure.com", "8901234567", "senha8", 8, "89012", "url_imagem8.jpg", "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Magni officia recusandae inventore dolorem est eligendi aliquam totam beatae labore dignissimos cumque hic magnam id nobis ut quae, earum facilis praesentium! Earum officia mollitia at eius hic inventore nulla vitae officiis velit beatae aspernatur et, quo veniam dolore dignissimos consequatur. Harum eius eligendi, expedita iusto doloribus quod inventore sapiente numquam obcaecati.Sed fugit similique dolore impedit cumque quaerat amet, repudiandae libero, ut ratione natus, culpa eligendi provident incidunt iste harum dignissimos nobis. Aliquid ipsa laborum quis molestiae illo quidem atque beatae!", 8),
+		("Clínica AnimalVet", "90123456789012", "contato@animalvet.com", "9012345678", "senha9", 9, "90123", "url_imagem9.jpg", "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Magni officia recusandae inventore dolorem est eligendi aliquam totam beatae labore dignissimos cumque hic magnam id nobis ut quae, earum facilis praesentium! Earum officia mollitia at eius hic inventore nulla vitae officiis velit beatae aspernatur et, quo veniam dolore dignissimos consequatur. Harum eius eligendi, expedita iusto doloribus quod inventore sapiente numquam obcaecati.Sed fugit similique dolore impedit cumque quaerat amet, repudiandae libero, ut ratione natus, culpa eligendi provident incidunt iste harum dignissimos nobis. Aliquid ipsa laborum quis molestiae illo quidem atque beatae!", 9),
+		("Clínica VetExpert", "01234567890123", "atendimento@vetexpert.com", "0123456789", "senha10", 10, "01234", "url_imagem10.jpg", "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Magni officia recusandae inventore dolorem est eligendi aliquam totam beatae labore dignissimos cumque hic magnam id nobis ut quae, earum facilis praesentium! Earum officia mollitia at eius hic inventore nulla vitae officiis velit beatae aspernatur et, quo veniam dolore dignissimos consequatur. Harum eius eligendi, expedita iusto doloribus quod inventore sapiente numquam obcaecati.Sed fugit similique dolore impedit cumque quaerat amet, repudiandae libero, ut ratione natus, culpa eligendi provident incidunt iste harum dignissimos nobis. Aliquid ipsa laborum quis molestiae illo quidem atque beatae!", 10);
+
+-- cadatro pacientes
+
+insert into pacientes (id_pet, id_clinica ) 
+	values
+		(6, 5),
+        (1,5),
+        (10, 5),
+        (16, 5),
+        (16, 1),
+        (5, 2),
+        (1,2),
+        (8, 3);
+        
+select * from pacientes;

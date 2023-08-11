@@ -119,5 +119,8 @@ insert into pacientes (id_pet, id_clinica )
         (5, 2),
         (1,2),
         (8, 3);
-        
-select * from pacientes;
+
+select pt.nm_pet, tt.nm_tutor, cl.nm_clinica from pacientes pc
+	inner join pet pt ON pt.id_pet = pc.id_pet
+    inner join tutor tt ON tt.id_tutor = pt.id_tutor
+	inner join clinica cl ON cl.id_clinica = pc.id_clinica

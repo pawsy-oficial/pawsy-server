@@ -69,7 +69,7 @@ CREATE TABLE clinica
 
 CREATE TABLE medico 
 ( 
- id_medico INT NOT NULL,  
+ id_medico INT NOT NULL auto_increment,  
  nm_medico VARCHAR(255) NOT NULL,  
  cd_cpf CHAR(11) NOT NULL,  
  dt_nascimento DATE NOT NULL,  
@@ -100,10 +100,6 @@ CREATE TABLE trabalho(
     CONSTRAINT fk_clinica FOREIGN KEY ( cd_clinica ) REFERENCES clinica(id_clinica)
 );
 
-
-
-
-
 CREATE TABLE tutor 
 ( 
     id_tutor INT AUTO_INCREMENT,  
@@ -119,6 +115,23 @@ CREATE TABLE tutor
     CONSTRAINT fk_tutor_endereco
         FOREIGN KEY (id_endereco)
         REFERENCES endereco (id_endereco)
+);
+
+CREATE TABLE comentarios (
+	cd_comentario int not null auto_increment,
+    ds_comentario varchar(300) not null,
+    vl_avaliacao int not null,
+    dt_comentario datetime not null,
+    id_tutor int not null,
+    id_clinica int not null,
+    
+    CONSTRAINT pk_comentario PRIMARY KEY (cd_comentario),
+    CONSTRAINT fk_tutor_comentario 
+		FOREIGN KEY (id_tutor) 
+        REFERENCES tutor(id_tutor),
+	CONSTRAINT fk_clinica_comentario 
+		FOREIGN KEY (id_clinica) 
+        REFERENCES clinica(id_clinica)
 );
 
 CREATE TABLE raca 
@@ -228,7 +241,7 @@ CREATE TABLE agenda
     dt_fechamento DATE NOT NULL,  
     observacoes VARCHAR(255),  
     id_consulta INT,
-    nm_agenda VARCHAR(255) NOT NULL,
+    nm_agenda VARCHAR(32) NOT NULL,
     CONSTRAINT fk_agenda_consulta
         FOREIGN KEY (id_consulta)
         REFERENCES consulta (id_consulta)
@@ -315,6 +328,8 @@ CREATE TABLE carteira_vacinas
     id_medico INT NOT NULL,
     dt_retorno DATE NOT NULL,  
     id_vacina INT NOT NULL,
+    id_clinica INT NOT NULL,
+    
     CONSTRAINT fk_carteira_vacinas_pet
         FOREIGN KEY (id_pet)
         REFERENCES pet (id_pet),

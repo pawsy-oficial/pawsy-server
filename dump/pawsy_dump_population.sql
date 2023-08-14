@@ -232,8 +232,11 @@ select
 
 -- medico -> consulta
 
-insert into consulta (dt_consulta, hr_consulta, id_pet, id_medico) values ();
+
 insert into medicos_disponiveis ( id_medico, id_agenda, time_entrada, time_saida ) values (  );
 insert into dias_semanais ( id_disponibilidade, dia_semana ) values ();
 insert into agenda (id_clinica, dt_abertura, dt_fechamento, observacoes, id_consulta, nm_agenda) values ();
 insert into restricao (dt_restricao, id_agenda) values ();
+
+-- insert 
+insert into consulta (dt_consulta, hr_consulta, id_pet, id_medico) values ();

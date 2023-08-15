@@ -2,14 +2,14 @@ CREATE DATABASE pawsy_database;
 
 USE pawsy_database;
 
-CREATE TABLE especialidade 
+CREATE TABLE IF NOT EXISTS especialidade 
 ( 
     id_especialidade INT AUTO_INCREMENT,  
     nm_especialidade VARCHAR(255) NOT NULL,
     constraint pk_especialidade primary key (id_especialidade)
 );
 
-CREATE TABLE cep 
+CREATE TABLE IF NOT EXISTS cep 
 ( 
     cd_cep char(9),  
     nm_cidade VARCHAR(255) NOT NULL,  
@@ -19,7 +19,7 @@ CREATE TABLE cep
     constraint pk_cep primary key (cd_cep)
 );
 
-CREATE TABLE endereco 
+CREATE TABLE IF NOT EXISTS endereco 
 ( 
     id_endereco INT AUTO_INCREMENT,  
     cd_cep char(9),  
@@ -31,18 +31,16 @@ CREATE TABLE endereco
     CONSTRAINT FOREIGN KEY (cd_cep) REFERENCES cep(cd_cep)
 ); 
 
-CREATE TABLE redes(
+CREATE TABLE IF NOT EXISTS redes(
 	cd_rede int not null auto_increment,
     user_tiktok varchar(64) unique,
     user_insta varchar(64) unique,
     num_whats varchar(13) unique,
     url_facebook varchar(200),
-    
-    
     CONSTRAINT pk_rede PRIMARY KEY (cd_rede)
 );
 
-CREATE TABLE clinica 
+CREATE TABLE IF NOT EXISTS clinica 
 ( 
  id_clinica INT NOT NULL auto_increment,  
  nm_clinica VARCHAR(255) NOT NULL,  
@@ -67,7 +65,7 @@ CREATE TABLE clinica
     REFERENCES redes(cd_rede)
 );
 
-CREATE TABLE medico 
+CREATE TABLE IF NOT EXISTS medico 
 ( 
  id_medico INT NOT NULL auto_increment,  
  nm_medico VARCHAR(255) NOT NULL,  
@@ -90,7 +88,7 @@ CREATE TABLE medico
     REFERENCES endereco (id_endereco)
 );
 
-CREATE TABLE trabalho(
+CREATE TABLE IF NOT EXISTS trabalho(
 	cd_trabalho int not null auto_increment,
     cd_medico int not null,
     cd_clinica int not null,
@@ -100,7 +98,7 @@ CREATE TABLE trabalho(
     CONSTRAINT fk_clinica FOREIGN KEY ( cd_clinica ) REFERENCES clinica(id_clinica)
 );
 
-CREATE TABLE tutor 
+CREATE TABLE IF NOT EXISTS tutor 
 ( 
     id_tutor INT AUTO_INCREMENT,  
     nm_tutor VARCHAR(255) NOT NULL,  
@@ -117,7 +115,7 @@ CREATE TABLE tutor
         REFERENCES endereco (id_endereco)
 );
 
-CREATE TABLE comentarios (
+CREATE TABLE IF NOT EXISTS comentarios (
 	cd_comentario int not null auto_increment,
     ds_comentario varchar(300) not null,
     vl_avaliacao int not null,
@@ -134,32 +132,32 @@ CREATE TABLE comentarios (
         REFERENCES clinica(id_clinica)
 );
 
-CREATE TABLE raca 
+CREATE TABLE IF NOT EXISTS raca 
 ( 
     id_raca INT PRIMARY KEY AUTO_INCREMENT,  
     nm_raca VARCHAR(255) NOT NULL,
     tp_raca VARCHAR(3) NOT NULL
 ); 
 
-CREATE TABLE pelagem 
+CREATE TABLE IF NOT EXISTS pelagem 
 ( 
     id_pelagem INT PRIMARY KEY AUTO_INCREMENT,  
     tp_pelagem VARCHAR(255) NOT NULL
 ); 
 
-CREATE TABLE sexo 
+CREATE TABLE IF NOT EXISTS sexo 
 ( 
     id_sexo INT PRIMARY KEY AUTO_INCREMENT,  
     nm_sexo VARCHAR(255) NOT NULL 
 ); 
 
-CREATE TABLE animal 
+CREATE TABLE IF NOT EXISTS animal 
 ( 
     id_animal INT PRIMARY KEY AUTO_INCREMENT,  
     nm_animal VARCHAR(255) NOT NULL 
 );
 
-CREATE TABLE pet 
+CREATE TABLE IF NOT EXISTS pet 
 ( 
     id_pet INT PRIMARY KEY AUTO_INCREMENT,  
     id_tutor INT,  
@@ -190,7 +188,7 @@ CREATE TABLE pet
 			REFERENCES animal(id_animal) 
 );
 
-CREATE TABLE vacinados(
+CREATE TABLE IF NOT EXISTS vacinados(
 	cd_aplicacao int not null auto_increment,
     cd_pet int not null,
     cd_clinica int not null,
@@ -202,7 +200,7 @@ CREATE TABLE vacinados(
 	CONSTRAINT fk_clinica_responsavel FOREIGN KEY ( cd_clinica ) REFERENCES clinica(id_clinica)
 );
 
-CREATE TABLE saude 
+CREATE TABLE IF NOT EXISTS saude 
 ( 
     id_saude INT PRIMARY KEY AUTO_INCREMENT,  
     id_pet INT NOT NULL,  
@@ -218,36 +216,36 @@ CREATE TABLE saude
         REFERENCES pet (id_pet)
 ); 
 
-CREATE TABLE consulta 
-( 
-    id_consulta INT PRIMARY KEY AUTO_INCREMENT,  
-    dt_consulta DATE NOT NULL,  
-    hr_consulta TIME NOT NULL,
-    id_pet INT NOT NULL,
-    id_medico INT NOT NULL,
-    CONSTRAINT fk_consulta_pet
-        FOREIGN KEY (id_pet)
-        REFERENCES pet (id_pet),
-    CONSTRAINT fk_consulta_medico
-        FOREIGN KEY (id_medico)
-        REFERENCES medico (id_medico)
-);
-
-CREATE TABLE agenda 
+CREATE TABLE IF NOT EXISTS agenda 
 ( 
     id_agenda INT PRIMARY KEY AUTO_INCREMENT,  
     id_clinica INT NOT NULL,  
     dt_abertura DATE NOT NULL,  
     dt_fechamento DATE NOT NULL,  
     observacoes VARCHAR(255),  
-    id_consulta INT,
-    nm_agenda VARCHAR(32) NOT NULL,
-    CONSTRAINT fk_agenda_consulta
-        FOREIGN KEY (id_consulta)
-        REFERENCES consulta (id_consulta)
+    nm_agenda VARCHAR(32) NOT NULL
 );
 
-CREATE TABLE historico 
+CREATE TABLE IF NOT EXISTS consulta 
+( 
+    id_consulta INT PRIMARY KEY AUTO_INCREMENT,  
+    dt_consulta DATE NOT NULL,  
+    hr_consulta TIME NOT NULL,
+    id_pet INT NOT NULL,
+    id_medico INT NOT NULL,
+    id_agenda INT NOT NULL,
+    CONSTRAINT fk_consulta_pet
+        FOREIGN KEY (id_pet)
+        REFERENCES pet (id_pet),
+    CONSTRAINT fk_consulta_medico
+        FOREIGN KEY (id_medico)
+        REFERENCES medico (id_medico),
+	CONSTRAINT fk_agenda_consulta
+        FOREIGN KEY (id_agenda)
+        REFERENCES agenda (id_agenda)
+);
+
+CREATE TABLE IF NOT EXISTS historico 
 ( 
     cd_historico INT AUTO_INCREMENT,  
     id_pet INT NOT NULL,  
@@ -263,7 +261,7 @@ CREATE TABLE historico
         REFERENCES clinica(id_clinica)
 );
 
-CREATE TABLE restricao 
+CREATE TABLE IF NOT EXISTS restricao 
 ( 
     id_restricao INT PRIMARY KEY AUTO_INCREMENT,  
     dt_restricao DATE NOT NULL,  
@@ -273,32 +271,57 @@ CREATE TABLE restricao
         REFERENCES agenda (id_agenda)
 );
 
-CREATE TABLE medicos_disponiveis 
+CREATE TABLE IF NOT EXISTS tipo_consulta
+( 
+	id_tipo int not null auto_increment,
+    nm_tipo varchar(64) not null,
+    
+    CONSTRAINT pk_tipo PRIMARY KEY (id_tipo)
+);
+
+CREATE TABLE IF NOT EXISTS disponibilidade
 ( 
     id_disponibilidade INT PRIMARY KEY AUTO_INCREMENT,  
     id_medico INT NOT NULL,
     id_agenda INT NOT NULL,  
-    time_entrada TIME NOT NULL,  
-    time_saida TIME NOT NULL,
+    hr_entrada TIME NOT NULL,  
+    hr_saida TIME NOT NULL,
+    tp_consulta int not null,
+    tm_intervalo int not null,
     CONSTRAINT fk_disponibilidade_medico
         FOREIGN KEY (id_medico)
         REFERENCES medico (id_medico),
     CONSTRAINT fk_disponibilidade_agenda
         FOREIGN KEY (id_agenda)
-        REFERENCES agenda (id_agenda)
+        REFERENCES agenda (id_agenda),
+	CONSTRAINT fk_tp_consulta 
+		FOREIGN KEY (tp_consulta) 
+        REFERENCES tipo_consulta(id_tipo)
 );
 
-CREATE TABLE dias_semanais 
+CREATE TABLE IF NOT EXISTS dia_semana (
+	id_dia int not null auto_increment,
+    nm_dia varchar(13) not null,
+    CONSTRAINT pk_dia PRIMARY KEY (id_dia)
+);
+
+CREATE TABLE IF NOT EXISTS dias_disponiveis 
 ( 
-    id_days INT PRIMARY KEY AUTO_INCREMENT,  
+    id_dia_disponivel INT not null AUTO_INCREMENT,  
     id_disponibilidade INT NOT NULL, 
-    dia_semana VARCHAR(255) NOT NULL,
+    id_dia_semana int NOT NULL,
+    CONSTRAINT pk_disponivel PRIMARY KEY (id_dia_disponivel),
     CONSTRAINT fk_days_disponibilidade
         FOREIGN KEY (id_disponibilidade)
-        REFERENCES medicos_disponiveis (id_disponibilidade)
+        REFERENCES disponibilidade (id_disponibilidade),
+	CONSTRAINT fk_dia_semana 
+		FOREIGN KEY (id_dia_semana)
+        REFERENCES dia_semana(id_dia)
 );
 
-CREATE TABLE pacientes 
+
+
+CREATE TABLE IF NOT EXISTS pacientes 
 ( 
     id_paciente INT PRIMARY KEY AUTO_INCREMENT,  
     id_pet INT NOT NULL,
@@ -312,7 +335,7 @@ CREATE TABLE pacientes
         REFERENCES pet (id_pet)
 );
 
-CREATE TABLE vacinas 
+CREATE TABLE IF NOT EXISTS vacinas 
 ( 
     id_vacina INT auto_increment,  
     nm_vacina VARCHAR(255) NOT NULL,  
@@ -320,7 +343,7 @@ CREATE TABLE vacinas
     CONSTRAINT pk_vacina primary key (id_vacina)
 );
 
-CREATE TABLE carteira_vacinas 
+CREATE TABLE IF NOT EXISTS carteira_vacinas 
 ( 
     id_aplicacao INT PRIMARY KEY AUTO_INCREMENT,  
     dt_aplicacao DATE NOT NULL,  
@@ -341,7 +364,7 @@ CREATE TABLE carteira_vacinas
         REFERENCES vacinas (id_vacina)
 );
 
-CREATE TABLE carteira_vermifugo 
+CREATE TABLE IF NOT EXISTS carteira_vermifugo 
 ( 
     id_aplicacao INT PRIMARY KEY AUTO_INCREMENT,  
     id_pet INT NOT NULL, 
@@ -425,4 +448,31 @@ values
     ("gripe canina", "dog"),
     ("giárdia ", "dog");
 
+insert into dia_semana (nm_dia) 
+values 
+	("Domingo"),
+    ("Segunda-feira"),
+    ("Terça-feira"),
+    ("Quarta-feira"),
+    ("Quinta-feira"),
+    ("Sexta-feira"),
+    ("Sábado");
+
+
+insert into tipo_consulta(nm_tipo)
+values 
+	("consulta - rotina"),
+    ("exame geral"),
+    ("eletrocardiograma"),
+    ("ecocardiograma"),
+    ("ultrassonografia"),
+    ("hemograma"),
+    ("cirurgia"),
+    ("consulta - dentista"),
+    ("consulta - dermatologista"),
+    ("consulta - otorrinolaringologista"),
+    ("consulta - oftalmologista");
+    
+
 -- 10-08-2023
+-- 15-08-2023

@@ -230,13 +230,39 @@ select
 			group by an.nm_animal
 	) cachorro;
 
--- medico -> consulta
+-- cadastro de nova agenda
 
+insert into agenda (id_clinica, dt_abertura, dt_fechamento, observacoes, nm_agenda) 
+values 
+	(1, "2023-08-10", "2023-08-15", "",  ""),
+    (2, "2023-08-10", "2023-08-25", "Consultas exclusivas para gatos", "");
+insert into restricao (dt_restricao, id_agenda)
+values 
+	("2023-08-13", 1),
+    ("2023-08-13", 2),
+    ("2023-08-20", 2);
 
-insert into medicos_disponiveis ( id_medico, id_agenda, time_entrada, time_saida ) values (  );
-insert into dias_semanais ( id_disponibilidade, dia_semana ) values ();
-insert into agenda (id_clinica, dt_abertura, dt_fechamento, observacoes, id_consulta, nm_agenda) values ();
-insert into restricao (dt_restricao, id_agenda) values ();
+insert into disponibilidade ( id_medico, id_agenda, hr_entrada, hr_saida, tp_consulta, tm_intervalo ) 
+values 
+	(1, 1, "11:00", "18:00", 1, 15),
+    (2, 2, "13:30", "20:00", 2, 30);
 
--- insert 
-insert into consulta (dt_consulta, hr_consulta, id_pet, id_medico) values ();
+select * from disponibilidade;
+
+insert into dias_disponiveis ( id_disponibilidade, id_dia_semana ) 
+values 
+	(1, 2),
+    (1, 3),
+    (1, 4),
+    (1, 5),
+    (1, 6),
+    (1, 7),
+    (2, 2),
+    (2, 3),
+    (2, 4),
+    (2, 5),
+    (2, 6),
+    (2, 7);
+
+-- insert de novas consultas
+-- insert into consulta (dt_consulta, hr_consulta, id_pet, id_medico, id_agenda) values ();

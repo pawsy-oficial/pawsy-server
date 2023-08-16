@@ -19,6 +19,8 @@ CREATE TABLE IF NOT EXISTS cep
     constraint pk_cep primary key (cd_cep)
 );
 
+-- excluir essa tabela e criar mais 3 (cidade/bairro/uf) e se não pode ter mais de 1 endereço, colocar o cep, rua, numero e complemento direto na tabela do cliente (orientações do rafael).
+
 CREATE TABLE IF NOT EXISTS endereco 
 ( 
     id_endereco INT AUTO_INCREMENT,  

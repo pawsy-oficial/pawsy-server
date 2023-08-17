@@ -9,29 +9,45 @@ CREATE TABLE IF NOT EXISTS especialidade
     constraint pk_especialidade primary key (id_especialidade)
 );
 
-CREATE TABLE IF NOT EXISTS cep 
+CREATE TABLE IF NOT EXISTS uf 
 ( 
-    cd_cep char(9),  
-    nm_cidade VARCHAR(255) NOT NULL,  
-    nm_estado VARCHAR(255) NOT NULL,  
-    nm_bairro VARCHAR(255) NOT NULL,  
-    nm_rua VARCHAR(255) NOT NULL,
-    constraint pk_cep primary key (cd_cep)
+    id_uf INT AUTO_INCREMENT PRIMARY KEY,  
+    nm_estado VARCHAR(255) NOT NULL
 );
 
--- excluir essa tabela e criar mais 3 (cidade/bairro/uf) e se não pode ter mais de 1 endereço, colocar o cep, rua, numero e complemento direto na tabela do cliente (orientações do rafael).
+CREATE TABLE IF NOT EXISTS cidade 
+( 
+    id_cidade INT AUTO_INCREMENT PRIMARY KEY,
+    id_uf INT,
+    nm_cidade VARCHAR(255) NOT NULL,
+    CONSTRAINT FOREIGN KEY (id_uf) REFERENCES uf(id_uf)
+);
+
+CREATE TABLE IF NOT EXISTS bairro 
+( 
+    id_bairro INT AUTO_INCREMENT PRIMARY KEY,
+    id_cidade INT,
+    nm_bairro VARCHAR(255) NOT NULL,
+    CONSTRAINT FOREIGN KEY (id_cidade) REFERENCES cidade(id_cidade)
+);
 
 CREATE TABLE IF NOT EXISTS endereco 
 ( 
-    id_endereco INT AUTO_INCREMENT,  
-    cd_cep char(9),  
+    id_endereco INT AUTO_INCREMENT PRIMARY KEY,  
+    cd_cep CHAR(9) NOT NULL,
+    nm_rua VARCHAR(255) NOT NULL,
     num_residencia INT NOT NULL,  
-    complemento VARCHAR(255),  
+    complemento VARCHAR(255),
     latitude DECIMAL(10, 6) NOT NULL,  
     longitude DECIMAL(10, 6) NOT NULL,
-    CONSTRAINT pk_endereco PRIMARY KEY (id_endereco),
-    CONSTRAINT FOREIGN KEY (cd_cep) REFERENCES cep(cd_cep)
-); 
+    id_bairro INT,
+    CONSTRAINT FOREIGN KEY (id_bairro) REFERENCES bairro(id_bairro)
+);
+
+-- A decisão de apenas puxar o bairro na tabela endereco é uma escolha de design para aproveitar o relacionamento entre tabelas e evitar redundância.
+-- Ou seja:
+-- Um bairro pertence a uma cidade.
+-- Uma cidade pertence a um uf (estado).
 
 CREATE TABLE IF NOT EXISTS redes(
 	cd_rede int not null auto_increment,

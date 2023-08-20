@@ -262,7 +262,8 @@ values
     (2, 4),
     (2, 5),
     (2, 6),
-    (2, 7);
+    (2, 7),
+	(2, 2);
 
 -- insert de novas consultas
 -- insert into consulta (dt_consulta, hr_consulta, id_pet, id_medico, id_agenda) values ();

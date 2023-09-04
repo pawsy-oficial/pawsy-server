@@ -1,14 +1,8 @@
-const yup = require("yup")
-
-const linkSchema = yup.object();
-
-
-
 const registerTutor = (req, res) => {
-    const { firstName, lastName, email, cpf, birthDate, cell, password, cep, city, state, addres, numberHome, complement, neighborhood } = req.body
+    const { firstName, lastName, email, cpf, birthDate, cell, password, cep, city, state, street, numberHome, complement, neighborhood } = req.body
     return res.status(200).send({
         msg: {
-            firstName, lastName, email, cpf, birthDate, cell, password, cep, city, state, addres, numberHome, complement, neighborhood
+            firstName, lastName, email, cpf, birthDate, cell, password, cep, city, state, street, numberHome, complement, neighborhood
         }
     })
 }

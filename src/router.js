@@ -27,6 +27,3 @@ router.get('/autenticacao', verifyJWT, (req, res) => {
 });
 
 module.exports = router
-
-
-

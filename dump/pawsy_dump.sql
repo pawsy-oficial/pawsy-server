@@ -494,3 +494,5 @@ values
 
 -- 10-08-2023
 -- 15-08-2023
+
+alter user 'root'@'localhost' identified with mysql_native_password by 'password';

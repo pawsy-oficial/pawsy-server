@@ -61,5 +61,4 @@ function calculateDigits(digits, count, repeat) {
     }
 }
 
-
 module.exports = linkSchema

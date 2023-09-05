@@ -1,5 +1,34 @@
 -- cadastro novo tutor
 
+insert into uf(nm_estado) values
+	("AC"),
+("AL"),
+("AP"),
+("AM"),
+("BA"),
+("CE"),
+("DF"),
+("ES"),
+("GO"),
+("MA"),
+("MS"),
+("MT"),
+("MG"),
+("PA"),
+("PB"),
+("PR"),
+("PE"),
+("PI"),
+("RJ"),
+("RN"),
+("RS"),
+("RO"),
+("RR"),
+	("SC"),
+	("SP"),
+	("SE"),
+	("TO");
+
 insert into cep (cd_cep, nm_cidade, nm_estado, nm_bairro, nm_rua) 
 values
 	("01000-000", "São Paulo", "SP", "Centro", "Rua A"),

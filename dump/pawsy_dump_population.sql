@@ -1,5 +1,8 @@
 -- cadastro novo tutor
 
+select * from bairro;
+
+
 insert into uf(nm_estado) values
 	("AC"),
 ("AL"),
@@ -28,6 +31,8 @@ insert into uf(nm_estado) values
 	("SP"),
 	("SE"),
 	("TO");
+
+
 
 insert into cep (cd_cep, nm_cidade, nm_estado, nm_bairro, nm_rua) 
 values

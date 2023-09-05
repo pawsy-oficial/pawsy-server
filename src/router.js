@@ -20,7 +20,9 @@ router.get("/clinica", registerTutor.registerClinic);
 router.post("/tutor-register", validate(tutorSchema), registerTutor.registerTutor);
 
 
-router.post('/login', login.loginTuto);
+router.post('/loginTutor', login.loginTuto);
+// Clinic
+// Medic
 
 router.get('/autenticacao', verifyJWT, (req, res) => {
     res.status(200).send({ success: true, message: 'You are authorized!', user: req.decoded });

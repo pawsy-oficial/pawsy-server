@@ -1,6 +1,9 @@
 const db = require("../db")
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 
-const registerTutor = (req, res) => {
+
+const registerTutor = async (req, res) => {
     const { firstName, lastName, email, cpf, birthDate, cell, password, cep, city, state, street, numberHome, complement, neighborhood } = req.body
     const latitude = "12.3456"
     const longitude = "-45.6789"
@@ -15,6 +18,20 @@ const registerTutor = (req, res) => {
     const cpfFormat = cpf.replace(/[^\d]+/g,'');
     const cellFormat = cell.replace(/[^\d]+/g,'');
 
+    let passwordHash
+    
+    try {
+        bcrypt.hash(password, saltRounds, function(err, hash) {
+            if(err){
+                res.status(400).json({error: "não foi possivel executar a criptografia"})
+                return
+            }
+            else passwordHash = hash
+        });
+    } catch (error) {
+        res.status(400).json({error: "Ocorreu um erro durante a execução da função de criptografia"})
+        return
+    }
 
     db.query(selectEmailTutorSQL, [email, cell, cpfFormat], (error, results)=>{
         if(error){
@@ -46,13 +63,14 @@ const registerTutor = (req, res) => {
                             return
                         }
                         idInsert = results.insertId
-                        db.query(insertTutorSQL, [firstName, cpfFormat, birthDate, email, cellFormat, password, idInsert, "https://pawsy.com/caminho/img.jpg"] , function (error, results) {
+                        db.query(insertTutorSQL, [firstName, cpfFormat, birthDate, email, cellFormat, passwordHash, idInsert, "https://pawsy.com/caminho/img.jpg"] , function (error, results) {
                             if(error){
                                 res.status(400).json({
                                     Mensage: error
                                 })
                                 return
                             }
+                            
                             return res.status(200).json({sucefull: "Tutor cadastrado com sucesso"})
                         })
                     })
@@ -67,9 +85,6 @@ const registerTutor = (req, res) => {
     })
 
 }
-
-
-
 
 const registerClinic = (req, res) => {
     return res.status(200).send({ msg: "Cadastro clinica" })

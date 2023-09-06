@@ -491,7 +491,34 @@ values
     ("consulta - otorrinolaringologista"),
     ("consulta - oftalmologista");
     
-
+insert into uf(nm_estado) values
+	("AC"),
+	("AL"),
+	("AP"),
+	("AM"),
+	("BA"),
+	("CE"),
+	("DF"),
+	("ES"),
+	("GO"),
+	("MA"),
+	("MS"),
+	("MT"),
+	("MG"),
+	("PA"),
+	("PB"),
+	("PR"),
+	("PE"),
+	("PI"),
+	("RJ"),
+	("RN"),
+	("RS"),
+	("RO"),
+	("RR"),
+	("SC"),
+	("SP"),
+	("SE"),
+	("TO");
 -- 10-08-2023
 -- 15-08-2023
 

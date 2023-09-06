@@ -1,4 +1,5 @@
 const express = require("express")
+const multer = require("multer")
 
 const { verifyJWT } = require('./middlewares/auth.js');
 const validate = require("./middlewares/validation")
@@ -8,7 +9,12 @@ router.use(express.json());
 
 const registerTutor = require("./controllers/registerControllers.js")
 const login = require("./controllers/loginControllers.js")
-const tutorSchema = require("./schemas/tutorSchema.js")
+const tutorSchema = require("./schemas/tutorSchema.js");
+
+
+
+const upload = require("./libs/multerConfig.js");
+
 
 router.get("/", (req, res)=>{
     res.status(200).send("Welcome Pawsy")
@@ -17,7 +23,7 @@ router.get("/", (req, res)=>{
 router.get("/medico", registerTutor.registerMedic);
 router.get("/clinica", registerTutor.registerClinic);
 
-router.post("/tutor-register", validate(tutorSchema), registerTutor.registerTutor);
+router.post("/tutor-register", validate(tutorSchema), upload.single('file'), registerTutor.registerTutor);
 
 
 router.post('/login', login.loginTuto);

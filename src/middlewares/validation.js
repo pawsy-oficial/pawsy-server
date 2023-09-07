@@ -1,5 +1,6 @@
 const validate = (schema) => async (req, res, next) => {
-    try {
+    try {   
+        // console.log(req.body)
         await schema.validate({
             body: req.body
         });
@@ -7,7 +8,6 @@ const validate = (schema) => async (req, res, next) => {
     } catch (err) {
        res.status(400).send({error: err.errors});
     }
-    // return next();
 } 
 
 module.exports = validate

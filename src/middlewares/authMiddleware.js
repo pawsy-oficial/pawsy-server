@@ -34,8 +34,9 @@ const authMiddlewareTutor = (req, res, next) => {
             const storedNameTutor = result[0].nm_tutor;
             const storedEmailTutor = result[0].nm_email;
             const storedCelTutor = result[0].num_celular;
+            const storedType = "Tutor";
             
-            req.user = {storedIdTutor, storedNameTutor, storedEmailTutor, storedCelTutor}
+            req.user = {storedIdTutor, storedNameTutor, storedEmailTutor, storedCelTutor, storedType}
 
             next()
         });
@@ -77,14 +78,15 @@ const authMiddlewareClinic = (req, res, next) => {
             const storedNameClinica = result[0].nm_clinica;
             const storedCnpjClinica = result[0].cnpj_clinica;
             const storedEmailClinica = result[0].email_clinica;
+            const storedType = "Clinica";
             
-            req.clinic = {storedIdClinica, storedNameClinica, storedCnpjClinica, storedEmailClinica}
+            req.clinic = {storedIdClinica, storedNameClinica, storedCnpjClinica, storedEmailClinica, storedType}
 
             next()
         });
     }
     catch (UnauthorizedError){
-        res.status(401).send(UnauthorizedError)
+        res.status(401).send('Não Autorizado!')
     }
 };
 
@@ -112,7 +114,7 @@ const authMiddlewareMedic = (req, res, next) => {
             }
             
             if (result.length === 0) {
-                res.status(401).send(UnauthorizedError);
+                res.status(401).send('UnauthorizedError');
                 return;
             }
 
@@ -120,14 +122,15 @@ const authMiddlewareMedic = (req, res, next) => {
             const storedNameMedic = result[0].nm_medico;
             const storedEmailMedic = result[0].nm_email;
             const storedCRMVMedic = result[0].cd_crmv;
+            const storedType = "Medico";
             
-            req.Medic = {storedIdMedic, storedNameMedic, storedEmailMedic, storedCRMVMedic}
+            req.Medic = {storedIdMedic, storedNameMedic, storedEmailMedic, storedCRMVMedic, storedType}
 
             next()
         });
     }
     catch (UnauthorizedError){
-        res.status(401).send(UnauthorizedError)
+        res.status(401).send('UnauthorizedError')
     }
 };
 

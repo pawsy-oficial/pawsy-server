@@ -12,8 +12,18 @@ const schemaMedic = yup.object({
         birthDate: yup.date().typeError('Deve ser uma data').required("Campo obrigatório 6").max(birthdate, "A conta só pode ser criada para maiores de 18 anos"),
         password: yup.string().required(),
         crmv: yup.string().required("Campo obrigatório 7").length(6),
+        urlProfile: yup.string().required("url obrigatório").test("valido", "caminho invalido", value => validarUrl(value)),
+        specialty: yup.string().required("Campo obrigatório").oneOf(['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13'], "Valor invalido")
     })
 })
+
+function validarUrl(caminho){
+    if(!caminho.includes("_pawsy_")){
+        return false
+    }
+
+    return true
+}
 
 function handleValidationCPF(cpf) {
     const format = cpf.replace(/[^\d]+/g, '');

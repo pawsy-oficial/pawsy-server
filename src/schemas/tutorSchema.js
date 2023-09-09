@@ -15,8 +15,17 @@ const linkSchema = yup.object({
         complement: yup.string(),
         neighborhood: yup.string().required("Campo obrigatório"),
         password: yup.string().required(),
+        urlProfile: yup.string().required("url obrigatório").test("valido", "caminho invalido", value => validarUrl(value))
     })
 });
+
+function validarUrl(caminho){
+    if(!caminho.includes("_pawsy_")){
+        return false
+    }
+
+    return true
+}
 
 function handleValidationCPF(cpf) {
     const format = cpf.replace(/[^\d]+/g,'');

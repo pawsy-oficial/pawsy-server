@@ -14,10 +14,18 @@ const schemaClinic = yup.object({
         complement: yup.string(),
         neighborhood: yup.string().required("Campo obrigatório 9"),
         password: yup.string().required(),
-        crmv: yup.string().length(6, "crmv possui 5 digitos e mais um .").required("Campo obrigatório 10")
+        crmv: yup.string().length(6, "crmv possui 5 digitos e mais um .").required("Campo obrigatório 10"),
+        urlProfile: yup.string().required("url obrigatório").test("valido", "caminho invalido", value => validarUrl(value))
     })
 })
 
+function validarUrl(caminho){
+    if(!caminho.includes("_pawsy_")){
+        return false
+    }
+
+    return true
+}
 
 function validarCNPJ(cnpj) {
  

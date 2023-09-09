@@ -1,6 +1,6 @@
 const express = require("express")
 
-const { verifyJWT } = require('./middlewares/auth.js');
+const { authMiddlewareTutor, authMiddlewareClinic, authMiddlewareMedic } = require('./middlewares/authMiddleware.js');
 const validate = require("./middlewares/validation")
 
 const cors = require("cors")
@@ -23,26 +23,39 @@ const schemaMedic = require("./schemas/medicSchema.js");
 const getSpecialty = require("./controllers/especialty.js");
 
 
+const { sendRecoveryCodeTutor, verifyAndResetPasswordTutor, sendRecoveryCodeClinica, verifyAndResetPasswordClinica, sendRecoveryCodeMedico, verifyAndResetPasswordMedico } = require('./services/passwordRecoveryService.js');
+
 router.get("/", (req, res)=>{
     res.status(200).send("Welcome to Pawsy")
 });
-
-router.use("/files", express.static(`${__dirname}/libs/uploads`))
-
-router.get("/uf", uf)
+router.post("/upload-files", upload.single('file'), uploadFiles.uploadFilesImage)
 router.get("/especialidade", getSpecialty)
+router.get("/uf", uf)
 
+// Registros
 router.post("/medico", validate(schemaMedic), registerTutor.registerMedic);
-router.post("/clinica", validate(schemaClinic), registerTutor.registerClinic);
+router.post("/clinica", validate(schemaClinic),registerTutor.registerClinic);
 router.post("/tutor-register", validate(tutorSchema), registerTutor.registerTutor);
 
+// Logins
+router.post('/loginTutor', login.loginTuto);
+router.post('/loginClinic', login.loginClinic);
+router.post('/loginMedic', login.loginMedic)
 
-router.post("/upload-files", upload.single('file'), uploadFiles.uploadFilesImage)
 
-router.post('/login', login.loginTuto);
+// Recuperação de senha
+router.post('/sendCodeTutor', sendRecoveryCodeTutor)
+router.post('/resetPasswordTutor', verifyAndResetPasswordTutor)
+router.post('/sendCodeClinic', sendRecoveryCodeClinica)
+router.post('/resetPasswordClinic', verifyAndResetPasswordClinica)
+router.post('/sendCodeMedic', sendRecoveryCodeMedico)
+router.post('/resetPasswordMedic', verifyAndResetPasswordMedico)
 
-router.get('/autenticacao', verifyJWT, (req, res) => {
-    res.status(200).send({ success: true, message: 'You are authorized!', user: req.decoded });
-});
+// router.use(authMiddlewareTutor, authMiddlewareClinic, authMiddlewareMedic)
+// abaixo desse comando, o login deverá ter sido autenticado para acessar as rotas
+
+router.get('/profileTutor', authMiddlewareTutor, login.getProfileTutor);
+router.get('/profileClinic', authMiddlewareClinic, login.getProfileClinic);
+router.get('/profileMedic', authMiddlewareMedic, login.getProfileMedic);
 
 module.exports = router

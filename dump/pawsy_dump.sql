@@ -337,8 +337,6 @@ CREATE TABLE IF NOT EXISTS dias_disponiveis
         REFERENCES dia_semana(id_dia)
 );
 
-
-
 CREATE TABLE IF NOT EXISTS pacientes 
 ( 
     id_paciente INT PRIMARY KEY AUTO_INCREMENT,  
@@ -397,61 +395,23 @@ CREATE TABLE IF NOT EXISTS carteira_vermifugo
         REFERENCES medico (id_medico)
 );
 
+ALTER TABLE tutor
+ADD recoveryCode VARCHAR(8);
 
-INSERT INTO raca (nm_raca, tp_raca)
-VALUES
-    ("BullDog", "dog"),
-    ("Pitbull", "dog"),
-    ("Beagle", "dog"),
-    ("Poodle", "dog"),
-    ("Husky", "dog"),
-    ("Dachshund", "dog"),
-    ("Pug", "dog"),
-    ("Shih Tzu", "dog"),
-    ("Pastor Alemão", "dog"),
-    ("Rottweiler", "dog"),
-    ("Labrador", "dog"),
-    ("Pinscher", "dog"),
-    ("Golden Retriever", "dog"),
-    ("Maltes", "dog"),
-    ("Chihuahua", "dog"),
-    
-    ("Persa", "cat"),
-    ("Siamês", "cat"),
-    ("Maine Coon", "cat"),
-    ("Angorá", "cat"),
-    ("Sphynx", "cat"),
-    ("Ragdoll", "cat"),
-    ("Ashera", "cat"),
-    ("American Shorthair", "cat"),
-    ("Exótico", "cat");
+ALTER TABLE tutor
+ADD recoveryCodeExpiry DATETIME;
 
-insert into pelagem (tp_pelagem)
-values
-	("Curto"),
-	("Médio"),
-	("Grande");
-    
-insert into animal (nm_animal) values ("cachorro"), ("gato");
+ALTER TABLE clinica 
+ADD recoveryCode VARCHAR(255);
 
-insert into sexo (nm_sexo) values ("macho"), ("fêmea");
+ALTER TABLE clinica 
+ADD recoveryCodeExpiry DATETIME;
 
-insert into especialidade (nm_especialidade)
-values 
-	("Dermatologia"),
-    ("Oftalmologia"),
-    ("Cardiologia"),
-    ("Ortopedia"),
-    ("Neurologia"),
-    ("Oncologia"),
-    ("Anestesiologia"),
-    ("Radiologia"),
-    ("Nutrição"),
-    ("Comportamento Animal"),
-    ("Reprodução"),
-    ("Odontologia"),
-    ("Cirurgião");
+ALTER TABLE medico
+ADD recoveryCode VARCHAR(8) NULL;
 
+ALTER TABLE medico
+ADD recoveryCodeExpiry DATETIME NULL;
 
 insert into vacinas ( nm_vacina, tp_vacina ) 
 values 

@@ -186,7 +186,6 @@ CREATE TABLE IF NOT EXISTS pet
     num_peso INT,  
     dt_nascimento DATE,  
     resumo VARCHAR(255),      
-    img_pet VARCHAR(255),  
     nm_pet VARCHAR(255) NOT NULL,  
     url_img VARCHAR(300),
     CONSTRAINT fk_pet_tutor
@@ -401,6 +400,8 @@ ADD recoveryCode VARCHAR(8);
 ALTER TABLE tutor
 ADD recoveryCodeExpiry DATETIME;
 
+
+
 ALTER TABLE clinica 
 ADD recoveryCode VARCHAR(255);
 
@@ -479,6 +480,9 @@ insert into uf(nm_estado) values
 	("SP"),
 	("SE"),
 	("TO");
+    
+
+
 -- 10-08-2023
 -- 15-08-2023
 

@@ -1,3 +1,4 @@
+// configurações e importações
 const express = require("express")
 
 const { authMiddlewareTutor, authMiddlewareClinic, authMiddlewareMedic } = require('./middlewares/authMiddleware.js');
@@ -19,23 +20,29 @@ const uf = require("./controllers/cepStateControllers.js")
 // schemas
 const tutorSchema = require("./schemas/tutorSchema.js");
 const schemaClinic = require("./schemas/clinicSchema.js");
+const schemaPet = require("./schemas/petSchema.js");
 const schemaMedic = require("./schemas/medicSchema.js");
 const getSpecialty = require("./controllers/especialty.js");
-
+const getAllRaces = require("./controllers/racesControllers.js")
+const verifyPet = require("./controllers/verifyPetControllers.js")
 
 const { sendRecoveryCodeTutor, verifyAndResetPasswordTutor, sendRecoveryCodeClinica, verifyAndResetPasswordClinica, sendRecoveryCodeMedico, verifyAndResetPasswordMedico } = require('./services/passwordRecoveryService.js');
 
+// Consultas de dados
 router.get("/", (req, res)=>{
     res.status(200).send("Welcome to Pawsy")
 });
 router.post("/upload-files", upload.single('file'), uploadFiles.uploadFilesImage)
 router.get("/especialidade", getSpecialty)
 router.get("/uf", uf)
+router.get("/raca", getAllRaces)
+router.get("/tutor/:id", authMiddlewareTutor, verifyPet)
 
 // Registros
 router.post("/medico", validate(schemaMedic), registerTutor.registerMedic);
 router.post("/clinica", validate(schemaClinic),registerTutor.registerClinic);
 router.post("/tutor-register", validate(tutorSchema), registerTutor.registerTutor);
+router.post("/pet-register", validate(schemaPet) ,registerTutor.registerPet);
 
 // Logins
 router.post('/loginTutor', login.loginTuto);

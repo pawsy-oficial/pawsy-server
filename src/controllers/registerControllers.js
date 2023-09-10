@@ -201,8 +201,38 @@ const registerMedic = (req, res) => {
     
 }
 
+const registerPet = (req, res)=>{
+    const { name, typeKind, gender, date, description, coat, urlProfile, id_tutor, race  } = req.body
+
+    const selectSQL = "select id_tutor from tutor where id_tutor = ?"
+    const insertSQL = "insert into pet (nm_pet, id_tutor, id_raca, id_pelagem, id_sexo, id_animal, dt_nascimento, resumo, url_img) values (?,?,?,?,?,?,?,?,?)"
+
+
+    db.query(selectSQL, [id_tutor],  (err, results)=>{
+        if(err){
+            res.status(400).json({erro: "não foi possivel cadastrar esse pet"})
+            return
+        }
+        if(results.length == 0){
+            res.status(401).json({erro: "tutor não cadastrado na plataforma"})
+            return
+        }
+        
+        db.query(insertSQL, [name, id_tutor, race, coat, gender, typeKind, date, description, urlProfile], (err, results)=>{
+            if(err){
+                res.status(400).json({erro: "não foi possivel cadastrar esse pet", err})
+            }
+
+            res.status(200).json({resultado: "pet cadastrado com sucesso"})
+        })
+
+    })
+
+}
+
 module.exports = {
     registerTutor,
     registerClinic,
-    registerMedic
+    registerMedic,
+    registerPet
 }

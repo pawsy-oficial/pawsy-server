@@ -39,9 +39,8 @@ const integrateMedicClinic = async (req, res) => {
       if (error) {
         return res.status(500).json({ error: "Erro ao verificar a integração do médico." });
       }
-
       if (results.length > 0) {
-        return res.status(400).json({ error: "Médico já integrado nesta clínica." });
+        return res.status(200).json({ error: "Médico já integrado nesta clínica." });
       }
 
       const queryInsert = `

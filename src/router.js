@@ -27,6 +27,7 @@ const schemaMedic = require("./schemas/medicSchema.js");
 const getSpecialty = require("./controllers/especialty.js");
 const getAllRaces = require("./controllers/racesControllers.js")
 const verifyPet = require("./controllers/verifyPetControllers.js")
+const getAllMedics = require("./controllers/getAllMedicsControllers.js")
 
 const { sendRecoveryCodeTutor, verifyAndResetPasswordTutor, sendRecoveryCodeClinica, verifyAndResetPasswordClinica, sendRecoveryCodeMedico, verifyAndResetPasswordMedico } = require('./services/passwordRecoveryService.js');
 
@@ -39,6 +40,8 @@ router.get("/especialidade", getSpecialty)
 router.get("/uf", uf)
 router.get("/raca", getAllRaces)
 router.get("/tutor/:id", authMiddlewareTutor, verifyPet)
+router.get("/medico", authMiddlewareClinic, getAllMedics)
+router.use("/files", express.static(`${__dirname}/libs/uploads`))
 
 // Registros
 router.post("/medico", validate(schemaMedic), registerTutor.registerMedic);

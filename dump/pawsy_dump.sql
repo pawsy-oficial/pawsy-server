@@ -69,9 +69,10 @@ CREATE TABLE IF NOT EXISTS clinica
  id_endereco INT NOT NULL,  
  cd_crmv INT NOT NULL,  
  url_imagem VARCHAR(300) not null,
- 
+ recoveryCode VARCHAR(255),
+recoveryCodeExpiry DATETIME,
  ds_sobre varchar(680),
- cd_rede int not null,
+ cd_rede int,
  
  constraint primary key (id_clinica, cd_crmv),  
  UNIQUE (cnpj_clinica,email_clinica,tl_clinica),
@@ -96,6 +97,9 @@ CREATE TABLE IF NOT EXISTS medico
  id_endereco INT,  
  cd_crmv INT NOT NULL,
  url_imagem VARCHAR(300) not null,
+	recoveryCode VARCHAR(8) NULL,
+	recoveryCodeExpiry DATETIME NULL,
+ 
  PRIMARY KEY (id_medico, cd_crmv),
  UNIQUE (cd_cpf,nm_email,num_celular),
  CONSTRAINT fk_especialidade
@@ -127,6 +131,8 @@ CREATE TABLE IF NOT EXISTS tutor
     pw_tutor VARCHAR(255) NOT NULL,  
     id_endereco INT,  
     url_imagem VARCHAR(300) not null,
+    recoveryCode VARCHAR(8),
+	recoveryCodeExpiry DATETIME,
     CONSTRAINT pk_tutor PRIMARY KEY (id_tutor),
     CONSTRAINT fk_tutor_endereco
         FOREIGN KEY (id_endereco)
@@ -394,22 +400,131 @@ CREATE TABLE IF NOT EXISTS carteira_vermifugo
         REFERENCES medico (id_medico)
 );
 
-ALTER TABLE tutor
-ADD recoveryCode VARCHAR(8);
+-- Insert na tabela estados
+insert into uf(nm_estado) values
+	("AC"),
+	("AL"),
+	("AP"),
+	("AM"),
+	("BA"),
+	("CE"),
+	("DF"),
+	("ES"),
+	("GO"),
+	("MA"),
+	("MS"),
+	("MT"),
+	("MG"),
+	("PA"),
+	("PB"),
+	("PR"),
+	("PE"),
+	("PI"),
+	("RJ"),
+	("RN"),
+	("RS"),
+	("RO"),
+	("RR"),
+	("SC"),
+	("SP"),
+	("SE"),
+	("TO");
 
-ALTER TABLE tutor
-ADD recoveryCodeExpiry DATETIME;
+-- Insert na tabela raca
+INSERT INTO raca (nm_raca, tp_raca)
+VALUES
+    ("BullDog", "dog"),
+    ("Pitbull", "dog"),
+    ("Beagle", "dog"),
+    ("Poodle", "dog"),
+    ("Husky", "dog"),
+    ("Dachshund", "dog"),
+    ("Pug", "dog"),
+    ("Shih Tzu", "dog"),
+    ("Pastor Alemão", "dog"),
+    ("Rottweiler", "dog"),
+    ("Labrador", "dog"),
+    ("Pinscher", "dog"),
+    ("Golden Retriever", "dog"),
+    ("Maltes", "dog"),
+    ("Chihuahua", "dog"),
+    
+    ("Persa", "cat"),
+    ("Siamês", "cat"),
+    ("Maine Coon", "cat"),
+    ("Angorá", "cat"),
+    ("Sphynx", "cat"),
+    ("Ragdoll", "cat"),
+    ("Ashera", "cat"),
+    ("American Shorthair", "cat"),
+    ("Exótico", "cat");
 
-ALTER TABLE clinica 
-ADD recoveryCode VARCHAR(255);
+-- Inserir dados na tabela pelagem
+insert into pelagem (tp_pelagem)
+values
+	("Curto"),
+	("Médio"),
+	("Grande");
 
-ALTER TABLE clinica 
-ADD recoveryCodeExpiry DATETIME;
+-- Inserir dados na tabela animal
+insert into animal (nm_animal) values ("cachorro"), ("gato");
 
-ALTER TABLE medico
-ADD recoveryCode VARCHAR(8) NULL;
+-- Inserir dados na tabela sexo
+insert into sexo (nm_sexo) values ("macho"), ("fêmea");
 
-ALTER TABLE medico
-ADD recoveryCodeExpiry DATETIME NULL;
+insert into especialidade (nm_especialidade)
+values 
+	("Dermatologia"),
+    ("Oftalmologia"),
+    ("Cardiologia"),
+    ("Ortopedia"),
+    ("Neurologia"),
+    ("Oncologia"),
+    ("Anestesiologia"),
+    ("Radiologia"),
+    ("Nutrição"),
+    ("Comportamento Animal"),
+    ("Reprodução"),
+    ("Odontologia"),
+    ("Cirurgião");
+
+
+insert into vacinas ( nm_vacina, tp_vacina ) 
+values 
+	("V08", "dog"),
+    ("V10", "dog"),
+    ("V12", "dog"),
+    ("V03", "cat"),
+    ("V04", "cat"),
+    ("V05", "cat"),
+    ("antirrábica", "all"),
+    ("leishmaniose", "dog"),
+    ("gripe canina", "dog"),
+    ("giárdia ", "dog");
+
+insert into dia_semana (nm_dia) 
+values 
+	("Domingo"),
+    ("Segunda-feira"),
+    ("Terça-feira"),
+    ("Quarta-feira"),
+    ("Quinta-feira"),
+    ("Sexta-feira"),
+    ("Sábado");
+
+
+insert into tipo_consulta(nm_tipo)
+values 
+	("consulta - rotina"),
+    ("exame geral"),
+    ("eletrocardiograma"),
+    ("ecocardiograma"),
+    ("ultrassonografia"),
+    ("hemograma"),
+    ("cirurgia"),
+    ("consulta - dentista"),
+    ("consulta - dermatologista"),
+    ("consulta - otorrinolaringologista"),
+    ("consulta - oftalmologista");
 
 alter user 'root'@'localhost' identified with mysql_native_password by 'password';

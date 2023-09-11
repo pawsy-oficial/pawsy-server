@@ -4,7 +4,6 @@ SET SQL_SAFE_UPDATES = 0;
 
 select * from pacientes;
 select * from trabalho;
-
 select * from tutor;
 select * from medico;
 select * from clinica;
@@ -23,7 +22,6 @@ VALUES (25, 1, 1, 1, 1, 25, '2015-01-20', 'Labrador preto', 'img_black_labrador'
        
 select * from pet where id_tutor = 25;
 select * from clinica;
-
 select * from pacientes;
 select * from raca where id_raca = 1;
 select * from pet;
@@ -46,9 +44,7 @@ INSERT INTO pelagem (tp_pelagem) VALUES ('Curto');
 INSERT INTO pelagem (tp_pelagem) VALUES ('Longo');
 INSERT INTO pelagem (tp_pelagem) VALUES ('Misto');
 
--- Inserir dados na tabela sexo
-INSERT INTO sexo (nm_sexo) VALUES ('Macho');
-INSERT INTO sexo (nm_sexo) VALUES ('Fêmea');
+
 
 -- Inserir dados na tabela animal
 INSERT INTO animal (nm_animal) VALUES ('Cachorro');
@@ -73,55 +69,41 @@ VALUES (1, 1, 1, 1, 1, 25, '2015-01-20', 'Labrador preto', 'img_black_labrador',
 
 
 -- Inserir dados na tabela pet
-INSERT INTO pet (id_tutor, id_raca, id_pelagem, id_sexo, id_animal, num_peso, dt_nascimento, resumo, img_pet, nm_pet, url_img) VALUES 
-(1, 1, 1, 1, 1, 25, '2015-01-20', 'Labrador preto', 'img_black_labrador', 'Bobby', 'url_to_bobby_image'),
-(2, 2, 2, 2, 2, 4, '2018-07-17', 'Gato Persa branco', 'img_white_persa', 'Mia', 'url_to_mia_image');
+-- INSERT INTO pet (id_tutor, id_raca, id_pelagem, id_sexo, id_animal, num_peso, dt_nascimento, resumo, img_pet, nm_pet, url_img) VALUES 
+-- (1, 1, 1, 1, 1, 25, '2015-01-20', 'Labrador preto', 'img_black_labrador', 'Bobby', 'url_to_bobby_image'),
+-- (2, 2, 2, 2, 2, 4, '2018-07-17', 'Gato Persa branco', 'img_white_persa', 'Mia', 'url_to_mia_image');
 
-select * from pet;
+-- select * from pet;
 
 -- Inserir dados na tabela clinica
-INSERT INTO clinica (nm_clinica, cnpj_clinica, email_clinica, tl_clinica, pw_clinica, id_endereco, cd_crmv, url_imagem, ds_sobre, cd_rede) VALUES 
-('Clínica Vet ABC', '11111111111111', 'vetabc@gmail.com', '1123456789', 'clinicavet123', 1, 12345, 'url_to_clinica_abc', 'A melhor clínica da região!', 1),
-('Pet Health XYZ', '99999999999999', 'pethxyz@yahoo.com', '1129876543', 'pethxyz456', 2, 98765, 'url_to_pet_health', 'Especializados em animais exóticos!', 2);
+-- INSERT INTO clinica (nm_clinica, cnpj_clinica, email_clinica, tl_clinica, pw_clinica, id_endereco, cd_crmv, url_imagem, ds_sobre, cd_rede) VALUES 
+-- ('Clínica Vet ABC', '11111111111111', 'vetabc@gmail.com', '1123456789', 'clinicavet123', 1, 12345, 'url_to_clinica_abc', 'A melhor clínica da região!', 1),
+-- ('Pet Health XYZ', '99999999999999', 'pethxyz@yahoo.com', '1129876543', 'pethxyz456', 2, 98765, 'url_to_pet_health', 'Especializados em animais exóticos!', 2);
 
 
 
-INSERT INTO clinica (nm_clinica, cnpj_clinica, email_clinica, tl_clinica, pw_clinica, id_endereco, cd_crmv, url_imagem, ds_sobre, cd_rede)
-VALUES ('Clinica A', '12345678901234', 'clinicaA@email.com', '12345678901', 'senha123', 1, 1001, 'url_imagemA.jpg', 'Descrição da Clinica A', 1);
+-- INSERT INTO clinica (nm_clinica, cnpj_clinica, email_clinica, tl_clinica, pw_clinica, id_endereco, cd_crmv, url_imagem, ds_sobre, cd_rede)
+-- VALUES ('Clinica A', '12345678901234', 'clinicaA@email.com', '12345678901', 'senha123', 1, 1001, 'url_imagemA.jpg', 'Descrição da Clinica A', 1);
 
-INSERT INTO clinica (nm_clinica, cnpj_clinica, email_clinica, tl_clinica, pw_clinica, id_endereco, cd_crmv, url_imagem, ds_sobre, cd_rede)
-VALUES ('Clinica B', '23456789012345', 'clinicaB@email.com', '23456789012', 'senha456', 2, 1002, 'url_imagemB.jpg', 'Descrição da Clinica B', 2);
+-- INSERT INTO clinica (nm_clinica, cnpj_clinica, email_clinica, tl_clinica, pw_clinica, id_endereco, cd_crmv, url_imagem, ds_sobre, cd_rede)
+-- VALUES ('Clinica B', '23456789012345', 'clinicaB@email.com', '23456789012', 'senha456', 2, 1002, 'url_imagemB.jpg', 'Descrição da Clinica B', 2);
 
-INSERT INTO medico (nm_medico, cd_cpf, dt_nascimento, nm_email, num_celular, pw_medic, id_especialidade, id_endereco, cd_crmv, url_imagem)
-VALUES ('Medico A', '12345678901', '1980-01-01', 'medicoA@email.com', '98765432101', 'senha321', 1, 1, 1001, 'url_imagemMedicoA.jpg');
+-- INSERT INTO medico (nm_medico, cd_cpf, dt_nascimento, nm_email, num_celular, pw_medic, id_especialidade, id_endereco, cd_crmv, url_imagem)
+-- VALUES ('Medico A', '12345678901', '1980-01-01', 'medicoA@email.com', '98765432101', 'senha321', 1, 1, 1001, 'url_imagemMedicoA.jpg');
 
-INSERT INTO medico (nm_medico, cd_cpf, dt_nascimento, nm_email, num_celular, pw_medic, id_especialidade, id_endereco, cd_crmv, url_imagem)
-VALUES ('Medico B', '23456789012', '1985-05-05', 'medicoB@email.com', '87654321098', 'senha654', 2, 2, 1002, 'url_imagemMedicoB.jpg');
+-- INSERT INTO medico (nm_medico, cd_cpf, dt_nascimento, nm_email, num_celular, pw_medic, id_especialidade, id_endereco, cd_crmv, url_imagem)
+-- VALUES ('Medico B', '23456789012', '1985-05-05', 'medicoB@email.com', '87654321098', 'senha654', 2, 2, 1002, 'url_imagemMedicoB.jpg');
 
-INSERT INTO clinica (nm_clinica, cnpj_clinica, email_clinica, tl_clinica, pw_clinica, id_endereco, cd_crmv, url_imagem, ds_sobre, cd_rede)
-VALUES ('Clinica C', '34567890123456', 'clinicaC@email.com', '34567890123', 'senha789', 3, 1003, 'url_imagemC.jpg', 'Descrição da Clinica C', 3);
+-- INSERT INTO clinica (nm_clinica, cnpj_clinica, email_clinica, tl_clinica, pw_clinica, id_endereco, cd_crmv, url_imagem, ds_sobre, cd_rede)
+-- VALUES ('Clinica C', '34567890123456', 'clinicaC@email.com', '34567890123', 'senha789', 3, 1003, 'url_imagemC.jpg', 'Descrição da Clinica C', 3);
 
-INSERT INTO medico (nm_medico, cd_cpf, dt_nascimento, nm_email, num_celular, pw_medic, id_especialidade, id_endereco, cd_crmv, url_imagem)
-VALUES ('Medico C', '34567890123', '1990-10-10', 'medicoC@email.com', '76543210987', 'senha987', 3, 3, 1003, 'url_imagemMedicoC.jpg');
-
-select * from clinica where nm_clinica = "Clinica C";
-
-select * from medico where nm_medico = "Medico C";
-
-INSERT INTO trabalho (cd_medico, cd_clinica)
-VALUES (4, 10);
-
-INSERT INTO trabalho (cd_medico, cd_clinica)
-VALUES (5, 11);
-
-DELETE FROM trabalho WHERE cd_medico = 5;
-
-select * from trabalho;
+-- INSERT INTO medico (nm_medico, cd_cpf, dt_nascimento, nm_email, num_celular, pw_medic, id_especialidade, id_endereco, cd_crmv, url_imagem)
+-- VALUES ('Medico C', '34567890123', '1990-10-10', 'medicoC@email.com', '76543210987', 'senha987', 3, 3, 1003, 'url_imagemMedicoC.jpg');
 
 
-select * from medico where nm_email =  "pedromagro1995@gmail.com";
 
-update medico set nm_email = "pedromagro1995@gmail.com" where id_medico = 3;
+
+
 
 SELECT 
             e.cd_cep AS CEP,
@@ -140,108 +122,9 @@ SELECT
         JOIN uf u ON c.id_uf = u.id_uf
         WHERE cl.id_clinica = 7;
 
-SELECT * FROM clinica where id_clinica = "7";
-SELECT * FROM clinica where cnpj_clinica = "11222333444455";
-
-UPDATE clinica SET email_clinica = "pedromagro1995@gmail.com" where email_clinica = "contato@petcare.com";
-
-SELECT * FROM tutor WHERE nm_email = "pepe@etec.sp";
-
-update tutor set nm_tutor = "Pedro" where nm_email = "pedromagro1995@gmail.com";
-update tutor set nm_email = "pedromagro1995@gmail.com" where nm_email = "luana.falcantara@gmail.com";
-
-INSERT INTO raca (nm_raca, tp_raca)
-VALUES
-    ("BullDog", "dog"),
-    ("Pitbull", "dog"),
-    ("Beagle", "dog"),
-    ("Poodle", "dog"),
-    ("Husky", "dog"),
-    ("Dachshund", "dog"),
-    ("Pug", "dog"),
-    ("Shih Tzu", "dog"),
-    ("Pastor Alemão", "dog"),
-    ("Rottweiler", "dog"),
-    ("Labrador", "dog"),
-    ("Pinscher", "dog"),
-    ("Golden Retriever", "dog"),
-    ("Maltes", "dog"),
-    ("Chihuahua", "dog"),
-    
-    ("Persa", "cat"),
-    ("Siamês", "cat"),
-    ("Maine Coon", "cat"),
-    ("Angorá", "cat"),
-    ("Sphynx", "cat"),
-    ("Ragdoll", "cat"),
-    ("Ashera", "cat"),
-    ("American Shorthair", "cat"),
-    ("Exótico", "cat");
-
-insert into pelagem (tp_pelagem)
-values
-	("Curto"),
-	("Médio"),
-	("Grande");
-    
-insert into animal (nm_animal) values ("cachorro"), ("gato");
-
-insert into sexo (nm_sexo) values ("macho"), ("fêmea");
-
-insert into especialidade (nm_especialidade)
-values 
-	("Dermatologia"),
-    ("Oftalmologia"),
-    ("Cardiologia"),
-    ("Ortopedia"),
-    ("Neurologia"),
-    ("Oncologia"),
-    ("Anestesiologia"),
-    ("Radiologia"),
-    ("Nutrição"),
-    ("Comportamento Animal"),
-    ("Reprodução"),
-    ("Odontologia"),
-    ("Cirurgião");
 
 
-insert into vacinas ( nm_vacina, tp_vacina ) 
-values 
-	("V08", "dog"),
-    ("V10", "dog"),
-    ("V12", "dog"),
-    ("V03", "cat"),
-    ("V04", "cat"),
-    ("V05", "cat"),
-    ("antirrábica", "all"),
-    ("leishmaniose", "dog"),
-    ("gripe canina", "dog"),
-    ("giárdia ", "dog");
 
-insert into dia_semana (nm_dia) 
-values 
-	("Domingo"),
-    ("Segunda-feira"),
-    ("Terça-feira"),
-    ("Quarta-feira"),
-    ("Quinta-feira"),
-    ("Sexta-feira"),
-    ("Sábado");
-
-
-insert into tipo_consulta(nm_tipo)
-values 
-	("consulta - rotina"),
-    ("exame geral"),
-    ("eletrocardiograma"),
-    ("ecocardiograma"),
-    ("ultrassonografia"),
-    ("hemograma"),
-    ("cirurgia"),
-    ("consulta - dentista"),
-    ("consulta - dermatologista"),
-    ("consulta - otorrinolaringologista"),
-    ("consulta - oftalmologista");
     
 
 -- 10-08-2023

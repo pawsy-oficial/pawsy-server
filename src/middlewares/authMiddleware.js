@@ -35,8 +35,9 @@ const authMiddlewareTutor = (req, res, next) => {
             const storedEmailTutor = result[0].nm_email;
             const storedCelTutor = result[0].num_celular;
             const storedType = "Tutor";
+            const storedImg = result[0].url_imagem;
             
-            req.user = {storedIdTutor, storedNameTutor, storedEmailTutor, storedCelTutor, storedType}
+            req.user = {storedIdTutor, storedNameTutor, storedEmailTutor, storedCelTutor, storedType, storedImg}
 
             next()
         });

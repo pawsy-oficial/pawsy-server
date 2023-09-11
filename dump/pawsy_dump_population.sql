@@ -1,43 +1,125 @@
-SET SQL_SAFE_UPDATES = 1;
+SET SQL_SAFE_UPDATES = 0;
+
+-- selects para a banca //////
+
+select * from pacientes;
+select * from trabalho;
 
 select * from tutor;
-select * from bairro;
-select * from endereco;
-select * from cidade;
+select * from medico;
+select * from clinica;
 
-insert into cep (cd_cep, nm_cidade, nm_estado, nm_bairro, nm_rua) 
-values
-	("01000-000", "São Paulo", "SP", "Centro", "Rua A"),
-    ("02000-000", "São Paulo", "SP", "Vila B", "Rua B"),
-    ("03000-000", "São Paulo", "SP", "Bairro C", "Rua C"),
-    ("04000-000", "São Paulo", "SP", "Bairro D", "Rua D"),
-    ("05000-000", "São Paulo", "SP", "Vila E", "Rua E"),
-    ("06000-000", "São Paulo", "SP", "Vila F", "Rua F"),
-    ("07000-000", "São Paulo", "SP", "Bairro G", "Rua G"),
-    ("08000-000", "São Paulo", "SP", "Vila H", "Rua H"),
-    ("09000-000", "São Paulo", "SP", "Bairro I", "Rua I"),
-    ("10000-000", "São Paulo", "SP", "Vila J", "Rua J"),
-    ("11000-000", "São Paulo", "SP", "Bairro K", "Rua K"),
-    ("12000-000", "São Paulo", "SP", "Vila L", "Rua L"),
-    ("13000-000", "São Paulo", "SP", "Bairro M", "Rua M"),
-    ("14000-000", "São Paulo", "SP", "Vila N", "Rua N"),
-    ("15000-000", "São Paulo", "SP", "Bairro O", "Rua O");
-    
-insert into endereco (cd_cep, num_residencia, complemento, latitude, longitude) 
-values
-	("01000-000", "123", "Apto 101", "12.3456", "-45.6789"),
-    ("02000-000", "456", "Casa", "12.3456", "-45.6789"),
-    ("03000-000", "789", "Sala 2", "12.3456", "-45.6789"),
-    ("06000-000", "80", "SP", "12.3456", "-45.6789"),
-    ("07000-000", "84", "SP", "12.3456", "-45.6789"),
-    ("08000-000", "532", "SP", "12.3456", "-45.6789"),
-    ("09000-000", "4532", "SP", "12.3456", "-45.6789"),
-    ("10000-000", "234", "SP", "12.3456", "-45.6789"),
-    ("11000-000", "32", "SP", "12.3456", "-45.6789"),
-    ("12000-000", "346", "SP", "12.3456", "-45.6789"),
-    ("13000-000", "921", "SP", "12.3456", "-45.6789"),
-    ("14000-000", "669", "SP", "12.3456", "-45.6789"),
-    ("15000-000", "13", "SP", "12.3456", "-45.6789");
+-- ///////////////////////////
+
+INSERT INTO tutor (nm_tutor, cd_cpf, dt_nascimento, nm_email, num_celular, pw_tutor, id_endereco, url_imagem)
+VALUES ('Tutor1', '50096888831', '1980-01-01', 'tutor1@email.com', '1234567890', 'password123', 1, 'url_to_tutor1_image'),
+       ('Tutor2', '23456784141', '1990-01-01', 'tutor2@email.com', '2345678901', 'password456', 2, 'url_to_tutor2_image');
+       
+select * from tutor where cd_cpf = "50096888831";
+       
+INSERT INTO pet (id_tutor, id_raca, id_pelagem, id_sexo, id_animal, num_peso, dt_nascimento, resumo, img_pet, nm_pet, url_img)
+VALUES (25, 1, 1, 1, 1, 25, '2015-01-20', 'Labrador preto', 'img_black_labrador', 'Bobby', 'url_to_bobby_image'),
+       (25, 2, 2, 2, 2, 4, '2018-07-17', 'Gato Persa branco', 'img_white_persa', 'Mia', 'url_to_mia_image');
+       
+select * from pet where id_tutor = 25;
+select * from clinica;
+
+select * from pacientes;
+select * from raca where id_raca = 1;
+select * from pet;
+
+SELECT * FROM pet 
+JOIN tutor ON pet.id_tutor = tutor.id_tutor 
+WHERE pet.id_pet = 25 AND tutor.cd_cpf = '50096888831';
+
+SELECT * FROM tutor WHERE cd_cpf = '50096888831';
+SELECT * FROM pet WHERE id_pet = 25;
+
+
+-- Inserir dados na tabela raca
+INSERT INTO raca (nm_raca, tp_raca) VALUES ('Labrador', 'Cão');
+INSERT INTO raca (nm_raca, tp_raca) VALUES ('Persa', 'Gat');
+INSERT INTO raca (nm_raca, tp_raca) VALUES ('Siames', 'Gat');
+
+-- Inserir dados na tabela pelagem
+INSERT INTO pelagem (tp_pelagem) VALUES ('Curto');
+INSERT INTO pelagem (tp_pelagem) VALUES ('Longo');
+INSERT INTO pelagem (tp_pelagem) VALUES ('Misto');
+
+-- Inserir dados na tabela sexo
+INSERT INTO sexo (nm_sexo) VALUES ('Macho');
+INSERT INTO sexo (nm_sexo) VALUES ('Fêmea');
+
+-- Inserir dados na tabela animal
+INSERT INTO animal (nm_animal) VALUES ('Cachorro');
+INSERT INTO animal (nm_animal) VALUES ('Gato');
+INSERT INTO animal (nm_animal) VALUES ('Pássaro');
+
+-- Inserir dados na tabela tutor
+INSERT INTO tutor (nm_tutor, cd_cpf, dt_nascimento, nm_email, num_celular, pw_tutor, id_endereco, url_imagem) VALUES 
+('Maria Silva', '12345678901', '1990-05-15', 'maria@gmail.com', '11987654321', 'senha123', 1, 'url_to_maria_image'),
+('João Pereira', '98765432109', '1985-08-10', 'joao@yahoo.com', '11965432178', 'joao1234', 2, 'url_to_joao_image');
+
+SELECT * FROM tutor WHERE id_tutor IN (1, 2);
+SELECT * FROM raca WHERE id_raca IN (1, 2);
+SELECT * FROM pelagem WHERE id_pelagem IN (1, 2);
+SELECT * FROM sexo WHERE id_sexo IN (1, 2);
+SELECT * FROM animal WHERE id_animal IN (1, 2);
+
+select * from clinica;
+
+INSERT INTO pet (id_tutor, id_raca, id_pelagem, id_sexo, id_animal, num_peso, dt_nascimento, resumo, img_pet, nm_pet, url_img)
+VALUES (1, 1, 1, 1, 1, 25, '2015-01-20', 'Labrador preto', 'img_black_labrador', 'Bobby', 'url_to_bobby_image');
+
+
+-- Inserir dados na tabela pet
+INSERT INTO pet (id_tutor, id_raca, id_pelagem, id_sexo, id_animal, num_peso, dt_nascimento, resumo, img_pet, nm_pet, url_img) VALUES 
+(1, 1, 1, 1, 1, 25, '2015-01-20', 'Labrador preto', 'img_black_labrador', 'Bobby', 'url_to_bobby_image'),
+(2, 2, 2, 2, 2, 4, '2018-07-17', 'Gato Persa branco', 'img_white_persa', 'Mia', 'url_to_mia_image');
+
+select * from pet;
+
+-- Inserir dados na tabela clinica
+INSERT INTO clinica (nm_clinica, cnpj_clinica, email_clinica, tl_clinica, pw_clinica, id_endereco, cd_crmv, url_imagem, ds_sobre, cd_rede) VALUES 
+('Clínica Vet ABC', '11111111111111', 'vetabc@gmail.com', '1123456789', 'clinicavet123', 1, 12345, 'url_to_clinica_abc', 'A melhor clínica da região!', 1),
+('Pet Health XYZ', '99999999999999', 'pethxyz@yahoo.com', '1129876543', 'pethxyz456', 2, 98765, 'url_to_pet_health', 'Especializados em animais exóticos!', 2);
+
+
+
+INSERT INTO clinica (nm_clinica, cnpj_clinica, email_clinica, tl_clinica, pw_clinica, id_endereco, cd_crmv, url_imagem, ds_sobre, cd_rede)
+VALUES ('Clinica A', '12345678901234', 'clinicaA@email.com', '12345678901', 'senha123', 1, 1001, 'url_imagemA.jpg', 'Descrição da Clinica A', 1);
+
+INSERT INTO clinica (nm_clinica, cnpj_clinica, email_clinica, tl_clinica, pw_clinica, id_endereco, cd_crmv, url_imagem, ds_sobre, cd_rede)
+VALUES ('Clinica B', '23456789012345', 'clinicaB@email.com', '23456789012', 'senha456', 2, 1002, 'url_imagemB.jpg', 'Descrição da Clinica B', 2);
+
+INSERT INTO medico (nm_medico, cd_cpf, dt_nascimento, nm_email, num_celular, pw_medic, id_especialidade, id_endereco, cd_crmv, url_imagem)
+VALUES ('Medico A', '12345678901', '1980-01-01', 'medicoA@email.com', '98765432101', 'senha321', 1, 1, 1001, 'url_imagemMedicoA.jpg');
+
+INSERT INTO medico (nm_medico, cd_cpf, dt_nascimento, nm_email, num_celular, pw_medic, id_especialidade, id_endereco, cd_crmv, url_imagem)
+VALUES ('Medico B', '23456789012', '1985-05-05', 'medicoB@email.com', '87654321098', 'senha654', 2, 2, 1002, 'url_imagemMedicoB.jpg');
+
+INSERT INTO clinica (nm_clinica, cnpj_clinica, email_clinica, tl_clinica, pw_clinica, id_endereco, cd_crmv, url_imagem, ds_sobre, cd_rede)
+VALUES ('Clinica C', '34567890123456', 'clinicaC@email.com', '34567890123', 'senha789', 3, 1003, 'url_imagemC.jpg', 'Descrição da Clinica C', 3);
+
+INSERT INTO medico (nm_medico, cd_cpf, dt_nascimento, nm_email, num_celular, pw_medic, id_especialidade, id_endereco, cd_crmv, url_imagem)
+VALUES ('Medico C', '34567890123', '1990-10-10', 'medicoC@email.com', '76543210987', 'senha987', 3, 3, 1003, 'url_imagemMedicoC.jpg');
+
+select * from clinica where nm_clinica = "Clinica C";
+
+select * from medico where nm_medico = "Medico C";
+
+INSERT INTO trabalho (cd_medico, cd_clinica)
+VALUES (4, 10);
+
+INSERT INTO trabalho (cd_medico, cd_clinica)
+VALUES (5, 11);
+
+DELETE FROM trabalho WHERE cd_medico = 5;
+
+select * from trabalho;
+
+
+select * from medico where nm_email =  "pedromagro1995@gmail.com";
 
 update medico set nm_email = "pedromagro1995@gmail.com" where id_medico = 3;
 
@@ -63,7 +145,7 @@ SELECT * FROM clinica where cnpj_clinica = "11222333444455";
 
 UPDATE clinica SET email_clinica = "pedromagro1995@gmail.com" where email_clinica = "contato@petcare.com";
 
-SELECT * FROM tutor WHERE nm_email = "pedromagro1995@gmail.com";
+SELECT * FROM tutor WHERE nm_email = "pepe@etec.sp";
 
 update tutor set nm_tutor = "Pedro" where nm_email = "pedromagro1995@gmail.com";
 update tutor set nm_email = "pedromagro1995@gmail.com" where nm_email = "luana.falcantara@gmail.com";

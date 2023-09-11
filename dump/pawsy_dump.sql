@@ -185,7 +185,7 @@ CREATE TABLE IF NOT EXISTS pet
     id_animal INT,  
     num_peso INT,  
     dt_nascimento DATE,  
-    resumo VARCHAR(255),      
+    resumo VARCHAR(255),       
     nm_pet VARCHAR(255) NOT NULL,  
     url_img VARCHAR(300),
     CONSTRAINT fk_pet_tutor
@@ -400,8 +400,6 @@ ADD recoveryCode VARCHAR(8);
 ALTER TABLE tutor
 ADD recoveryCodeExpiry DATETIME;
 
-
-
 ALTER TABLE clinica 
 ADD recoveryCode VARCHAR(255);
 
@@ -413,77 +411,5 @@ ADD recoveryCode VARCHAR(8) NULL;
 
 ALTER TABLE medico
 ADD recoveryCodeExpiry DATETIME NULL;
-
-insert into vacinas ( nm_vacina, tp_vacina ) 
-values 
-	("V08", "dog"),
-    ("V10", "dog"),
-    ("V12", "dog"),
-    ("V03", "cat"),
-    ("V04", "cat"),
-    ("V05", "cat"),
-    ("antirrábica", "all"),
-    ("leishmaniose", "dog"),
-    ("gripe canina", "dog"),
-    ("giárdia ", "dog");
-
-insert into dia_semana (nm_dia) 
-values 
-	("Domingo"),
-    ("Segunda-feira"),
-    ("Terça-feira"),
-    ("Quarta-feira"),
-    ("Quinta-feira"),
-    ("Sexta-feira"),
-    ("Sábado");
-
-
-insert into tipo_consulta(nm_tipo)
-values 
-	("consulta - rotina"),
-    ("exame geral"),
-    ("eletrocardiograma"),
-    ("ecocardiograma"),
-    ("ultrassonografia"),
-    ("hemograma"),
-    ("cirurgia"),
-    ("consulta - dentista"),
-    ("consulta - dermatologista"),
-    ("consulta - otorrinolaringologista"),
-    ("consulta - oftalmologista");
-    
-insert into uf(nm_estado) values
-	("AC"),
-	("AL"),
-	("AP"),
-	("AM"),
-	("BA"),
-	("CE"),
-	("DF"),
-	("ES"),
-	("GO"),
-	("MA"),
-	("MS"),
-	("MT"),
-	("MG"),
-	("PA"),
-	("PB"),
-	("PR"),
-	("PE"),
-	("PI"),
-	("RJ"),
-	("RN"),
-	("RS"),
-	("RO"),
-	("RR"),
-	("SC"),
-	("SP"),
-	("SE"),
-	("TO");
-    
-
-
--- 10-08-2023
--- 15-08-2023
 
 alter user 'root'@'localhost' identified with mysql_native_password by 'password';

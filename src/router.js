@@ -18,6 +18,7 @@ const login = require("./controllers/loginControllers.js")
 const uf = require("./controllers/cepStateControllers.js")
 const integrarMedicoClinica = require("./controllers/integrateMedicClinic.js")
 const integratePatientClinic = require("./controllers/integratePetPatientClinic.js")
+const schendule = require("./controllers/schenduleControllers.js")
 
 // schemas
 const tutorSchema = require("./schemas/tutorSchema.js");
@@ -73,5 +74,9 @@ router.post('/resetPasswordMedic', verifyAndResetPasswordMedico)
 router.get('/profileTutor', authMiddlewareTutor, login.getProfileTutor);
 router.get('/profileClinic', authMiddlewareClinic, login.getProfileClinic);
 router.get('/profileMedic', authMiddlewareMedic, login.getProfileMedic);
+
+// register schendule
+
+router.post('/newSchendule', authMiddlewareClinic, schendule.registerNewSchendule)
 
 module.exports = router

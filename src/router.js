@@ -43,7 +43,7 @@ router.get("/raca", getAllRaces)
 router.get("/tutor/:id", authMiddlewareTutor, verifyPet)
 router.get("/medico", authMiddlewareClinic, getAllMedics)
 router.use("/files", express.static(`${__dirname}/libs/uploads`))
-router.get("/coordinates", authMiddlewareClinic, getCoordinate.tutorCoordinates)
+router.get("/coordinates", authMiddlewareTutor, getCoordinate.tutorCoordinates)
 
 // Registros
 router.post("/medico", validate(schemaMedic), registerTutor.registerMedic);

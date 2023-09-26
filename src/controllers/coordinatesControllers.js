@@ -2,7 +2,6 @@ const db = require("../db")
 
 const tutorCoordinates = (req, res)=>{
     const { idTutor } = req.body
-
     if(!idTutor){
         res.json({erro : "falta de parametros"})
     }

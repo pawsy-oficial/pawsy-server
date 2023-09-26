@@ -3,9 +3,7 @@ const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
 const registerTutor = async (req, res) => {
-    const { firstName, lastName, email, cpf, birthDate, cell, password, cep, city, state, street, numberHome, complement, neighborhood, urlProfile } = req.body
-    const latitude = "12.3456"
-    const longitude = "-45.6789"
+    const { firstName, lastName, email, cpf, birthDate, cell, password, cep, city, state, street, numberHome, complement, neighborhood, urlProfile, latitude, longitude } = req.body
 
     const selectEmailTutorSQL = "select nm_email, num_celular, cd_cpf from tutor where nm_email = ? or num_celular = ? or cd_cpf = ?"
     const insertCitySQL = "insert into cidade (nm_cidade, id_uf) values (?,?)"

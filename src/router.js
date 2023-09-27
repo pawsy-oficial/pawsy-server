@@ -49,7 +49,7 @@ router.get("/coordinates", authMiddlewareTutor, getCoordinate.tutorCoordinates)
 router.post("/medico", validate(schemaMedic), registerTutor.registerMedic);
 router.post("/clinica", validate(schemaClinic),registerTutor.registerClinic);
 router.post("/tutor-register", validate(tutorSchema), registerTutor.registerTutor);
-router.post("/pet-register", validate(schemaPet) ,registerTutor.registerPet);
+router.post("/pet-register", validate(schemaPet), registerTutor.registerPet);
 
 // Integrações
 router.post("/integrar-medico-clinica", integrarMedicoClinica.integrateMedicClinic)

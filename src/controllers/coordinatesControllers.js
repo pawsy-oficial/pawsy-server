@@ -43,7 +43,7 @@ const ClinicCoordinates = (req, res) => {
         }
 
         const formattedResult = result.map(item => ({
-            "Id Clinica": item.id_clinica,
+            "idClinica": item.id_clinica,
             "longitude": item.longitude,
             "latitude": item.latitude
         }));

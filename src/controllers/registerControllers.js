@@ -228,9 +228,38 @@ const registerPet = (req, res)=>{
 
 }
 
+const registerVermifuge = (req, res)=>{
+    const { vermifuge  } = req.body
+
+    const selectSQL = "select id_pet from pet where id_pet = ?"
+    const insertSQL = "insert into carteira_vermifugo (nm_vermifugo) values (?)"
+
+
+    db.query(selectSQL, [id_pet],  (err, results)=>{
+        if(err){
+            res.status(400).json({erro: "não foi possivel cadastrar esse pet"})
+            return
+        }
+        if(results.length == 0){
+            res.status(401).json({erro: "tutor não cadastrado na plataforma"})
+            return
+        }
+        
+        db.query(insertSQL, [vermifuge], (err, results)=>{
+            if(err){
+                res.status(400).json({erro: "não foi possivel cadastrar esse pet", err})
+            }
+
+            res.status(200).json({resultado: "pet cadastrado com sucesso"})
+        })
+
+    })
+}
+
 module.exports = {
     registerTutor,
     registerClinic,
     registerMedic,
-    registerPet
+    registerPet,
+    registerVermifuge
 }

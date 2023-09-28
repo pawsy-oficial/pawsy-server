@@ -31,6 +31,7 @@ const getAllMedics = require("./controllers/getAllMedicsControllers.js")
 const getCoordinate = require("./controllers/coordinatesControllers.js")
 
 const { sendRecoveryCodeTutor, verifyAndResetPasswordTutor, sendRecoveryCodeClinica, verifyAndResetPasswordClinica, sendRecoveryCodeMedico, verifyAndResetPasswordMedico } = require('./services/passwordRecoveryService.js');
+const schemaVermifuge = require("./schemas/vermifugeSchema.js");
 
 // Consultas de dados
 router.get("/", (req, res)=>{
@@ -50,6 +51,7 @@ router.post("/medico", validate(schemaMedic), registerTutor.registerMedic);
 router.post("/clinica", validate(schemaClinic),registerTutor.registerClinic);
 router.post("/tutor-register", validate(tutorSchema), registerTutor.registerTutor);
 router.post("/pet-register", validate(schemaPet) ,registerTutor.registerPet);
+router.post("/vermifuge", validate(schemaVermifuge), registerTutor.registerVermifuge);
 
 // Integrações
 router.post("/integrar-medico-clinica", integrarMedicoClinica.integrateMedicClinic)

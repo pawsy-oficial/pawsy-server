@@ -78,10 +78,7 @@ const registerTutor = async (req, res) => {
 }
 
 const registerClinic = (req, res) => {
-    const { clinicName, crmv, email, cnpj, cell, password, cep, city, state, street, numberHome, complement, neighborhood, urlProfile } = req.body
-    
-    const latitude = "12.3456"
-    const longitude = "-45.6789"
+    const { clinicName, crmv, email, cnpj, cell, password, cep, city, state, street, numberHome, complement, neighborhood, urlProfile, latitude, longitude } = req.body
 
     const selectEmailClinicSQL = "select email_clinica, tl_clinica, cnpj_clinica from clinica where email_clinica = ? or tl_clinica = ? or cnpj_clinica = ?"
     const insertCitySQL = "insert into cidade (nm_cidade, id_uf) values (?,?)"

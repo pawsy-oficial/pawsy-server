@@ -30,6 +30,7 @@ const verifyPet = require("./controllers/verifyPetControllers.js")
 const getAllMedics = require("./controllers/getAllMedicsControllers.js")
 const getCoordinate = require("./controllers/coordinatesControllers.js")
 const ClinicCoordinates = require("./controllers/coordinatesControllers.js")
+const Previews = require("./controllers/previewControllers.js")
 
 const { sendRecoveryCodeTutor, verifyAndResetPasswordTutor, sendRecoveryCodeClinica, verifyAndResetPasswordClinica, sendRecoveryCodeMedico, verifyAndResetPasswordMedico } = require('./services/passwordRecoveryService.js');
 
@@ -46,6 +47,7 @@ router.get("/medico", authMiddlewareClinic, getAllMedics)
 router.use("/files", express.static(`${__dirname}/libs/uploads`))
 router.get("/coordinates", authMiddlewareTutor, getCoordinate.tutorCoordinates)
 router.get("/ClinicCoordinates", authMiddlewareTutor, getCoordinate.ClinicCoordinates)
+router.get("/ClinicPreviews", Previews.ClinicPreview)
 
 // Registros
 router.post("/medico", validate(schemaMedic), registerTutor.registerMedic);

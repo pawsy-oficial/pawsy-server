@@ -123,7 +123,8 @@ CREATE TABLE IF NOT EXISTS trabalho(
 CREATE TABLE IF NOT EXISTS tutor 
 ( 
     id_tutor INT AUTO_INCREMENT,  
-    nm_tutor VARCHAR(255) NOT NULL,  
+    nm_tutor VARCHAR(64) NOT NULL,  
+    sb_tutor VARCHAR(64) NOT NULL,
     cd_cpf CHAR(11) NOT NULL UNIQUE,  
     dt_nascimento DATE NOT NULL,  
     nm_email VARCHAR(255) UNIQUE,  

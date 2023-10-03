@@ -11,13 +11,13 @@ select * from clinica;
 
 
 
---SELECT * FROM tutor WHERE id_tutor IN (1, 2);
---SELECT * FROM raca WHERE id_raca IN (1, 2);
---SELECT * FROM pelagem WHERE id_pelagem IN (1, 2);
---SELECT * FROM sexo WHERE id_sexo IN (1, 2);
---SELECT * FROM animal WHERE id_animal IN (1, 2);
+-- SELECT * FROM tutor WHERE id_tutor IN (1, 2);
+-- SELECT * FROM raca WHERE id_raca IN (1, 2);
+-- SELECT * FROM pelagem WHERE id_pelagem IN (1, 2);
+-- SELECT * FROM sexo WHERE id_sexo IN (1, 2);
+-- SELECT * FROM animal WHERE id_animal IN (1, 2);
 
---SELECT 
+-- SELECT 
 --            e.cd_cep AS CEP,
 --            e.nm_rua AS Rua,
 --            e.num_residencia AS Numero,
@@ -47,13 +47,37 @@ select * from clinica;
 -- Inserindo 3 médicos fictícios:
 
 -- tentando popular aqui
-alter table tutor drop column sb_tutor;
-INSERT INTO tutor (nm_tutor, sb_tutor,cd_cpf, dt_nascimento, nm_email, num_celular, pw_tutor, id_endereco, url_imagem)
+
+
+INSERT INTO cidade (id_uf, nm_cidade)
 VALUES
-('Romullo', "melo", '56011132898', '2003-08-24', 'romullomelo013@gmail.com', '12312412312', '$2b$10$CLLqaZ3H4cDDjOzUWFN4DeMWcqRGiF/HOPrmcPShWdgjLHEV/RAta', 1, '1695781169912_pawsy_20221213_033118_Easy-Resize.com.jpg'),
-('Ronaldo', "silva",'42661065059', '2000-08-08', 'ronaldo@gmail.com', '22342342342', '$2b$10$yLPXVODxjNnamPRL7rEr..WMUjd0yiCPGa.Hjz4atHW./VSReP1XC', 4, '1696255243714_pawsy_Dr-Tanveer-Ahmed.jpg'),
-('Estefani', 'maria', '12579709096', '1999-04-25', 'estefani@hotmail.com', '21998239423', '$2b$10$pl2J20nSDs5hwAXBPHqQDeR7lojEgCdnTewos410sBbBSvf7v1Ate', 6, '1696255532099_pawsy_images.jpeg'),
-('Leticia', 'matto','89461252099', '1980-06-30', 'leticia@yahoo.com', '23423872300', '$2b$10$qWvgqe6VdfeCefq9MGHIve5TQPu/G9dzFDHXD6.LrsDqI/1AH6eQO', 7, '1696255677299_pawsy_images (1).jpeg');
+(25, 'Santos'),
+(25, 'Santos'),
+(25, 'Santos'),
+(25, 'Santos'),
+(25, 'Praia Grande'),
+(25, 'Praia Grande'),
+(25, 'São Vicente'),
+(25, 'Santos'),
+(25, 'Santos'),
+(25, 'Santos'),
+(25, 'Santos'),
+(25, 'Santos');
+
+INSERT INTO bairro (id_cidade, nm_bairro)
+VALUES
+(1, 'Bom Retiro'),
+(2, 'Bom Retiro'),
+(3, 'Santa Maria'),
+(4, 'Gonzaga'),
+(5, 'Aviação'),
+(6, 'Aviação'),
+(7, 'Vila Nossa Senhora de Fátima'),
+(8, 'Santa Maria'),
+(9, 'Castelo'),
+(10, 'Bom Retiro'),
+(11, 'Gonzaga'),
+(12, 'Boqueirão');
 
 INSERT INTO endereco (cd_cep, nm_rua, num_residencia, complemento, latitude, longitude, id_bairro)
 VALUES
@@ -73,35 +97,12 @@ VALUES
 
 select * from endereco;
 
-INSERT INTO bairro (id_cidade, nm_bairro)
+INSERT INTO tutor (nm_tutor, sb_tutor,cd_cpf, dt_nascimento, nm_email, num_celular, pw_tutor, id_endereco, url_imagem)
 VALUES
-(1, 'Bom Retiro'),
-(2, 'Bom Retiro'),
-(3, 'Santa Maria'),
-(4, 'Gonzaga'),
-(5, 'Aviação'),
-(6, 'Aviação'),
-(7, 'Vila Nossa Senhora de Fátima'),
-(8, 'Santa Maria'),
-(9, 'Castelo'),
-(10, 'Bom Retiro'),
-(11, 'Gonzaga'),
-(12, 'Boqueirão');
-
-INSERT INTO cidade (id_uf, nm_cidade)
-VALUES
-(25, 'Santos'),
-(25, 'Santos'),
-(25, 'Santos'),
-(25, 'Santos'),
-(25, 'Praia Grande'),
-(25, 'Praia Grande'),
-(25, 'São Vicente'),
-(25, 'Santos'),
-(25, 'Santos'),
-(25, 'Santos'),
-(25, 'Santos'),
-(25, 'Santos');
+('Romullo', "melo", '56011132898', '2003-08-24', 'romullomelo013@gmail.com', '12312412312', '$2b$10$CLLqaZ3H4cDDjOzUWFN4DeMWcqRGiF/HOPrmcPShWdgjLHEV/RAta', 1, '1695781169912_pawsy_20221213_033118_Easy-Resize.com.jpg'),
+('Ronaldo', "silva",'42661065059', '2000-08-08', 'ronaldo@gmail.com', '22342342342', '$2b$10$yLPXVODxjNnamPRL7rEr..WMUjd0yiCPGa.Hjz4atHW./VSReP1XC', 4, '1696255243714_pawsy_Dr-Tanveer-Ahmed.jpg'),
+('Estefani', 'maria', '12579709096', '1999-04-25', 'estefani@hotmail.com', '21998239423', '$2b$10$pl2J20nSDs5hwAXBPHqQDeR7lojEgCdnTewos410sBbBSvf7v1Ate', 6, '1696255532099_pawsy_images.jpeg'),
+('Leticia', 'matto','89461252099', '1980-06-30', 'leticia@yahoo.com', '23423872300', '$2b$10$qWvgqe6VdfeCefq9MGHIve5TQPu/G9dzFDHXD6.LrsDqI/1AH6eQO', 7, '1696255677299_pawsy_images (1).jpeg');
 
 INSERT INTO clinica (nm_clinica, cnpj_clinica, email_clinica, tl_clinica, pw_clinica, id_endereco, cd_crmv, url_imagem)
 VALUES

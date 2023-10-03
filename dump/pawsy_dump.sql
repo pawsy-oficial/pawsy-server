@@ -449,6 +449,7 @@ VALUES
     ("Golden Retriever", "dog"),
     ("Maltes", "dog"),
     ("Chihuahua", "dog"),
+    ("Raça não definida", "dog"),
     
     ("Persa", "cat"),
     ("Siamês", "cat"),
@@ -458,7 +459,8 @@ VALUES
     ("Ragdoll", "cat"),
     ("Ashera", "cat"),
     ("American Shorthair", "cat"),
-    ("Exótico", "cat");
+    ("Exótico", "cat"),
+    ("Raça não definida", "cat");
 
 -- Inserir dados na tabela pelagem
 insert into pelagem (tp_pelagem)

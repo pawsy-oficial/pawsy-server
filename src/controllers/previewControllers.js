@@ -25,7 +25,6 @@ const ClinicPreview = async (req, res) => {
   WHERE cli.id_clinica = ?;
  `
 
- console.log(id)
   db.query(query, [id], async (err, result) => {
     if (err){
       console.log(err);

@@ -33,6 +33,7 @@ const Previews = require("./controllers/previewControllers.js")
 
 const { sendRecoveryCodeTutor, verifyAndResetPasswordTutor, sendRecoveryCodeClinica, verifyAndResetPasswordClinica, sendRecoveryCodeMedico, verifyAndResetPasswordMedico } = require('./services/passwordRecoveryService.js');
 const getAllPets = require("./controllers/tutor/getMyPetsControllers.js");
+const updatePet = require("./controllers/tutor/updatePetsControllers.js");
 
 // Consultas de dados
 router.get("/", (req, res)=>{
@@ -80,5 +81,8 @@ router.post('/resetPasswordMedic', verifyAndResetPasswordMedico)
 router.get('/profileTutor', authMiddlewareTutor, login.getProfileTutor);
 router.get('/profileClinic', authMiddlewareClinic, login.getProfileClinic);
 router.get('/profileMedic', authMiddlewareMedic, login.getProfileMedic);
+
+// updata
+router.post('/update-pet', updatePet)
 
 module.exports = router

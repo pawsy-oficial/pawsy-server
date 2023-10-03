@@ -9,7 +9,7 @@ const registerTutor = async (req, res) => {
     const insertCitySQL = "insert into cidade (nm_cidade, id_uf) values (?,?)"
     const insertNeighborhoodSQL = "insert into bairro (nm_bairro, id_cidade) values (?,?)"
     const insertAddresSQL = "insert into endereco (cd_cep, nm_rua, num_residencia, complemento, latitude, longitude, id_bairro) values (?,?,?,?,?,?,?)"
-    const insertTutorSQL = "insert into tutor (nm_tutor, cd_cpf, dt_nascimento, nm_email, num_celular, pw_tutor, id_endereco, url_imagem) values (?,?,?,?,?,?,?,?)"
+    const insertTutorSQL = "insert into tutor (nm_tutor, sb_tutor, cd_cpf, dt_nascimento, nm_email, num_celular, pw_tutor, id_endereco, url_imagem) values (?,?,?,?,?,?,?,?,?)"
 
     let idInsert
     const cpfFormat = cpf.replace(/[^\d]+/g, '');
@@ -48,7 +48,7 @@ const registerTutor = async (req, res) => {
                                     return
                                 }
                                 idInsert = results.insertId
-                                db.query(insertTutorSQL, [firstName, cpfFormat, birthDate, email, cellFormat, hash, idInsert, urlProfile], function (error, results) {
+                                db.query(insertTutorSQL, [firstName, lastName, cpfFormat, birthDate, email, cellFormat, hash, idInsert, urlProfile], function (error, results) {
                                     if (error) {
                                         res.status(400).json({
                                             Mensage: error

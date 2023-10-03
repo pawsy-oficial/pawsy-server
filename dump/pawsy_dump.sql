@@ -529,3 +529,6 @@ values
     ("consulta - oftalmologista");
 
 alter user 'root'@'localhost' identified with mysql_native_password by 'password';
+
+ALTER TABLE clinica ADD status_loja boolean; 
+-- aberto ou fechado

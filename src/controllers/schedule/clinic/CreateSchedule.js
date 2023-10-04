@@ -3,5 +3,6 @@
 //     idClinica,
 //     dtOpen,
 //     dtClose
+
 //    } = req.body
 // }

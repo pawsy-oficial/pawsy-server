@@ -1,14 +1,14 @@
 const db = require("../../db")
 
 const updatePet = (req, res)=>{
-    const { url_imagem, resumo, raca, sexo, idade, idTutor } = req.body
+    const { url_imagem, resumo, sexo, idade, idPet, namePet } = req.body
     
     const updatePet = `
         UPDATE pet
-        SET url_img = ?, id_sexo = ?, dt_nascimento = ?, id_raca = ?, resumo = ?
+        SET url_img = ?, id_sexo = ?, dt_nascimento = ? , resumo = ?, nm_pet = ?
         WHERE id_pet = ?;`
     
-    db.query(updatePet, [ url_imagem, sexo, idade, raca, resumo, idTutor ], (err, result)=>{
+    db.query(updatePet, [ url_imagem, sexo, idade, resumo, namePet, idPet ], (err, result)=>{
         if(err){
             res.status(400).json({ error: err })
         }

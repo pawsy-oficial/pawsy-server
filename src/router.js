@@ -36,6 +36,7 @@ const { sendRecoveryCodeTutor, verifyAndResetPasswordTutor, sendRecoveryCodeClin
 const schemaVermifuge = require("./schemas/vermifugeSchema.js");
 const getAllPets = require("./controllers/tutor/getMyPetsControllers.js");
 const updatePet = require("./controllers/tutor/updatePetsControllers.js");
+const clinicsMedic = require("./controllers/medic/clinicsMedic.js");
 
 
 // Consultas de dados
@@ -55,6 +56,7 @@ router.get("/ClinicPreviews", Previews.ClinicPreview)
 router.get("/get-all-pets/:idTutor", authMiddlewareTutor, getAllPets)
 router.get("/get-tipoConsulta", authMiddlewareClinic, PopulationsControllerSchedule.TipoConsulta)
 router.get("/get-medicosIntegrados", authMiddlewareClinic, PopulationsControllerSchedule.MedicosIntegrados)
+router.get("/clinicsMedic", authMiddlewareMedic, clinicsMedic)
 
 // Registros
 router.post("/medico", validate(schemaMedic), registerTutor.registerMedic);

@@ -130,6 +130,8 @@ const authMiddlewareClinic = (req, res, next) => {
             const storedNameClinica = result[0].nm_clinica;
             const storedCnpjClinica = result[0].cnpj_clinica;
             const storedEmailClinica = result[0].email_clinica;
+            const storedDescriptionClinica = result[0].ds_sobre;
+            const storedTellClinica = result[0].tl_clinica;
             const storedImg = result[0].url_imagem;
             const storedType = "Clinica";
             const storedStatus = result[0].status_loja;
@@ -167,11 +169,14 @@ const authMiddlewareClinic = (req, res, next) => {
                 const storedEstado = result[0].Estado;
 
             
+
             req.clinic = {
                 storedIdClinica, 
                 storedNameClinica, 
                 storedCnpjClinica, 
                 storedEmailClinica, 
+                storedTellClinica, 
+                storedDescriptionClinica, 
                 storedType,
                 storedImg,
                 CEP: storedCEP,

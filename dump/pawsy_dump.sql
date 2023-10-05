@@ -565,12 +565,12 @@ ALTER TABLE clinica ADD status_loja boolean;
 -- );
 
 CREATE TABLE IF NOT EXISTS tp_receita(
-    id_TipoReceita INT NOT NULL AUTO_INCREMENT,
+    id_TipoReceita INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     nm_TipoReceita VARCHAR(80) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS tupla_receita(
-    id_TuplaReceita INT NOT NULL AUTO_INCREMENT,
+    id_TuplaReceita INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     nm_medicamento VARCHAR(255) NOT NULL,
     concentracao char(4) NOT NULL,
     via_adm varchar(255),
@@ -580,11 +580,15 @@ CREATE TABLE IF NOT EXISTS tupla_receita(
 );
 
 CREATE TABLE IF NOT EXISTS RECEITAS(
-    id_receita INT NOT NULL AUTO_INCREMENT,
+    id_receita INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     dt_validade DATE NOT NULL,
     id_TipoReceita INT NOT NULL,
     id_TuplaReceita INT NOT NULL,
+    id_pet INT NOT NULL,
 
+    CONSTRAINT fk_pet_Receita
+        FOREIGN KEY (id_pet)
+        REFERENCES pet (id_pet)
     CONSTRAINT fk_TipoReceita_Receita
          FOREIGN KEY (id_TipoReceita)
          REFERENCES tp_receita (id_TipoReceita),

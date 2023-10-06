@@ -146,7 +146,8 @@ const authMiddlewareClinic = (req, res, next) => {
                     e.longitude AS Longitude,
                     b.nm_bairro AS Bairro,
                     c.nm_cidade AS Cidade,
-                    u.nm_estado AS Estado
+                    u.nm_estado AS Estado,
+                    u.id_uf AS IdEstado
                 FROM clinica cl
                     JOIN endereco e ON cl.id_endereco = e.id_endereco
                     JOIN bairro b ON e.id_bairro = b.id_bairro
@@ -167,6 +168,7 @@ const authMiddlewareClinic = (req, res, next) => {
                 const storedBairro = result[0].Bairro;
                 const storedCidade = result[0].Cidade;
                 const storedEstado = result[0].Estado;
+                const storedIdEstado = result[0].IdEstado;
 
             
 
@@ -188,6 +190,7 @@ const authMiddlewareClinic = (req, res, next) => {
                 Bairro: storedBairro,
                 Cidade: storedCidade,
                 Estado: storedEstado,
+                storedIdEstado,
                 storedStatus 
             }
 

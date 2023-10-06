@@ -35,6 +35,7 @@ const PopulationsControllerSchedule = require("./controllers/schedule/clinic/Pop
 const { sendRecoveryCodeTutor, verifyAndResetPasswordTutor, sendRecoveryCodeClinica, verifyAndResetPasswordClinica, sendRecoveryCodeMedico, verifyAndResetPasswordMedico } = require('./services/passwordRecoveryService.js');
 const getAllPets = require("./controllers/tutor/getMyPetsControllers.js");
 const updatePet = require("./controllers/tutor/updatePetsControllers.js");
+const { updateClinic } = require("./controllers/clinic/updateClinicControllers.js");
 
 
 // Consultas de dados
@@ -86,7 +87,8 @@ router.get('/profileTutor', authMiddlewareTutor, login.getProfileTutor);
 router.get('/profileClinic', authMiddlewareClinic, login.getProfileClinic);
 router.get('/profileMedic', authMiddlewareMedic, login.getProfileMedic);
 
-// updata
+// update
 router.post('/update-pet', updatePet)
+router.post('/update-clinic-profile', updateClinic)
 
 module.exports = router

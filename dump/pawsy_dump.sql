@@ -15,6 +15,8 @@ CREATE TABLE IF NOT EXISTS uf
     nm_estado VARCHAR(255) NOT NULL
 );
 
+select * from tutor;
+
 CREATE TABLE IF NOT EXISTS cidade 
 ( 
     id_cidade INT AUTO_INCREMENT PRIMARY KEY,
@@ -588,7 +590,7 @@ CREATE TABLE IF NOT EXISTS RECEITAS(
 
     CONSTRAINT fk_pet_Receita
         FOREIGN KEY (id_pet)
-        REFERENCES pet (id_pet)
+        REFERENCES pet (id_pet),
     CONSTRAINT fk_TipoReceita_Receita
          FOREIGN KEY (id_TipoReceita)
          REFERENCES tp_receita (id_TipoReceita),

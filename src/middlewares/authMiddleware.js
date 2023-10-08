@@ -210,7 +210,7 @@ const authMiddlewareMedic = (req, res, next) => {
             throw new UnauthorizedError('Não autorizado')
         }
         
-        const token = authorization.split(' ')[1]
+        const token = authorization.includes('Bearer') ? authorization.split(' ')[1] : authorization;
 
         const { id } = jwt.verify(token, process.env.JWT_PASS);
 

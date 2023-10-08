@@ -1,16 +1,16 @@
 const { createDbConnection } = require("../../db/mysql2")
 
-const clinicsMedic = async (req, res) => {
+const clinicsPet = async (req, res) => {
   try {
     const bd = await createDbConnection();
 
-    const selectClinicsMedicSQL = `
+    const selectClinicsPetSQL = `
       SELECT clinica.id_clinica, clinica.nm_clinica, clinica.url_imagem, clinica.status_loja FROM trabalho
       JOIN clinica ON trabalho.cd_clinica = clinica.id_clinica
       WHERE trabalho.cd_medico = ?
     `
 
-    const [results] = await bd.query(selectClinicsMedicSQL, [req.Medic.storedIdMedic]);
+    const [results] = await bd.query(selectClinicsPetSQL, [req.Medic.storedIdMedic]);
 
     res.status(200).json({ count: results.length, results })
   } catch (error) {
@@ -18,4 +18,4 @@ const clinicsMedic = async (req, res) => {
   }
 }
 
-module.exports = clinicsMedic;
+module.exports = clinicsPet;

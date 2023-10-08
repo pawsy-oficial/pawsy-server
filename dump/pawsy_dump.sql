@@ -116,6 +116,7 @@ CREATE TABLE IF NOT EXISTS trabalho(
 	cd_trabalho int not null auto_increment,
     cd_medico int not null,
     cd_clinica int not null,
+    dt_inscricao datetime not null,
     
     CONSTRAINT pk_trabalho PRIMARY KEY (cd_trabalho),
     CONSTRAINT fk_medico FOREIGN KEY ( cd_medico ) REFERENCES medico(id_medico),

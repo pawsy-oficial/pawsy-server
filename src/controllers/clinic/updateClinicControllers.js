@@ -20,11 +20,11 @@ const updateClinic = (req, res) => {
         SET nm_cidade = ?
         WHERE id_cidade = ?;`
 
-    db.query(`SELECT tl_clinica from clinica where tl_clinica = ?`, [numberTell], (err, result) => {
+    db.query(`SELECT id_clinica, tl_clinica from clinica where tl_clinica = ?`, [numberTell], (err, result) => {
         if(err){
             res.status(500).json({ error: "Ocorreu um erro interno" })
         }
-        if(result.length > 0){
+        if(result.length > 0 && result[0].id_clinica != idClinic){
             res.status(401).json({error: "Telefone já está em uso"})
             return
         }
@@ -34,7 +34,7 @@ const updateClinic = (req, res) => {
                 res.status(500).json({ error: "Ocorreu um erro interno" })
             }
 
-            db.query(`select id_endereco from clinica where id_clinica = ?;`, [4], (err, result) => {
+            db.query(`select id_endereco from clinica where id_clinica = ?;`, [idClinic], (err, result) => {
                 if (err) {
                     res.status(500).json({ error: "Ocorreu um erro interno" })
                 }

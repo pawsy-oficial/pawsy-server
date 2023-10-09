@@ -18,6 +18,7 @@ const login = require("./controllers/loginControllers.js")
 const uf = require("./controllers/cepStateControllers.js")
 const integrarMedicoClinica = require("./controllers/integrateMedicClinic.js")
 const integratePatientClinic = require("./controllers/integratePetPatientClinic.js")
+const scheduleRegister = require("./controllers/schedule/clinic/CreateSchedule.js")
 
 // schemas
 const tutorSchema = require("./schemas/tutorSchema.js");
@@ -64,6 +65,7 @@ router.post("/medico", validate(schemaMedic), registerTutor.registerMedic);
 router.post("/clinica", validate(schemaClinic),registerTutor.registerClinic);
 router.post("/tutor-register", validate(tutorSchema), registerTutor.registerTutor);
 router.post("/pet-register", validate(schemaPet), registerTutor.registerPet);
+// router.post("/agenda-register", authMiddlewareClinic, scheduleRegister.CreateSchedule);
 
 // Integrações
 router.post("/integrar-medico-clinica", integrarMedicoClinica.integrateMedicClinic)

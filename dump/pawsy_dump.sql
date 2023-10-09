@@ -15,8 +15,6 @@ CREATE TABLE IF NOT EXISTS uf
     nm_estado VARCHAR(255) NOT NULL
 );
 
-select * from tutor;
-
 CREATE TABLE IF NOT EXISTS cidade 
 ( 
     id_cidade INT AUTO_INCREMENT PRIMARY KEY,

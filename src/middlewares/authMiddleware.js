@@ -26,7 +26,7 @@ const authMiddlewareTutor = (req, res, next) => {
             }
             
             if (result.length === 0) {
-                res.status(401).send(UnauthorizedError);
+                res.status(401).send('UnauthorizedError');
                 return;
             }
 

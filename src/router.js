@@ -38,7 +38,7 @@ const getAllPets = require("./controllers/tutor/getMyPetsControllers.js");
 const updatePet = require("./controllers/tutor/updatePetsControllers.js");
 const clinicsMedic = require("./controllers/medic/clinicsMedic.js");
 const clinicsPet = require("./controllers/medic/clinicsPet.js");
-
+const petInfos = require("./controllers/medic/petInfos.js");
 
 // Consultas de dados
 router.get("/", (req, res)=>{
@@ -59,6 +59,7 @@ router.get("/get-tipoConsulta", authMiddlewareClinic, PopulationsControllerSched
 router.get("/get-medicosIntegrados", authMiddlewareClinic, PopulationsControllerSchedule.MedicosIntegrados)
 router.get("/clinicsMedic", authMiddlewareMedic, clinicsMedic)
 router.get("/clinicsPet", authMiddlewareMedic, clinicsPet)
+router.get("/pets/:petId", authMiddlewareMedic, petInfos)
 
 // Registros
 router.post("/medico", validate(schemaMedic), registerTutor.registerMedic);

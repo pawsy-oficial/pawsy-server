@@ -153,12 +153,27 @@ const countPatientsClinic = (req, res) => {
 		group by an.nm_animal;
 	`
 
+	let client 
+
 	db.query(queryCountPatients, [ idClinic ], (err, result)=>{
 		if(err){
 			res.status(500).json({error: err})
 		}
 
-		res.status(200).json({result})
+		if(result.length > 0){
+			if(result[0].especie == "cachorro"){
+				client = [ ...result,  { "especie": "gato", "quantidade": 0 }]
+			}
+			else if(result[1].especie == "gato"){
+				client = [ { "especie": "cachorro", "quantidade": 0 }, ...result]
+			}
+		}
+		else {
+			client = [ { "especie": "cachorro", "quantidade": 0 }, { "especie": "gato", "quantidade": 0 }]
+		}
+		// else if(result[1].especie)
+
+		res.status(200).json({client})
 	})
 }
 

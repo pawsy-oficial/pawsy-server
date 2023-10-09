@@ -55,6 +55,9 @@ router.get("/ClinicPreviews", Previews.ClinicPreview)
 router.get("/get-all-pets/:idTutor", authMiddlewareTutor, getAllPets)
 router.get("/get-tipoConsulta", authMiddlewareClinic, PopulationsControllerSchedule.TipoConsulta)
 router.get("/get-medicosIntegrados", authMiddlewareClinic, PopulationsControllerSchedule.MedicosIntegrados)
+router.get("/getAllPets", authMiddlewareClinic, integratePatientClinic.pets)
+router.get("/getAllPatients/:idClinic", authMiddlewareClinic, integratePatientClinic.getAllPatientsClinic)
+router.get("/countPatients/:idClinic", authMiddlewareClinic, integratePatientClinic.countPatientsClinic)
 
 // Registros
 router.post("/medico", validate(schemaMedic), registerTutor.registerMedic);

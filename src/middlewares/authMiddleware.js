@@ -213,7 +213,7 @@ const authMiddlewareMedic = (req, res, next) => {
             throw new UnauthorizedError('Não autorizado')
         }
         
-        const token = authorization.split(' ')[1]
+        const token = authorization.includes('Bearer') ? authorization.split(' ')[1] : authorization;
 
         const { id } = jwt.verify(token, process.env.JWT_PASS);
 
@@ -235,9 +235,10 @@ const authMiddlewareMedic = (req, res, next) => {
             const storedNameMedic = result[0].nm_medico;
             const storedEmailMedic = result[0].nm_email;
             const storedCRMVMedic = result[0].cd_crmv;
+            const storedImg = result[0].url_imagem;
             const storedType = "Medico";
             
-            req.Medic = {storedIdMedic, storedNameMedic, storedEmailMedic, storedCRMVMedic, storedType}
+            req.Medic = {storedIdMedic, storedNameMedic, storedEmailMedic, storedCRMVMedic, storedType, storedImg}
 
             next()
         });

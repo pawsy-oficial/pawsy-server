@@ -34,8 +34,12 @@ const Previews = require("./controllers/previewControllers.js")
 const PopulationsControllerSchedule = require("./controllers/schedule/clinic/PopulationsController.js")
 
 const { sendRecoveryCodeTutor, verifyAndResetPasswordTutor, sendRecoveryCodeClinica, verifyAndResetPasswordClinica, sendRecoveryCodeMedico, verifyAndResetPasswordMedico } = require('./services/passwordRecoveryService.js');
+const schemaVermifuge = require("./schemas/vermifugeSchema.js");
 const getAllPets = require("./controllers/tutor/getMyPetsControllers.js");
 const updatePet = require("./controllers/tutor/updatePetsControllers.js");
+const clinicsMedic = require("./controllers/medic/clinicsMedic.js");
+const clinicsPet = require("./controllers/medic/clinicsPet.js");
+const petInfos = require("./controllers/medic/petInfos.js");
 const { updateClinic } = require("./controllers/clinic/updateClinicControllers.js");
 
 
@@ -59,12 +63,16 @@ router.get("/get-medicosIntegrados", authMiddlewareClinic, PopulationsController
 router.get("/getAllPets", authMiddlewareClinic, integratePatientClinic.pets)
 router.get("/getAllPatients/:idClinic", authMiddlewareClinic, integratePatientClinic.getAllPatientsClinic)
 router.get("/countPatients/:idClinic", authMiddlewareClinic, integratePatientClinic.countPatientsClinic)
+router.get("/clinicsMedic", authMiddlewareMedic, clinicsMedic)
+router.get("/clinicsPet", authMiddlewareMedic, clinicsPet)
+router.get("/pets/:petId", authMiddlewareMedic, petInfos)
 
 // Registros
 router.post("/medico", validate(schemaMedic), registerTutor.registerMedic);
 router.post("/clinica", validate(schemaClinic),registerTutor.registerClinic);
 router.post("/tutor-register", validate(tutorSchema), registerTutor.registerTutor);
-router.post("/pet-register", validate(schemaPet), registerTutor.registerPet);
+router.post("/pet-register", validate(schemaPet) ,registerTutor.registerPet);
+router.post("/vermifuge", registerTutor.registerVermifuge);
 // router.post("/agenda-register", authMiddlewareClinic, scheduleRegister.CreateSchedule);
 
 // Integrações

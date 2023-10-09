@@ -30,8 +30,6 @@ const pets = (req, res)=>{
 
 const integratePetPatientClinic = async (req, res) => {
 	const { id_pet, cpf_tutor, id_clinica } = req.body;
-	console.log((!id_pet || !cpf_tutor) && !id_clinica);
-	console.log(id_clinica);
 	if ((!id_pet || !cpf_tutor) && !id_clinica) {
 		return res.status(400).json({ error: "ID do pet, CPF do tutor e ID da clínica são necessários para a requisição." });
 	}

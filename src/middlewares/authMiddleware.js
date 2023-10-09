@@ -232,9 +232,10 @@ const authMiddlewareMedic = (req, res, next) => {
             const storedNameMedic = result[0].nm_medico;
             const storedEmailMedic = result[0].nm_email;
             const storedCRMVMedic = result[0].cd_crmv;
+            const storedImg = result[0].url_imagem;
             const storedType = "Medico";
             
-            req.Medic = {storedIdMedic, storedNameMedic, storedEmailMedic, storedCRMVMedic, storedType}
+            req.Medic = {storedIdMedic, storedNameMedic, storedEmailMedic, storedCRMVMedic, storedType, storedImg}
 
             next()
         });

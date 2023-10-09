@@ -5,8 +5,9 @@ const clinicsPet = async (req, res) => {
     const bd = await createDbConnection();
 
     const selectClinicsPetSQL = `
-      SELECT pet.* FROM pacientes
+      SELECT pet.*, tutor.nm_tutor FROM pacientes
       JOIN pet ON pet.id_pet = pacientes.id_pet
+      INNER JOIN tutor ON tutor.id_tutor = pet.id_tutor
       WHERE pacientes.id_clinica = ?
     `
 

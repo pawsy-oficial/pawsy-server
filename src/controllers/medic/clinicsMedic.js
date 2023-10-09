@@ -3,12 +3,13 @@ const { createDbConnection } = require("../../db/mysql2")
 const clinicsMedic = async (req, res) => {
   try {
     const bd = await createDbConnection();
-
+    
     const selectClinicsMedicSQL = `
-      SELECT clinica.id_clinica, clinica.nm_clinica, clinica.url_imagem, clinica.status_loja FROM trabalho
-      JOIN clinica ON trabalho.cd_clinica = clinica.id_clinica
-      WHERE trabalho.cd_medico = ?
+    SELECT clinica.id_clinica, clinica.nm_clinica, clinica.url_imagem, clinica.status_loja FROM trabalho
+    JOIN clinica ON trabalho.cd_clinica = clinica.id_clinica
+    WHERE trabalho.cd_medico = ?
     `
+    console.log(req);
 
     const [results] = await bd.query(selectClinicsMedicSQL, [req.Medic.storedIdMedic]);
 

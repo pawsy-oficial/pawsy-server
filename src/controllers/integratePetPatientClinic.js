@@ -141,38 +141,38 @@ const getAllPatientsClinic = (req, res) => {
 }
 
 const countPatientsClinic = (req, res) => {
-	const idClinic = req.params.idClinic
+	const idClinic = req.params.idClinic;
 
 	const queryCountPatients = `
-		select an.nm_animal as especie, count(an.nm_animal) as quantidade from pacientes pc
-		inner join pet pt ON pt.id_pet = pc.id_pet
-		inner join animal an ON an.id_animal = pt.id_animal
-		where id_clinica = ?
-		group by an.nm_animal;
-	`
+			select an.nm_animal as especie, count(an.nm_animal) as quantidade from pacientes pc
+			inner join pet pt ON pt.id_pet = pc.id_pet
+			inner join animal an ON an.id_animal = pt.id_animal
+			where id_clinica = ?
+			group by an.nm_animal;
+	`;
 
-	let client 
-
-	db.query(queryCountPatients, [ idClinic ], (err, result)=>{
-		if(err){
-			res.status(500).json({error: err})
-		}
-
-		if(result.length > 0){
-			if(result[0].especie == "cachorro"){
-				client = [ ...result,  { "especie": "gato", "quantidade": 0 }]
+	db.query(queryCountPatients, [idClinic], (err, result) => {
+			if (err) {
+					return res.status(500).json({ error: err });
 			}
-			else if(result[1].especie == "gato"){
-				client = [ { "especie": "cachorro", "quantidade": 0 }, ...result]
-			}
-		}
-		else {
-			client = [ { "especie": "cachorro", "quantidade": 0 }, { "especie": "gato", "quantidade": 0 }]
-		}
-		// else if(result[1].especie)
+			const resultObj = {};
+			result.forEach(item => {
+					resultObj[item.especie] = item.quantidade;
+			});
 
-		res.status(200).json({client})
-	})
+			const client = [
+					{
+							"especie": "cachorro",
+							"quantidade": resultObj["cachorro"] || 0
+					},
+					{
+							"especie": "gato",
+							"quantidade": resultObj["gato"] || 0
+					}
+			];
+
+			res.status(200).json({ client });
+	});
 }
 
 module.exports = {

@@ -41,6 +41,7 @@ const clinicsMedic = require("./controllers/medic/clinicsMedic.js");
 const clinicsPet = require("./controllers/medic/clinicsPet.js");
 const petInfos = require("./controllers/medic/petInfos.js");
 const { updateClinic } = require("./controllers/clinic/updateClinicControllers.js");
+const { searchClinicsControllers } = require("./controllers/searchClinicsControllers.js");
 
 
 // Consultas de dados
@@ -66,6 +67,7 @@ router.get("/countPatients/:idClinic", authMiddlewareClinic, integratePatientCli
 router.get("/clinicsMedic", authMiddlewareMedic, clinicsMedic)
 router.get("/clinicsPet", authMiddlewareMedic, clinicsPet)
 router.get("/pets/:petId", authMiddlewareMedic, petInfos)
+router.get("/pesquisa", searchClinicsControllers)
 
 // Registros
 router.post("/medico", validate(schemaMedic), registerTutor.registerMedic);

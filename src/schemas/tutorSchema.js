@@ -15,7 +15,9 @@ const linkSchema = yup.object({
         complement: yup.string(),
         neighborhood: yup.string().required("Campo obrigatório"),
         password: yup.string().required(),
-        urlProfile: yup.string().required("url obrigatório").test("valido", "caminho invalido", value => validarUrl(value))
+        urlProfile: yup.string().required("url obrigatório").test("valido", "caminho invalido", value => validarUrl(value)),
+        latitude: yup.number().min(-90).max(90).required("Latitude obrigatório"),
+        longitude: yup.number().min(-180).max(180).required("Longitude obrigatório")
     })
 });
 

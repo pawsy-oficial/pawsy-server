@@ -114,6 +114,7 @@ CREATE TABLE IF NOT EXISTS trabalho(
 	cd_trabalho int not null auto_increment,
     cd_medico int not null,
     cd_clinica int not null,
+    dt_inscricao datetime not null,
     
     CONSTRAINT pk_trabalho PRIMARY KEY (cd_trabalho),
     CONSTRAINT fk_medico FOREIGN KEY ( cd_medico ) REFERENCES medico(id_medico),
@@ -123,7 +124,8 @@ CREATE TABLE IF NOT EXISTS trabalho(
 CREATE TABLE IF NOT EXISTS tutor 
 ( 
     id_tutor INT AUTO_INCREMENT,  
-    nm_tutor VARCHAR(255) NOT NULL,  
+    nm_tutor VARCHAR(64) NOT NULL,  
+    sb_tutor VARCHAR(64),
     cd_cpf CHAR(11) NOT NULL UNIQUE,  
     dt_nascimento DATE NOT NULL,  
     nm_email VARCHAR(255) UNIQUE,  
@@ -448,6 +450,7 @@ VALUES
     ("Golden Retriever", "dog"),
     ("Maltes", "dog"),
     ("Chihuahua", "dog"),
+    ("Raça não definida", "dog"),
     
     ("Persa", "cat"),
     ("Siamês", "cat"),
@@ -457,7 +460,8 @@ VALUES
     ("Ragdoll", "cat"),
     ("Ashera", "cat"),
     ("American Shorthair", "cat"),
-    ("Exótico", "cat");
+    ("Exótico", "cat"),
+    ("Raça não definida", "cat");
 
 -- Inserir dados na tabela pelagem
 insert into pelagem (tp_pelagem)
@@ -528,3 +532,77 @@ values
     ("consulta - oftalmologista");
 
 alter user 'root'@'localhost' identified with mysql_native_password by 'password';
+
+ALTER TABLE clinica ADD status_loja boolean; 
+-- aberto ou fechado
+
+-- CREATE TABLE IF NOT EXISTS vacinas 
+-- ( 
+--     id_vacina INT auto_increment,  
+--     nm_vacina VARCHAR(255) NOT NULL,  
+--     tp_vacina VARCHAR(3) NOT NULL,
+--     CONSTRAINT pk_vacina primary key (id_vacina)
+-- );
+
+-- CREATE TABLE IF NOT EXISTS carteira_vacinas 
+-- ( 
+--     id_aplicacao INT PRIMARY KEY AUTO_INCREMENT,  
+--     dt_aplicacao DATE NOT NULL,  
+--     id_pet INT NOT NULL,
+--     id_medico INT NOT NULL,
+--     dt_retorno DATE NOT NULL,  
+--     id_vacina INT NOT NULL,
+--     id_clinica INT NOT NULL,
+    
+--     CONSTRAINT fk_carteira_vacinas_pet
+--         FOREIGN KEY (id_pet)
+--         REFERENCES pet (id_pet),
+--     CONSTRAINT fk_carteira_vacinas_medico
+--         FOREIGN KEY (id_medico)
+--         REFERENCES medico (id_medico),
+--     CONSTRAINT fk_carteira_vacinas_vacina
+--         FOREIGN KEY (id_vacina)
+--         REFERENCES vacinas (id_vacina)
+-- );
+
+CREATE TABLE IF NOT EXISTS tp_receita(
+    id_TipoReceita INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    nm_TipoReceita VARCHAR(80) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS tupla_receita(
+    id_TuplaReceita INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    nm_medicamento VARCHAR(255) NOT NULL,
+    concentracao char(4) NOT NULL,
+    via_adm varchar(255),
+    qtd_medicamento char(4),
+    tmp_duracao date,
+    posologia varchar(300)
+);
+
+CREATE TABLE IF NOT EXISTS RECEITAS(
+    id_receita INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    dt_validade DATE NOT NULL,
+    id_TipoReceita INT NOT NULL,
+    id_TuplaReceita INT NOT NULL,
+    id_pet INT NOT NULL,
+
+    CONSTRAINT fk_pet_Receita
+        FOREIGN KEY (id_pet)
+        REFERENCES pet (id_pet),
+    CONSTRAINT fk_TipoReceita_Receita
+         FOREIGN KEY (id_TipoReceita)
+         REFERENCES tp_receita (id_TipoReceita),
+     CONSTRAINT fk_TuplaReceita_Receita
+         FOREIGN KEY (id_TuplaReceita)
+         REFERENCES tupla_receita (id_TuplaReceita)
+);
+
+insert into tp_receita(nm_TipoReceita)
+values
+    ('Simples'),
+    ('Controle especial'),
+    ('Receita azul'),
+    ('Receita amarela'),
+    ('Receita branca de Talidomida'),
+    ('Receita branca de Retinóides');

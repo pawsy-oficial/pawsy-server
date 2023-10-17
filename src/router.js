@@ -19,6 +19,7 @@ const uf = require("./controllers/cepStateControllers.js")
 const integrarMedicoClinica = require("./controllers/integrateMedicClinic.js")
 const integratePatientClinic = require("./controllers/integratePetPatientClinic.js")
 const schendule = require("./controllers/schenduleControllers.js")
+const scheduleRegister = require("./controllers/schedule/clinic/CreateSchedule.js")
 
 // schemas
 const tutorSchema = require("./schemas/tutorSchema.js");
@@ -29,8 +30,19 @@ const getSpecialty = require("./controllers/especialty.js");
 const getAllRaces = require("./controllers/racesControllers.js")
 const verifyPet = require("./controllers/verifyPetControllers.js")
 const getAllMedics = require("./controllers/getAllMedicsControllers.js")
+const getCoordinate = require("./controllers/coordinatesControllers.js")
+const Previews = require("./controllers/previewControllers.js")
+const PopulationsControllerSchedule = require("./controllers/schedule/clinic/PopulationsController.js")
 
 const { sendRecoveryCodeTutor, verifyAndResetPasswordTutor, sendRecoveryCodeClinica, verifyAndResetPasswordClinica, sendRecoveryCodeMedico, verifyAndResetPasswordMedico } = require('./services/passwordRecoveryService.js');
+const schemaVermifuge = require("./schemas/vermifugeSchema.js");
+const getAllPets = require("./controllers/tutor/getMyPetsControllers.js");
+const updatePet = require("./controllers/tutor/updatePetsControllers.js");
+const clinicsMedic = require("./controllers/medic/clinicsMedic.js");
+const clinicsPet = require("./controllers/medic/clinicsPet.js");
+const petInfos = require("./controllers/medic/petInfos.js");
+const { updateClinic } = require("./controllers/clinic/updateClinicControllers.js");
+
 
 // Consultas de dados
 router.get("/", (req, res)=>{
@@ -43,12 +55,26 @@ router.get("/raca", getAllRaces)
 router.get("/tutor/:id", authMiddlewareTutor, verifyPet)
 router.get("/medico", authMiddlewareClinic, getAllMedics)
 router.use("/files", express.static(`${__dirname}/libs/uploads`))
+router.get("/coordinates", authMiddlewareTutor, getCoordinate.tutorCoordinates)
+router.get("/ClinicCoordinates", authMiddlewareTutor, getCoordinate.ClinicCoordinates)
+router.get("/ClinicPreviews", Previews.ClinicPreview)
+router.get("/get-all-pets/:idTutor", authMiddlewareTutor, getAllPets)
+router.get("/get-tipoConsulta", authMiddlewareClinic, PopulationsControllerSchedule.TipoConsulta)
+router.get("/get-medicosIntegrados", authMiddlewareClinic, PopulationsControllerSchedule.MedicosIntegrados)
+router.get("/getAllPets", authMiddlewareClinic, integratePatientClinic.pets)
+router.get("/getAllPatients/:idClinic", authMiddlewareClinic, integratePatientClinic.getAllPatientsClinic)
+router.get("/countPatients/:idClinic", authMiddlewareClinic, integratePatientClinic.countPatientsClinic)
+router.get("/clinicsMedic", authMiddlewareMedic, clinicsMedic)
+router.get("/clinicsPet", authMiddlewareMedic, clinicsPet)
+router.get("/pets/:petId", authMiddlewareMedic, petInfos)
 
 // Registros
 router.post("/medico", validate(schemaMedic), registerTutor.registerMedic);
 router.post("/clinica", validate(schemaClinic),registerTutor.registerClinic);
 router.post("/tutor-register", validate(tutorSchema), registerTutor.registerTutor);
 router.post("/pet-register", validate(schemaPet) ,registerTutor.registerPet);
+router.post("/vermifuge", registerTutor.registerVermifuge);
+// router.post("/agenda-register", authMiddlewareClinic, scheduleRegister.CreateSchedule);
 
 // Integrações
 router.post("/integrar-medico-clinica", integrarMedicoClinica.integrateMedicClinic)
@@ -78,5 +104,10 @@ router.get('/profileMedic', authMiddlewareMedic, login.getProfileMedic);
 // register schendule
 
 router.post('/newSchendule', authMiddlewareClinic, schendule.registerNewSchendule)
+
+module.exports = router
+// update
+router.post('/update-pet', updatePet)
+router.post('/update-clinic-profile', updateClinic)
 
 module.exports = router

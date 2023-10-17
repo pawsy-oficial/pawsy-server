@@ -3,15 +3,13 @@ const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
 const registerTutor = async (req, res) => {
-    const { firstName, lastName, email, cpf, birthDate, cell, password, cep, city, state, street, numberHome, complement, neighborhood, urlProfile } = req.body
-    const latitude = "12.3456"
-    const longitude = "-45.6789"
+    const { firstName, lastName, email, cpf, birthDate, cell, password, cep, city, state, street, numberHome, complement, neighborhood, urlProfile, latitude, longitude } = req.body
 
     const selectEmailTutorSQL = "select nm_email, num_celular, cd_cpf from tutor where nm_email = ? or num_celular = ? or cd_cpf = ?"
     const insertCitySQL = "insert into cidade (nm_cidade, id_uf) values (?,?)"
     const insertNeighborhoodSQL = "insert into bairro (nm_bairro, id_cidade) values (?,?)"
     const insertAddresSQL = "insert into endereco (cd_cep, nm_rua, num_residencia, complemento, latitude, longitude, id_bairro) values (?,?,?,?,?,?,?)"
-    const insertTutorSQL = "insert into tutor (nm_tutor, cd_cpf, dt_nascimento, nm_email, num_celular, pw_tutor, id_endereco, url_imagem) values (?,?,?,?,?,?,?,?)"
+    const insertTutorSQL = "insert into tutor (nm_tutor, sb_tutor, cd_cpf, dt_nascimento, nm_email, num_celular, pw_tutor, id_endereco, url_imagem) values (?,?,?,?,?,?,?,?,?)"
 
     let idInsert
     const cpfFormat = cpf.replace(/[^\d]+/g, '');
@@ -50,7 +48,7 @@ const registerTutor = async (req, res) => {
                                     return
                                 }
                                 idInsert = results.insertId
-                                db.query(insertTutorSQL, [firstName, cpfFormat, birthDate, email, cellFormat, hash, idInsert, urlProfile], function (error, results) {
+                                db.query(insertTutorSQL, [firstName, lastName, cpfFormat, birthDate, email, cellFormat, hash, idInsert, urlProfile], function (error, results) {
                                     if (error) {
                                         res.status(400).json({
                                             Mensage: error
@@ -80,10 +78,7 @@ const registerTutor = async (req, res) => {
 }
 
 const registerClinic = (req, res) => {
-    const { clinicName, crmv, email, cnpj, cell, password, cep, city, state, street, numberHome, complement, neighborhood, urlProfile } = req.body
-    
-    const latitude = "12.3456"
-    const longitude = "-45.6789"
+    const { clinicName, crmv, email, cnpj, cell, password, cep, city, state, street, numberHome, complement, neighborhood, urlProfile, latitude, longitude } = req.body
 
     const selectEmailClinicSQL = "select email_clinica, tl_clinica, cnpj_clinica from clinica where email_clinica = ? or tl_clinica = ? or cnpj_clinica = ?"
     const insertCitySQL = "insert into cidade (nm_cidade, id_uf) values (?,?)"
@@ -230,9 +225,44 @@ const registerPet = (req, res)=>{
 
 }
 
+const registerVermifuge = (req, res)=>{
+    const date = new Date();
+    const currentDay = date.getDate();
+    const currentYear = date.getFullYear();
+    const currentMonth = date.getMonth();
+    const currentDate = `${currentYear}-${currentMonth}-${currentDay}`
+
+    const { vermifuge, id_pet, id_medic } = req.body
+
+    const selectSQL = "select id_pet from pet where id_pet = ?"
+    const insertSQL = "insert into carteira_vermifugo (nm_vermifugo, id_pet, id_medico, dt_aplicacao) values (?,?,?,?)"
+
+
+    db.query(selectSQL, [id_pet],  (err, results)=>{
+        if(err){
+            res.status(400).json({erro: "erro ao consultar o banco"})
+            return
+        }
+        if(results.length == 0){
+            res.status(401).json({erro: "pet não cadastrado na plataforma"})
+            return
+        }
+        
+        db.query(insertSQL, [vermifuge, id_pet, id_medic, currentDate], (err, result)=>{
+            if(err){
+                res.status(400).json({erro: "erro ao consultar o banco" + err})
+                return
+            }
+
+            res.status(200).json({result: "adicionado com sucesso"})
+        })
+    })
+}
+
 module.exports = {
     registerTutor,
     registerClinic,
     registerMedic,
-    registerPet
+    registerPet,
+    registerVermifuge
 }

@@ -29,19 +29,19 @@ const schemaMedic = require("./schemas/medicSchema.js");
 const getSpecialty = require("./controllers/especialty.js");
 const getAllRaces = require("./controllers/racesControllers.js")
 const verifyPet = require("./controllers/verifyPetControllers.js")
-const getAllMedics = require("./controllers/getAllMedicsControllers.js")
 const getCoordinate = require("./controllers/coordinatesControllers.js")
 const Previews = require("./controllers/previewControllers.js")
 const PopulationsControllerSchedule = require("./controllers/schedule/clinic/PopulationsController.js")
 
 const { sendRecoveryCodeTutor, verifyAndResetPasswordTutor, sendRecoveryCodeClinica, verifyAndResetPasswordClinica, sendRecoveryCodeMedico, verifyAndResetPasswordMedico } = require('./services/passwordRecoveryService.js');
 const schemaVermifuge = require("./schemas/vermifugeSchema.js");
-const getAllPets = require("./controllers/tutor/getMyPetsControllers.js");
+// const getAllPets = require("./controllers/tutor/getMyPetsControllers.js");
 const updatePet = require("./controllers/tutor/updatePetsControllers.js");
 const clinicsMedic = require("./controllers/medic/clinicsMedic.js");
 const clinicsPet = require("./controllers/medic/clinicsPet.js");
 const petInfos = require("./controllers/medic/petInfos.js");
 const { updateClinic } = require("./controllers/clinic/updateClinicControllers.js");
+const { getAllConsultation, getAllMyPets, getAllMedics } = require("./controllers/getAllControllers.js");
 
 
 // Consultas de dados
@@ -53,20 +53,22 @@ router.get("/especialidade", getSpecialty)
 router.get("/uf", uf)
 router.get("/raca", getAllRaces)
 router.get("/tutor/:id", authMiddlewareTutor, verifyPet)
-router.get("/medico", authMiddlewareClinic, getAllMedics)
 router.use("/files", express.static(`${__dirname}/libs/uploads`))
 router.get("/coordinates", authMiddlewareTutor, getCoordinate.tutorCoordinates)
 router.get("/ClinicCoordinates", authMiddlewareTutor, getCoordinate.ClinicCoordinates)
 router.get("/ClinicPreviews", Previews.ClinicPreview)
-router.get("/get-all-pets/:idTutor", authMiddlewareTutor, getAllPets)
 router.get("/get-tipoConsulta", authMiddlewareClinic, PopulationsControllerSchedule.TipoConsulta)
 router.get("/get-medicosIntegrados", authMiddlewareClinic, PopulationsControllerSchedule.MedicosIntegrados)
-router.get("/getAllPets", authMiddlewareClinic, integratePatientClinic.pets)
-router.get("/getAllPatients/:idClinic", authMiddlewareClinic, integratePatientClinic.getAllPatientsClinic)
 router.get("/countPatients/:idClinic", authMiddlewareClinic, integratePatientClinic.countPatientsClinic)
 router.get("/clinicsMedic", authMiddlewareMedic, clinicsMedic)
 router.get("/clinicsPet", authMiddlewareMedic, clinicsPet)
 router.get("/pets/:petId", authMiddlewareMedic, petInfos)
+router.get("/getAllPets", authMiddlewareClinic, integratePatientClinic.pets)
+router.get("/getAllPatients/:idClinic", authMiddlewareClinic, integratePatientClinic.getAllPatientsClinic)
+// get all
+router.get("/get-all-consultation", getAllConsultation)
+router.get("/get-all-pets/:idTutor", authMiddlewareTutor, getAllMyPets)
+router.get("/medico", authMiddlewareClinic, getAllMedics)
 
 // Registros
 router.post("/medico", validate(schemaMedic), registerTutor.registerMedic);

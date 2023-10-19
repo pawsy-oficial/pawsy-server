@@ -14,11 +14,7 @@ const pets = (req, res)=>{
 		res.status(400).json({ error: "ID do pet ou CPF do tutor são necessários para a requisição" });
 		return
 	}
-
-	// if(!idPet && !cpfTutor){
-	// }
-
-	// res.status(200).json({s: "OK"})
+	
 	db.query(checkPetOwnershipQuery, [idPet, cpfTutor], (err, result)=>{ 
 		if (err) {
 			return res.status(500).json({ error: "Erro ao verificar a propriedade do pet." });

@@ -59,6 +59,7 @@ router.get("/ClinicCoordinates", authMiddlewareTutor, getCoordinate.ClinicCoordi
 router.get("/ClinicPreviews", Previews.ClinicPreview)
 router.get("/get-tipoConsulta", authMiddlewareClinic, PopulationsControllerSchedule.TipoConsulta)
 router.get("/get-medicosIntegrados", authMiddlewareClinic, PopulationsControllerSchedule.MedicosIntegrados)
+router.get("/get-medicosIntegrados-schedule", authMiddlewareTutor, PopulationsControllerSchedule.MedicosIntegrados) // melhorar essa rota - ver se é possivel deixar ela dinamica
 router.get("/countPatients/:idClinic", authMiddlewareClinic, integratePatientClinic.countPatientsClinic)
 router.get("/clinicsMedic", authMiddlewareMedic, clinicsMedic)
 router.get("/clinicsPet", authMiddlewareMedic, clinicsPet)

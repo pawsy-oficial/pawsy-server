@@ -36,19 +36,19 @@ const MedicosIntegrados = async (req, res) => {
 	const { idClinica, all } = req.query
 
 	const query = `
-    select 
-      trb.cd_trabalho as codIntegracao,
-      trb.dt_inscricao as dataInscricao,
-      mdc.nm_medico as nomeMedico,
-      mdc.id_medico as idMedico,
-      mdc.url_imagem as imagemPerfil,
-      esp.nm_especialidade as especialidade
-    from clinica cc
-      join trabalho trb on trb.cd_clinica = cc.id_clinica
-      join medico mdc on mdc.id_medico = trb.cd_medico
-      join especialidade esp on esp.id_especialidade = mdc.id_especialidade
-    where cc.id_clinica = ?;
-  `
+		select 
+			trb.cd_trabalho as codIntegracao,
+			trb.dt_inscricao as dataInscricao,
+			mdc.nm_medico as nomeMedico,
+			mdc.id_medico as idMedico,
+			mdc.url_imagem as imagemPerfil,
+			esp.nm_especialidade as especialidade
+		from clinica cc
+			join trabalho trb on trb.cd_clinica = cc.id_clinica
+			join medico mdc on mdc.id_medico = trb.cd_medico
+			join especialidade esp on esp.id_especialidade = mdc.id_especialidade
+		where cc.id_clinica = ?;
+	`
 
 	db.query(query, [idClinica], (err, result) => {
 		if (err) {

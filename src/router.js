@@ -60,7 +60,7 @@ router.get("/ClinicCoordinates", authMiddlewareTutor, getCoordinate.ClinicCoordi
 router.get("/ClinicPreviews", Previews.ClinicPreview)
 router.get("/get-all-pets/:idTutor", authMiddlewareTutor, getAllPets)
 router.get("/get-tipoConsulta", authMiddlewareClinic, PopulationsControllerSchedule.TipoConsulta)
-router.get("/get-medicosIntegrados", authMiddlewareClinic, PopulationsControllerSchedule.MedicosIntegrados)
+router.get("/get-medicosIntegrados", PopulationsControllerSchedule.MedicosIntegrados) // removi o meddleware dessa rota
 router.get("/getAllPets", authMiddlewareClinic, integratePatientClinic.pets)
 router.get("/getAllPatients/:idClinic", authMiddlewareClinic, integratePatientClinic.getAllPatientsClinic)
 router.get("/countPatients/:idClinic", authMiddlewareClinic, integratePatientClinic.countPatientsClinic)

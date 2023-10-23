@@ -304,6 +304,8 @@ CREATE TABLE IF NOT EXISTS tipo_consulta
     CONSTRAINT pk_tipo PRIMARY KEY (id_tipo)
 );
 
+drop table tipo_consulta;
+
 CREATE TABLE IF NOT EXISTS disponibilidade
 ( 
     id_disponibilidade INT PRIMARY KEY AUTO_INCREMENT,  
@@ -318,11 +320,11 @@ CREATE TABLE IF NOT EXISTS disponibilidade
         REFERENCES medico (id_medico),
     CONSTRAINT fk_disponibilidade_agenda
         FOREIGN KEY (id_agenda)
-        REFERENCES agenda (id_agenda),
-	CONSTRAINT fk_tp_consulta 
-		FOREIGN KEY (tp_consulta) 
-        REFERENCES tipo_consulta(id_tipo)
+        REFERENCES agenda (id_agenda)
 );
+
+ALTER TABLE disponibilidade
+MODIFY COLUMN tp_consulta VARCHAR(180) NULL;
 
 CREATE TABLE IF NOT EXISTS dia_semana (
 	id_dia int not null auto_increment,
@@ -517,19 +519,19 @@ values
     ("Sábado");
 
 
-insert into tipo_consulta(nm_tipo)
-values 
-	("consulta - rotina"),
-    ("exame geral"),
-    ("eletrocardiograma"),
-    ("ecocardiograma"),
-    ("ultrassonografia"),
-    ("hemograma"),
-    ("cirurgia"),
-    ("consulta - dentista"),
-    ("consulta - dermatologista"),
-    ("consulta - otorrinolaringologista"),
-    ("consulta - oftalmologista");
+-- insert into tipo_consulta(nm_tipo)
+-- values 
+-- 	   ("consulta - rotina"),
+--     ("exame geral"),
+--     ("eletrocardiograma"),
+--     ("ecocardiograma"),
+--     ("ultrassonografia"),
+--     ("hemograma"),
+--     ("cirurgia"),
+--     ("consulta - dentista"),
+--     ("consulta - dermatologista"),
+--     ("consulta - otorrinolaringologista"),
+--     ("consulta - oftalmologista");
 
 alter user 'root'@'localhost' identified with mysql_native_password by 'password';
 

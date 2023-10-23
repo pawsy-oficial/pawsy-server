@@ -77,7 +77,7 @@ router.post("/clinica", validate(schemaClinic),registerTutor.registerClinic);
 router.post("/tutor-register", validate(tutorSchema), registerTutor.registerTutor);
 router.post("/pet-register", validate(schemaPet) ,registerTutor.registerPet);
 router.post("/vermifuge", registerTutor.registerVermifuge);
-// router.post("/agenda-register", authMiddlewareClinic, scheduleRegister.CreateSchedule);
+router.post("/agenda-register", authMiddlewareClinic, scheduleRegister.CreateSchedule);
 
 // Integrações
 router.post("/integrar-medico-clinica", integrarMedicoClinica.integrateMedicClinic)

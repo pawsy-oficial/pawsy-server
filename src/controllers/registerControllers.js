@@ -250,10 +250,34 @@ const registerVermifuge = (req, res) => {
     })
 }
 
+const registerVaccine = (req, res) => {
+    const { vacina, id_pet, id_medic, dt_retorno } = req.body
+
+    const date = new Date();
+    const currentDay = date.getDate();
+    const currentYear = date.getFullYear();
+    const currentMonth = date.getMonth();
+    const currentDate = `${currentYear}-${currentMonth}-${currentDay}`
+
+
+    // let data = new Date();
+    // let dataFormatada = currentDay + "-" + currentMonth + "-" + currentDay;
+
+    const insertSQL = "insert into carteira_vacina (nm_vacina, id_pet, id_medico, dt_aplicacao, dt_retorno) values ?"
+    db.query(insertSQL, [[[vacina, id_pet, id_medic, currentDate, dt_retorno]]], (err, result) => {
+        if (err) {
+            res.status(400).json({ erro: "erro ao consultar o banco" + err })
+            return;
+        }
+        res.status(200).json({ result: "adicionado com sucesso" })
+    })
+}
+
 module.exports = {
     registerTutor,
     registerClinic,
     registerMedic,
     registerPet,
-    registerVermifuge
+    registerVermifuge,
+    registerVaccine
 }

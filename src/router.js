@@ -40,6 +40,7 @@ const clinicsMedic = require("./controllers/medic/clinicsMedic.js");
 const clinicsPet = require("./controllers/medic/clinicsPet.js");
 const petInfos = require("./controllers/medic/petInfos.js");
 const addNewVermifuge = require("./controllers/medic/addNewVermifuge.js");
+const getVaccines = require("./controllers/medic/getVaccines.js");
 
 // Consultas de dados
 router.get("/", (req, res)=>{
@@ -62,13 +63,15 @@ router.get("/clinicsMedic", authMiddlewareMedic, clinicsMedic)
 router.get("/clinicsPet", authMiddlewareMedic, clinicsPet)
 router.get("/pets/:petId", authMiddlewareMedic, petInfos)
 router.get("/add-new-vermifuge", authMiddlewareMedic, addNewVermifuge)
+router.get("/add-new-vermifuge", authMiddlewareMedic, getVaccines)
 
 // Registros
 router.post("/medico", validate(schemaMedic), registerTutor.registerMedic);
 router.post("/clinica", validate(schemaClinic),registerTutor.registerClinic);
 router.post("/tutor-register", validate(tutorSchema), registerTutor.registerTutor);
 router.post("/pet-register", validate(schemaPet) ,registerTutor.registerPet);
-router.post("/vermifuge", validate(schemaVermifuge), registerTutor.registerVermifuge);
+router.post("/vermifuge", registerTutor.registerVermifuge);
+router.post("/vaccine", registerTutor.registerVermifuge);
 
 // Integrações
 router.post("/integrar-medico-clinica", integrarMedicoClinica.integrateMedicClinic)

@@ -10,8 +10,10 @@ const addNewVermifuge = async (req, res) => {
     console.log(req);
 
     const [results] = await bd.query(selectaddNewVermifugeSQL);
+    console.log(results);
 
     res.status(200).json({ count: results.length, results })
+
   } catch (error) {
     res.status(500).json({ message: "Internal Server Error" })
   }

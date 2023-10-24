@@ -68,7 +68,7 @@ router.post("/medico", validate(schemaMedic), registerTutor.registerMedic);
 router.post("/clinica", validate(schemaClinic),registerTutor.registerClinic);
 router.post("/tutor-register", validate(tutorSchema), registerTutor.registerTutor);
 router.post("/pet-register", validate(schemaPet) ,registerTutor.registerPet);
-router.post("/vermifuge", registerTutor.registerVermifuge);
+router.post("/vermifuge", validate(schemaVermifuge), registerTutor.registerVermifuge);
 
 // Integrações
 router.post("/integrar-medico-clinica", integrarMedicoClinica.integrateMedicClinic)

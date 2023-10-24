@@ -55,7 +55,7 @@ const registerTutor = async (req, res) => {
                                         })
                                         return
                                     }
-        
+
                                     return res.status(200).json({ sucefull: "Tutor cadastrado com sucesso" })
                                 })
                             })
@@ -73,7 +73,7 @@ const registerTutor = async (req, res) => {
             res.status(500).json({ error: "Ocorreu um erro no servidor" });
         });
 
-    
+
 
 }
 
@@ -84,9 +84,9 @@ const registerClinic = (req, res) => {
     const insertCitySQL = "insert into cidade (nm_cidade, id_uf) values (?,?)"
     const insertNeighborhoodSQL = "insert into bairro (nm_bairro, id_cidade) values (?,?)"
     const insertAddresSQL = "insert into endereco (cd_cep, nm_rua, num_residencia, complemento, latitude, longitude, id_bairro) values (?,?,?,?,?,?,?)"
-    
+
     const insertClinicSQL = "insert into clinica (nm_clinica, cnpj_clinica, email_clinica, tl_clinica, pw_clinica, id_endereco, cd_crmv, url_imagem) values (?,?,?,?,?,?,?,?)"
-    
+
     let idInsert
     const cnpjFormat = cnpj.replace(/[^\d]+/g, '');
     const cellFormat = cell.replace(/[^\d]+/g, '');
@@ -131,7 +131,7 @@ const registerClinic = (req, res) => {
                                         })
                                         return
                                     }
-        
+
                                     return res.status(200).json({ sucefull: "Clinica cadastrado com sucesso" })
                                 })
                             })
@@ -149,19 +149,19 @@ const registerClinic = (req, res) => {
             res.status(500).json({ error: "Ocorreu um erro no servidor" });
         });
 
-    
+
 }
 
 const registerMedic = (req, res) => {
     const { firstNameMedic, lastNameMedic, crmv, email, cpf, cell, birthDate, specialty, password, urlProfile } = req.body
-    
+
     const selectEmailMedicSQL = "select nm_email, num_celular, cd_cpf from medico where nm_email = ? or num_celular = ? or cd_cpf = ?"
     const insertMedicSQL = "INSERT INTO medico (nm_medico, cd_cpf, dt_nascimento, nm_email, num_celular, pw_medic, id_especialidade, cd_crmv, url_imagem) VALUES (?,?,?,?,?,?,?,?,?)"
-    
+
     const cpfFormat = cpf.replace(/[^\d]+/g, '');
     const cellFormat = cell.replace(/[^\d]+/g, '');
     const crmvFormat = crmv.replace(/[^\d]+/g, '');
-    
+
     bcrypt.hash(password, saltRounds)
         .then(hash => {
             db.query(selectEmailMedicSQL, [email, cellFormat, cpfFormat], (error, results) => {
@@ -170,7 +170,7 @@ const registerMedic = (req, res) => {
                     return
                 }
                 if (results.length === 0) {
-                    
+
                     db.query(insertMedicSQL, [firstNameMedic, cpfFormat, birthDate, email, cellFormat, hash, specialty, crmvFormat, urlProfile], function (error, results) {
                         if (error) {
                             res.status(400).json({
@@ -180,7 +180,7 @@ const registerMedic = (req, res) => {
                         }
 
                         return res.status(200).json({ sucefull: "Medico cadastrado com sucesso" })
-                    })          
+                    })
                 }
                 else {
                     res.status(401).json({
@@ -193,58 +193,62 @@ const registerMedic = (req, res) => {
             res.status(500).json({ error: "Ocorreu um erro no servidor" });
         });
 
-    
+
 }
 
-const registerPet = (req, res)=>{
-    const { name, typeKind, gender, date, description, coat, urlProfile, id_tutor, race  } = req.body
+const registerPet = (req, res) => {
+    const { name, typeKind, gender, date, description, coat, urlProfile, id_tutor, race } = req.body
 
     const selectSQL = "select id_tutor from tutor where id_tutor = ?"
     const insertSQL = "insert into pet (nm_pet, id_tutor, id_raca, id_pelagem, id_sexo, id_animal, dt_nascimento, resumo, url_img) values (?,?,?,?,?,?,?,?,?)"
 
 
-    db.query(selectSQL, [id_tutor],  (err, results)=>{
-        if(err){
-            res.status(400).json({erro: "não foi possivel cadastrar esse pet"})
+    db.query(selectSQL, [id_tutor], (err, results) => {
+        if (err) {
+            res.status(400).json({ erro: "não foi possivel cadastrar esse pet" })
             return
         }
-        if(results.length == 0){
-            res.status(401).json({erro: "tutor não cadastrado na plataforma"})
+        if (results.length == 0) {
+            res.status(401).json({ erro: "tutor não cadastrado na plataforma" })
             return
         }
-        
-        db.query(insertSQL, [name, id_tutor, race, coat, gender, typeKind, date, description, urlProfile], (err, results)=>{
-            if(err){
-                res.status(400).json({erro: "não foi possivel cadastrar esse pet", err})
+
+        db.query(insertSQL, [name, id_tutor, race, coat, gender, typeKind, date, description, urlProfile], (err, results) => {
+            if (err) {
+                res.status(400).json({ erro: "não foi possivel cadastrar esse pet", err })
             }
 
-            res.status(200).json({resultado: "pet cadastrado com sucesso"})
+            res.status(200).json({ resultado: "pet cadastrado com sucesso" })
         })
 
     })
 
 }
 
-const registerVermifuge = (req, res)=>{
-    const date = new Date();
-    // const currentDay = date.getDate();
-    // const currentYear = date.getFullYear();
-    // const currentMonth = date.getMonth();
-    // const currentDate = `${currentYear}-${currentMonth}-${currentDay}`
-          
+const registerVermifuge = (req, res) => {
     const { vermifuge, id_pet, id_medic } = req.body
 
+
+
+    const date = new Date();
+    const currentDay = date.getDate();
+    const currentYear = date.getFullYear();
+    const currentMonth = date.getMonth();
+    const currentDate = `${currentYear}-${currentMonth}-${currentDay}`
+
+
+    // let data = new Date();
+    // let dataFormatada = currentDay + "-" + currentMonth + "-" + currentDay;
+
     const insertSQL = "insert into carteira_vermifugo (nm_vermifugo, id_pet, id_medico, dt_aplicacao) values (?,?,?,?)"
-
-
-        db.query(insertSQL, [vermifuge, id_pet, id_medic, new Date()], (err, result)=>{
-            if(err){
-                res.status(400).json({erro: "erro ao consultar o banco" + err})
-                return
-            }
-            res.status(200).json({result: "adicionado com sucesso"})
-        })
-    }
+    db.query(insertSQL, [vermifuge, id_pet, id_medic, currentDate], (err, result) => {
+        if (err) {
+            res.status(400).json({ erro: "erro ao consultar o banco" + err })
+            return
+        }
+        res.status(200).json({ result: "adicionado com sucesso" })
+    })
+}
 
 module.exports = {
     registerTutor,

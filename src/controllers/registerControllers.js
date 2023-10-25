@@ -234,7 +234,7 @@ const registerVermifuge = (req, res) => {
     const currentDay = date.getDate();
     const currentYear = date.getFullYear();
     const currentMonth = date.getMonth();
-    const currentDate = `${currentYear}-${currentMonth}-${currentDay}`
+    const currentDate = `${currentYear}-${currentMonth+1}-${currentDay}`
 
 
     // let data = new Date();

@@ -63,7 +63,7 @@ router.get("/clinicsMedic", authMiddlewareMedic, clinicsMedic)
 router.get("/clinicsPet", authMiddlewareMedic, clinicsPet)
 router.get("/pets/:petId", authMiddlewareMedic, petInfos)
 router.get("/add-new-vermifuge", authMiddlewareMedic, addNewVermifuge)
-router.get("/add-new-vermifuge", authMiddlewareMedic, getVaccines)
+router.get("/get-vaccine", authMiddlewareMedic, getVaccines)
 
 // Registros
 router.post("/medico", validate(schemaMedic), registerTutor.registerMedic);
@@ -71,7 +71,7 @@ router.post("/clinica", validate(schemaClinic),registerTutor.registerClinic);
 router.post("/tutor-register", validate(tutorSchema), registerTutor.registerTutor);
 router.post("/pet-register", validate(schemaPet) ,registerTutor.registerPet);
 router.post("/vermifuge", registerTutor.registerVermifuge);
-router.post("/vaccine", registerTutor.registerVermifuge);
+router.post("/vaccine", registerTutor.registerVaccine);
 
 // Integrações
 router.post("/integrar-medico-clinica", integrarMedicoClinica.integrateMedicClinic)

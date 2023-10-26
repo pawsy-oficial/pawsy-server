@@ -28,14 +28,19 @@ const getCommentsClinic = (req, res) => {
             WHERE id_clinica = ?;
     `
 
-    const date = new Date()
-
+    let data
     db.query(query, [idClinic], (err, result) => {
         if (err) {
             res.status(500).json({ err })
         }
-
-        res.status(200).json({ comments: result })
+        data = result
+        db.query(`SELECT AVG(vl_avaliacao) AS average FROM comentarios WHERE id_clinica = ?`, [idClinic], (err, results)=>{
+            if (err) {
+                res.status(500).json({ err })
+            }
+            const average = results[0]
+            res.status(200).json({ comments: data, average})
+        })
     })
 }
 

@@ -606,3 +606,30 @@ values
     ('Receita amarela'),
     ('Receita branca de Talidomida'),
     ('Receita branca de Retinóides');
+    
+CREATE TABLE IF NOT EXISTS ANUNCIO(
+	id_anuncio INT NOT NULL auto_increment primary key,
+    nm_anuncio varchar(50) NOT NULL
+);
+insert into ANUNCIO(nm_anuncio)
+values
+	('Campanha de vacinação'),
+    ('Campanha de castração'),
+    ('Doação'),
+    ('Promoção');
+CREATE TABLE IF NOT EXISTS MARKETING(
+	id_marketing INT NOT NULL auto_increment primary key,
+    nm_titulo varchar(180) NOT NULL,
+    nm_descricao varchar(300) NOT NULL,
+    tmp_inicial datetime null,
+    tmp_final datetime null,
+    img_marketing varchar(300) not null,
+    id_anuncio int not null,
+    id_clinica int not null,
+    CONSTRAINT fk_id_anuncio
+        FOREIGN KEY (id_anuncio)
+        REFERENCES ANUNCIO (id_anuncio),
+	CONSTRAINT fk_id_clinica
+        FOREIGN KEY (id_clinica)
+        REFERENCES clinica (id_clinica)
+);

@@ -43,6 +43,8 @@ const petInfos = require("./controllers/medic/petInfos.js");
 const { updateClinic } = require("./controllers/clinic/updateClinicControllers.js");
 const { searchClinicsControllers } = require("./controllers/searchClinicsControllers.js");
 const { postCommentsClinic, getCommentsClinic } = require("./controllers/commentsControllers.js");
+const getAllTypeAds = require("./controllers/ads/getAllAds.js");
+const postAds = require("./controllers/ads/postAds.js");
 
 
 // Consultas de dados
@@ -70,6 +72,7 @@ router.get("/clinicsPet", authMiddlewareMedic, clinicsPet)
 router.get("/pets/:petId", authMiddlewareMedic, petInfos)
 router.get("/pesquisa", searchClinicsControllers)
 router.get("/comment/:id", authMiddlewareClinic, getCommentsClinic)
+router.get("/getAllTypeAds", getAllTypeAds)
 
 // Registros
 router.post("/medico", validate(schemaMedic), registerTutor.registerMedic);
@@ -78,6 +81,7 @@ router.post("/tutor-register", validate(tutorSchema), registerTutor.registerTuto
 router.post("/pet-register", validate(schemaPet) ,registerTutor.registerPet);
 router.post("/vermifuge", registerTutor.registerVermifuge);
 router.post("/comment", authMiddlewareTutor, postCommentsClinic)
+router.post("/ads", authMiddlewareClinic, postAds)
 // router.post("/agenda-register", authMiddlewareClinic, scheduleRegister.CreateSchedule);
 
 // Integrações

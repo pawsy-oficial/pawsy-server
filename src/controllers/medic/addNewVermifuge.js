@@ -7,10 +7,8 @@ const addNewVermifuge = async (req, res) => {
     const selectaddNewVermifugeSQL = `
     SELECT * FROM carteira_vermifugo
     `
-    console.log(req);
 
     const [results] = await bd.query(selectaddNewVermifugeSQL);
-    console.log(results);
 
     res.status(200).json({ count: results.length, results })
 

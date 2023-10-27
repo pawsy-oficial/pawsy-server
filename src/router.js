@@ -40,7 +40,7 @@ const clinicsMedic = require("./controllers/medic/clinicsMedic.js");
 const clinicsPet = require("./controllers/medic/clinicsPet.js");
 const petInfos = require("./controllers/medic/petInfos.js");
 const addNewVermifuge = require("./controllers/medic/addNewVermifuge.js");
-const getVaccines = require("./controllers/medic/getVaccines.js");
+const { getVaccines, getAllTypeVaccines } = require("./controllers/medic/getVaccinesAndVermifuge.js");
 
 // Consultas de dados
 router.get("/", (req, res)=>{

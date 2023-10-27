@@ -45,6 +45,7 @@ const { searchClinicsControllers } = require("./controllers/searchClinicsControl
 const { postCommentsClinic, getCommentsClinic } = require("./controllers/commentsControllers.js");
 const {getAllTypeAds, getAllAds} = require("./controllers/ads/getAllAdsControllers.js");
 const postAds = require("./controllers/ads/postAds.js");
+const deletePostAd = require("./controllers/ads/deleteController.js");
 
 
 // Consultas de dados
@@ -113,5 +114,8 @@ router.get('/profileMedic', authMiddlewareMedic, login.getProfileMedic);
 // update
 router.post('/update-pet', updatePet)
 router.post('/update-clinic-profile', updateClinic)
+
+// delete
+router.delete('/ads', authMiddlewareClinic, deletePostAd )
 
 module.exports = router

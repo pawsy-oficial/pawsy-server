@@ -1,3 +1,4 @@
+const dayjs = require("dayjs")
 const db = require("../../db")
 
 const getAllTypeAds = (req, res)=>{
@@ -27,6 +28,13 @@ const getAllAds = (req, res)=>{
         if(err){
             res.status(500).json({err})
         }
+
+        const formatDateAds = Ads.map(ad => (
+            { ...ad,  tmp_final: dayjs(ad.tmp_final).format("YYYY-MM-DD HH:mm") }
+        )) 
+        const filterAds = formatDateAds.filter(m => dayjs(m.tmp_final).isAfter(dayjs().format("YYYY-MM-DD HH:mm")))
+
+        Ads = filterAds
 
         res.status(200).json({Ads})
     })

@@ -6,11 +6,8 @@ const postCommentsClinic = (req, res) => {
     const query = `INSERT INTO comentarios (id_tutor, id_clinica, vl_avaliacao, ds_comentario, dt_comentario) VALUE (?,?,?,?,?);`
 
     const date = new Date()
-    const day = date.getDate()
-    const month = date.getMonth() + 1
-    const year = date.getFullYear()
 
-    db.query(query, [idClinic, idTutor, scoreEvaluation, textComment, date], (err, result) => {
+    db.query(query, [idTutor, idClinic, scoreEvaluation, textComment, date], (err, result) => {
         if (err) {
             res.status(500).json({ err })
         }

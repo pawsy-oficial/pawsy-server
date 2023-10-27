@@ -118,6 +118,6 @@ router.post('/update-clinic-profile', updateClinic)
 router.put('/ads', authMiddlewareClinic, updatePostAd)
 
 // delete
-router.delete('/ads', authMiddlewareClinic, deletePostAd )
+router.delete('/ads/:idAd', authMiddlewareClinic, deletePostAd )
 
 module.exports = router

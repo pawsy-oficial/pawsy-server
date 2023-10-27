@@ -1,7 +1,7 @@
 const db = require("../../db")
 
 const deletePostAd = (req, res)=>{
-    const { idAd } = req.body
+    const idAd = req.params.idAd
 
     const selectSQL = `SELECT * FROM marketing WHERE id_marketing = ?`
     const deleteSQL = `DELETE FROM marketing WHERE id_marketing = ?`

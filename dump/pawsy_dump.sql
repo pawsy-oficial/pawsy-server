@@ -626,8 +626,13 @@ CREATE TABLE IF NOT EXISTS MARKETING(
     tmp_inicial datetime null,
     tmp_final datetime null,
     img_marketing varchar(300) not null,
+    tm_qnt_dias int not null,
     id_anuncio int not null,
+    id_clinica int not null,
     CONSTRAINT fk_id_anuncio
         FOREIGN KEY (id_anuncio)
-        REFERENCES ANUNCIO (id_anuncio)
+        REFERENCES ANUNCIO (id_anuncio),
+	CONSTRAINT fk_id_clinica
+        FOREIGN KEY (id_clinica)
+        REFERENCES clinica (id_clinica)
 );

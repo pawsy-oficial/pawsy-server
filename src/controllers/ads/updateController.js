@@ -2,7 +2,7 @@ const dayjs = require("dayjs")
 const db = require("../../db")
 
 const updatePostAd = (req, res)=>{
-    let { title, description, endTime, urlImage, idTypeAd, qttDays, idPost } = req.body
+    let { title, description, endTime, urlImage, idTypeAD, limitTime, idPost } = req.body
 
     const selectSQL = `SELECT * FROM marketing WHERE id_marketing = ?`
     const updateSQL = `
@@ -12,7 +12,7 @@ const updatePostAd = (req, res)=>{
     `
 
 
-    endTime = dayjs().add(qttDays, 'day')
+    endTime = dayjs().add(limitTime, 'day')
     const formatDateEndTime = dayjs(endTime).format("YYYY-MM-DD HH:mm")
 
     db.query(selectSQL, [idPost], (err, result)=>{
@@ -27,7 +27,7 @@ const updatePostAd = (req, res)=>{
             return
         }
 
-        db.query(updateSQL, [title, description, formatDateEndTime, urlImage, idTypeAd, qttDays, idPost], (err, result)=>{
+        db.query(updateSQL, [title, description, formatDateEndTime, urlImage, idTypeAD, limitTime, idPost], (err, result)=>{
             if(err){
                 res.status(500).json({err})
             }

@@ -39,9 +39,9 @@ const ClinicPreview = async (req, res) => {
 			res.status(401).send('Não foi possível encontrar os dados.');
 			return;
 		}
-		const storedId = result[0].ID;
-		const storedNomeClinica = result[0].Nome;
-		const storedUrlImg = result[0].Imagem;
+		const storedId = result[0].storedIdClinica;
+		const storedNomeClinica = result[0].storedNameClinica;
+		const storedUrlImg = result[0].storedImg;
 		const storedCEP = result[0].CEP;
 		const storedRua = result[0].Rua;
 		const storedNumero = result[0].Numero;
@@ -56,11 +56,12 @@ const ClinicPreview = async (req, res) => {
 			res.status(200).json({result})
 		}
 		else {
+			console.log(result);
 			res.status(200).json({
 				'Id': storedId,
 				'Nome': storedNomeClinica,
 				'Imagem': storedUrlImg,
-				'Endereço': endereco
+				'Endereco': endereco
 			})
 		}
 	});

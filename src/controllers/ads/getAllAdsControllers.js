@@ -21,7 +21,7 @@ const getAllAds = (req, res) => {
         select mk.id_marketing as idPost, mk.nm_titulo as title, mk.nm_descricao as description, mk.tmp_inicial as startTime, mk.tmp_final, mk.tm_qnt_dias as limitDay, mk.img_marketing as urlImage, an.nm_anuncio as typeAd
             from marketing mk
             inner join anuncio an ON an.id_anuncio = mk.id_anuncio
-            where ?
+            where mk.id_clinica = ?
     `
 
     db.query(query, [id], (err, Ads) => {

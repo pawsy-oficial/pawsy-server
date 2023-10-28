@@ -56,7 +56,6 @@ const ClinicPreview = async (req, res) => {
 			res.status(200).json({result})
 		}
 		else {
-			console.log(result);
 			res.status(200).json({
 				'Id': storedId,
 				'Nome': storedNomeClinica,

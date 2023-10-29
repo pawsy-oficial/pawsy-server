@@ -26,7 +26,15 @@ const getAllAds = (req, res) => {
             where mk.id_clinica = ?
     `
 
-    db.query(query, [id], (err, Ads) => {
+    const queryPreview = `
+        select mk.id_marketing as idPost, mk.nm_titulo as title, mk.nm_descricao as description, mk.tmp_final, cl.nm_clinica as nameClinic, mk.id_clinica as idClinic, cl.url_imagem as urlImageClinic
+            from marketing mk
+            inner join anuncio an ON an.id_anuncio = mk.id_anuncio
+            inner join clinica cl ON cl.id_clinica = mk.id_clinica
+            where mk.id_anuncio = 1
+    `
+
+    db.query((filter == "preview" ? queryPreview : query), [id], (err, Ads) => {
         if (err) {
             res.status(500).json({ err })
         }
@@ -42,14 +50,7 @@ const getAllAds = (req, res) => {
             const adsPreview = []
             for (let i = 0; i < Ads.length; i++) {
                 if((i+1) <= 20){
-                    adsPreview.push({
-                        title: Ads[i].title,
-                        description: Ads[i].description,
-                        typeAd: Ads[i].typeAd,
-                        nameClinic: Ads[i].nameClinic,
-                        urlImage: Ads[i].urlImageClinic,
-                        idClinic: Ads[i].idClinic
-                    })
+                    adsPreview.push(Ads[i])
                 }
                 else break
             }

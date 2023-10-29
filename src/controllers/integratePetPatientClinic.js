@@ -8,17 +8,12 @@ const pets = (req, res)=>{
 		JOIN tutor ON pet.id_tutor = tutor.id_tutor 
 		WHERE pet.id_pet = ? OR tutor.cd_cpf = ?
 	`
-	console.log(idPet, cpfTutor);
 
 	if(!idPet && !cpfTutor){
 		res.status(400).json({ error: "ID do pet ou CPF do tutor são necessários para a requisição" });
 		return
 	}
 
-	// if(!idPet && !cpfTutor){
-	// }
-
-	// res.status(200).json({s: "OK"})
 	db.query(checkPetOwnershipQuery, [idPet, cpfTutor], (err, result)=>{ 
 		if (err) {
 			return res.status(500).json({ error: "Erro ao verificar a propriedade do pet." });

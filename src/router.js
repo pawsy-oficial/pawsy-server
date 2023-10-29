@@ -47,6 +47,10 @@ const {getAllTypeAds, getAllAds} = require("./controllers/ads/getAllAdsControlle
 const postAds = require("./controllers/ads/postAds.js");
 const deletePostAd = require("./controllers/ads/deleteController.js");
 const updatePostAd = require("./controllers/ads/updateController.js");
+const { removePatient } = require("./controllers/clinic/removePatientControllers.js");
+const { removeAcountTutor } = require("./controllers/tutor/removeTutorAcountControllers.js");
+const { removeMedic } = require("./controllers/clinic/removeMedicController.js");
+const { removeAcountClinic } = require("./controllers/clinic/removeAcountClinicControllers.js");
 
 
 // Consultas de dados
@@ -119,5 +123,13 @@ router.put('/ads', authMiddlewareClinic, updatePostAd)
 
 // delete
 router.delete('/ads/:idAd', authMiddlewareClinic, deletePostAd )
+router.delete('/patient/:idClinic/:idPet', authMiddlewareClinic, removePatient)
+router.delete('/tutor/:idTutor', authMiddlewareTutor, removeAcountTutor)
+router.delete('/integrar-medico-clinica/:idClinic/:idMedic', authMiddlewareClinic, removeMedic)
+router.delete('/clinic/:idClinic', authMiddlewareClinic, removeAcountClinic)
+// remover medico
+
+
+
 
 module.exports = router

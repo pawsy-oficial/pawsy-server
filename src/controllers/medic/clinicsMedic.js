@@ -9,7 +9,7 @@ const clinicsMedic = async (req, res) => {
     JOIN clinica ON trabalho.cd_clinica = clinica.id_clinica
     WHERE trabalho.cd_medico = ?
     `
-    console.log(req);
+    // console.log(req);
 
     const [results] = await bd.query(selectClinicsMedicSQL, [req.Medic.storedIdMedic]);
 

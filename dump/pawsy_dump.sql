@@ -118,7 +118,7 @@ CREATE TABLE IF NOT EXISTS trabalho(
     
     CONSTRAINT pk_trabalho PRIMARY KEY (cd_trabalho),
     CONSTRAINT fk_medico FOREIGN KEY ( cd_medico ) REFERENCES medico(id_medico),
-    CONSTRAINT fk_clinica FOREIGN KEY ( cd_clinica ) REFERENCES clinica(id_clinica)
+    CONSTRAINT fk_clinica FOREIGN KEY ( cd_clinica ) REFERENCES clinica(id_clinica) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS tutor 
@@ -152,10 +152,10 @@ CREATE TABLE IF NOT EXISTS comentarios (
     CONSTRAINT pk_comentario PRIMARY KEY (cd_comentario),
     CONSTRAINT fk_tutor_comentario 
 		FOREIGN KEY (id_tutor) 
-        REFERENCES tutor(id_tutor),
+        REFERENCES tutor(id_tutor) ON DELETE CASCADE,
 	CONSTRAINT fk_clinica_comentario 
 		FOREIGN KEY (id_clinica) 
-        REFERENCES clinica(id_clinica)
+        REFERENCES clinica(id_clinica) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS raca 
@@ -198,7 +198,7 @@ CREATE TABLE IF NOT EXISTS pet
     url_img VARCHAR(300),
     CONSTRAINT fk_pet_tutor
         FOREIGN KEY (id_tutor)
-        REFERENCES tutor (id_tutor),
+        REFERENCES tutor (id_tutor) ON DELETE CASCADE,
     CONSTRAINT fk_pet_raca
         FOREIGN KEY (id_raca)
 			REFERENCES raca(id_raca),
@@ -222,7 +222,7 @@ CREATE TABLE IF NOT EXISTS vacinados(
     CONSTRAINT fk_pet 
 		FOREIGN KEY (cd_pet) 
         REFERENCES pet(id_pet),
-	CONSTRAINT fk_clinica_responsavel FOREIGN KEY ( cd_clinica ) REFERENCES clinica(id_clinica)
+	CONSTRAINT fk_clinica_responsavel FOREIGN KEY ( cd_clinica ) REFERENCES clinica(id_clinica) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS saude 
@@ -283,7 +283,7 @@ CREATE TABLE IF NOT EXISTS historico
         REFERENCES pet (id_pet),
     CONSTRAINT fk_historico_clinica
         FOREIGN KEY (id_clinica)
-        REFERENCES clinica(id_clinica)
+        REFERENCES clinica(id_clinica) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS restricao 
@@ -351,7 +351,7 @@ CREATE TABLE IF NOT EXISTS pacientes
     
     id_clinica int not null,
     
-    constraint fk_paciente foreign key (id_clinica) references clinica(id_clinica),
+    constraint fk_paciente foreign key (id_clinica) references clinica(id_clinica) ON DELETE CASCADE,
 
     CONSTRAINT fk_pacientes_pet
         FOREIGN KEY (id_pet)
@@ -634,5 +634,5 @@ CREATE TABLE IF NOT EXISTS MARKETING(
         REFERENCES ANUNCIO (id_anuncio),
 	CONSTRAINT fk_id_clinica
         FOREIGN KEY (id_clinica)
-        REFERENCES clinica (id_clinica)
+        REFERENCES clinica (id_clinica) ON DELETE CASCADE
 );

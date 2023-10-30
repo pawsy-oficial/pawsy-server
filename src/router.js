@@ -77,7 +77,7 @@ router.get("/clinicsMedic", authMiddlewareMedic, clinicsMedic)
 router.get("/clinicsPet", authMiddlewareMedic, clinicsPet)
 router.get("/pets/:petId", authMiddlewareMedic, petInfos)
 router.get("/pesquisa", searchClinicsControllers)
-router.get("/comment/:id", authMiddlewareClinic, getCommentsClinic)
+router.get("/comment/:id", getCommentsClinic)
 router.get("/getAllTypeAds", getAllTypeAds)
 router.get("/getAllAds/:idClinic", getAllAds)
 
@@ -122,10 +122,10 @@ router.post('/update-clinic-profile', updateClinic)
 router.put('/ads', authMiddlewareClinic, updatePostAd)
 
 // delete
-router.delete('/ads/:idAd', authMiddlewareClinic, deletePostAd )
-router.delete('/patient/:idClinic/:idPet', authMiddlewareClinic, removePatient)
+router.delete('/ads/:idAd', authMiddlewareClinic, deletePostAd ) // ok
+router.delete('/patient/:idClinic/:idPet', authMiddlewareClinic, removePatient) // ok
+router.delete('/integrar-medico-clinica/:idClinic/:idMedic', authMiddlewareClinic, removeMedic) // ok
 router.delete('/tutor/:idTutor', authMiddlewareTutor, removeAcountTutor)
-router.delete('/integrar-medico-clinica/:idClinic/:idMedic', authMiddlewareClinic, removeMedic)
 router.delete('/clinic/:idClinic', authMiddlewareClinic, removeAcountClinic)
 // remover medico
 

@@ -38,6 +38,7 @@ const authMiddlewareTutor = (req, res, next) => {
             const storedCelTutor = result[0].num_celular;
             const storedType = "Tutor";
             const storedImg = result[0].url_imagem;
+            const storedCPF = result[0].cd_cpf;
             
             const queryEndereco = `
                 SELECT 
@@ -72,6 +73,7 @@ const authMiddlewareTutor = (req, res, next) => {
                 const storedEstado = result[0].Estado;
 
                 req.user = {
+                    storedCPF,
                     storedIdTutor, 
                     storedNameTutor, 
                     storedSBTutor,

@@ -2,14 +2,13 @@ const db = require("../../db");
 const { createDbConnection } = require("../../db/mysql2")
 
 const getVaccines = async (req, res) => {
+	const idPet = req.params.idPet
 	try {
 		const bd = await createDbConnection();
 
-		const selectgetVaccinesSQL = `
-    SELECT * FROM carteira_vacinas
-    `
+		const selectgetVaccinesSQL = `SELECT * FROM carteira_vacinas WHERE id_pet = ?`
 
-		const [results] = await bd.query(selectgetVaccinesSQL);
+		const [results] = await bd.query(selectgetVaccinesSQL, [idPet]);
 
 		res.status(200).json({ count: results.length, results })
 

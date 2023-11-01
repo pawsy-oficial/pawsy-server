@@ -73,6 +73,7 @@ CREATE TABLE IF NOT EXISTS clinica
 recoveryCodeExpiry DATETIME,
  ds_sobre varchar(680),
  cd_rede int,
+ bl_disabled boolean default(false),
  
  constraint primary key (id_clinica, cd_crmv),  
  UNIQUE (cnpj_clinica,email_clinica,tl_clinica),
@@ -97,6 +98,7 @@ CREATE TABLE IF NOT EXISTS medico
  id_especialidade INT,
  id_endereco INT,  
  cd_crmv INT NOT NULL,
+ bl_disabled boolean default(false),
  url_imagem VARCHAR(300) not null,
 	recoveryCode VARCHAR(8) NULL,
 	recoveryCodeExpiry DATETIME NULL,

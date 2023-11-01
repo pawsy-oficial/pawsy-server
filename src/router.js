@@ -51,6 +51,8 @@ const { removePatient } = require("./controllers/clinic/removePatientControllers
 const { removeAcountTutor } = require("./controllers/tutor/removeTutorAcountControllers.js");
 const { removeMedic } = require("./controllers/clinic/removeMedicController.js");
 const { removeAcountClinic } = require("./controllers/clinic/removeAcountClinicControllers.js");
+const { updateAcountTutor, updateAddressTutor } = require("./controllers/tutor/updateAcountControllers.js");
+const { updateAcountMedic } = require("./controllers/medic/updateAcountMedic.js");
 
 
 // Consultas de dados
@@ -120,6 +122,9 @@ router.get('/profileMedic', authMiddlewareMedic, login.getProfileMedic);
 router.post('/update-pet', updatePet)
 router.post('/update-clinic-profile', updateClinic)
 router.put('/ads', authMiddlewareClinic, updatePostAd)
+router.put('/tutor', authMiddlewareTutor, updateAcountTutor)
+router.put('/tutorAddress', authMiddlewareTutor, updateAddressTutor)
+router.put('/medic', authMiddlewareMedic, updateAcountMedic)
 
 // delete
 router.delete('/ads/:idAd', authMiddlewareClinic, deletePostAd ) // ok

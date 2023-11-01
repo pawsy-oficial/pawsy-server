@@ -20,6 +20,7 @@ const integrarMedicoClinica = require("./controllers/integrateMedicClinic.js")
 const integratePatientClinic = require("./controllers/integratePetPatientClinic.js")
 const schendule = require("./controllers/schenduleControllers.js")
 const scheduleRegister = require("./controllers/schedule/clinic/CreateSchedule.js")
+const GenerateAvailableConsultations = require("./controllers/schedule/clinic/GenerateAvailableConsultations.js")
 
 // schemas
 const tutorSchema = require("./schemas/tutorSchema.js");
@@ -42,7 +43,8 @@ const clinicsPet = require("./controllers/medic/clinicsPet.js");
 const petInfos = require("./controllers/medic/petInfos.js");
 const { updateClinic } = require("./controllers/clinic/updateClinicControllers.js");
 const { getAllConsultation, getAllMyPets, getAllMedics } = require("./controllers/getAllControllers.js");
-
+const ListScheduleClinic = require("./controllers/schedule/clinic/ListSchedulesClinic.js")
+const VerifyStatusSchedule = require("./controllers/schedule/clinic/VerifyStatusSchedule.js")
 
 // Consultas de dados
 router.get("/", (req, res)=>{
@@ -70,6 +72,10 @@ router.get("/getAllPatients/:idClinic", authMiddlewareClinic, integratePatientCl
 router.get("/get-all-consultation", getAllConsultation)
 router.get("/get-all-pets/:idTutor", authMiddlewareTutor, getAllMyPets)
 router.get("/medico", authMiddlewareClinic, getAllMedics)
+router.get("/list-schedules/:id", authMiddlewareClinic, ListScheduleClinic.ListScheduleClinic)
+
+// verify(middleware)
+router.get("/status-schedule/:id", authMiddlewareClinic, VerifyStatusSchedule.VerifyStatusSchedule)
 
 // Registros
 router.post("/medico", validate(schemaMedic), registerTutor.registerMedic);
@@ -83,11 +89,13 @@ router.post("/agenda-register", authMiddlewareClinic, scheduleRegister.CreateSch
 router.post("/integrar-medico-clinica", integrarMedicoClinica.integrateMedicClinic)
 router.post("/integrar-paciente-clinica", integratePatientClinic.integratePetPatientClinic)
 
+//Consultas
+router.post("/gerar-consultas", authMiddlewareClinic, GenerateAvailableConsultations.GenerateAvailableConsultations)
+
 // Logins
 router.post('/loginTutor', login.loginTuto);
 router.post('/loginClinic', login.loginClinic);
 router.post('/loginMedic', login.loginMedic)
-
 
 // Recuperação de senha
 router.post('/sendCodeTutor', sendRecoveryCodeTutor)

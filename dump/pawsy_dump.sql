@@ -251,6 +251,10 @@ CREATE TABLE IF NOT EXISTS agenda
     nm_agenda VARCHAR(32) NOT NULL
 );
 
+ALTER TABLE agenda 
+	add column status bool;
+
+/*
 CREATE TABLE IF NOT EXISTS consulta 
 ( 
     id_consulta INT PRIMARY KEY AUTO_INCREMENT,  
@@ -268,6 +272,35 @@ CREATE TABLE IF NOT EXISTS consulta
 	CONSTRAINT fk_agenda_consulta
         FOREIGN KEY (id_agenda)
         REFERENCES agenda (id_agenda)
+);
+*/
+
+CREATE TABLE IF NOT EXISTS consulta_disponivel 
+( 
+    id_consulta_disp INT PRIMARY KEY AUTO_INCREMENT,  
+    dt_consulta DATE NOT NULL,  
+    hr_consulta TIME NOT NULL, 
+    id_medico INT NOT NULL,
+    id_agenda INT NOT NULL,
+    CONSTRAINT fk_consulta_disp_medico
+        FOREIGN KEY (id_medico)
+        REFERENCES medico (id_medico),
+    CONSTRAINT fk_consulta_disp_agenda
+        FOREIGN KEY (id_agenda)
+        REFERENCES agenda (id_agenda)
+);
+
+CREATE TABLE IF NOT EXISTS consulta_agendada 
+( 
+    id_consulta_agendada INT PRIMARY KEY AUTO_INCREMENT,
+    id_consulta_disp INT NOT NULL,
+    id_pet INT NOT NULL,
+    CONSTRAINT fk_consulta_agendada_disp
+        FOREIGN KEY (id_consulta_disp)
+        REFERENCES consulta_disponivel (id_consulta_disp),
+    CONSTRAINT fk_consulta_agendada_pet
+        FOREIGN KEY (id_pet)
+        REFERENCES pet (id_pet)
 );
 
 CREATE TABLE IF NOT EXISTS historico 
@@ -598,6 +631,31 @@ CREATE TABLE IF NOT EXISTS RECEITAS(
      CONSTRAINT fk_TuplaReceita_Receita
          FOREIGN KEY (id_TuplaReceita)
          REFERENCES tupla_receita (id_TuplaReceita)
+);
+
+CREATE TABLE IF NOT EXISTS ANUNCIO(
+	id_anuncio INT NOT NULL auto_increment primary key,
+    nm_anuncio varchar(50) NOT NULL
+);
+
+insert into ANUNCIO(nm_anuncio)
+values
+	('Campanha de vacinação'),
+    ('Campanha de castração'),
+    ('Doação'),
+    ('Promoção');
+
+CREATE TABLE IF NOT EXISTS MARKETING(
+	id_marketing INT NOT NULL auto_increment primary key,
+    nm_titulo varchar(180) NOT NULL,
+    nm_descricao varchar(300) NOT NULL,
+    tmp_inicial datetime null,
+    tmp_final datetime null,
+    img_marketing varchar(300) not null,
+    id_anuncio int not null,
+    CONSTRAINT fk_id_anuncio
+        FOREIGN KEY (id_anuncio)
+        REFERENCES ANUNCIO (id_anuncio)
 );
 
 insert into tp_receita(nm_TipoReceita)

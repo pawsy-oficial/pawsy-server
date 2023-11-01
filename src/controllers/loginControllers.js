@@ -138,24 +138,30 @@ const loginClinic = async (req, res) => {
             
             //secure: false por enquanto, já que ainda está localhost
             res.cookie('jwtToken', token, { httpOnly: true, secure: false, maxAge: 8 * 60 * 60 * 1000 });
-            
-            return res.json({
-                idClinica: storedIdClinica,
-                nameClinica: storedNameClinica,
-                cnpjClinica: storedCnpjClinica,
-                emailClinica: storedEmailClinica,
-                celClinica: storedCelClinica,
-                CEP: storedCEP,
-                Rua: storedRua,
-                Numero: storedNumero,
-                Complemento: storedComplemento,
-                Latitude: storedLatitude,
-                Longitude: storedLongitude,
-                Bairro: storedBairro,
-                Cidade: storedCidade,
-                Estado: storedEstado,
-                token: token
-            })
+            if(result[0].bl_disabled){
+                res.status(401).json({
+                    message: "conta desativada"
+                })
+            }
+            else{
+                res.status(200).json({
+                    idClinica: storedIdClinica,
+                    nameClinica: storedNameClinica,
+                    cnpjClinica: storedCnpjClinica,
+                    emailClinica: storedEmailClinica,
+                    celClinica: storedCelClinica,
+                    CEP: storedCEP,
+                    Rua: storedRua,
+                    Numero: storedNumero,
+                    Complemento: storedComplemento,
+                    Latitude: storedLatitude,
+                    Longitude: storedLongitude,
+                    Bairro: storedBairro,
+                    Cidade: storedCidade,
+                    Estado: storedEstado,
+                    token: token
+                })
+            }
             
         } catch (bcryptError) {
             console.log(bcryptError);
@@ -209,13 +215,18 @@ const loginMedic = async (req, res) => {
             //secure: false por enquanto, já que ainda está localhost
             res.cookie('jwtToken', token, { httpOnly: true, secure: false, maxAge: 8 * 60 * 60 * 1000 });
             
-            return res.json({
-                id: storedIdMedic,
-                nome: storedNameMedic,
-                email: storedEmailMedic,
-                celular: storedCRMVMedic,
-                token: token
-            })
+            if(result[0].bl_disabled){
+                res.status(401).json({message: "conta desativada"})
+            }
+            else{
+                res.status(200).json({
+                    id: storedIdMedic,
+                    nome: storedNameMedic,
+                    email: storedEmailMedic,
+                    celular: storedCRMVMedic,
+                    token: token
+                })
+            }
 
         } catch (bcryptError) {
             console.log(bcryptError);

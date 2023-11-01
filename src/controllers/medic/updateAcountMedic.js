@@ -4,12 +4,12 @@ const updateAcountMedic = (req, res) => {
     const { name, lastName, urlImage, idMedic } = req.body
 
     const updatProfileTutor = `
-        UPDATE medico tt
+        UPDATE medico md
             SET 
-                tt.nm_tutor = ?, 
-                tt.sb_medico = ?, 
-                tt.url_imagem = ?
-            WHERE tt.id_tutor = ?
+                md.nm_medico = ?, 
+                md.sb_medico = ?, 
+                md.url_imagem = ?
+            WHERE md.id_medico = ?
     `
 
     db.query(

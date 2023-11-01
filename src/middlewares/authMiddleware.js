@@ -239,8 +239,10 @@ const authMiddlewareMedic = (req, res, next) => {
             const storedCRMVMedic = result[0].cd_crmv;
             const storedImg = result[0].url_imagem;
             const storedType = "Medico";
+            const storedCel = result[0].num_celular
+            const storedLastName = result[0].sb_medico
             
-            req.Medic = {storedIdMedic, storedNameMedic, storedEmailMedic, storedCRMVMedic, storedType, storedImg}
+            req.Medic = {storedIdMedic, storedNameMedic, storedEmailMedic, storedCRMVMedic, storedType, storedImg, storedCel, storedLastName}
 
             next()
         });

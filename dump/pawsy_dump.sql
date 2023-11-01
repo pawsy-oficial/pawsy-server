@@ -88,6 +88,7 @@ CREATE TABLE IF NOT EXISTS medico
 ( 
  id_medico INT NOT NULL auto_increment,  
  nm_medico VARCHAR(255) NOT NULL,  
+ sb_medico VARCHAR(64) NULL,
  cd_cpf CHAR(11) NOT NULL,  
  dt_nascimento DATE NOT NULL,  
  nm_email VARCHAR(255) NOT NULL,  

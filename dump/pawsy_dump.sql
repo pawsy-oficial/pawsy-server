@@ -136,6 +136,7 @@ CREATE TABLE IF NOT EXISTS tutor
     url_imagem VARCHAR(300) not null,
     recoveryCode VARCHAR(8),
 	recoveryCodeExpiry DATETIME,
+    bl_disabled boolean default(false),
     CONSTRAINT pk_tutor PRIMARY KEY (id_tutor),
     CONSTRAINT fk_tutor_endereco
         FOREIGN KEY (id_endereco)

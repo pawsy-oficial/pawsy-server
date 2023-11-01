@@ -4,7 +4,7 @@ const removeAcountTutor = (req, res) => {
     const { idTutor } = req.params
 
     const querySQL = `SELECT id_tutor FROM tutor WHERE id_tutor = ?`
-    const deleteSQL = `DELETE FROM tutor WHERE id_tutor = ?`
+    const deleteSQL = `UPDATE tutor SET bl_disabled = 1 WHERE id_tutor = ?`
     
     db.query(querySQL, [idTutor], (err, result)=>{
         if(err){
@@ -19,7 +19,7 @@ const removeAcountTutor = (req, res) => {
                     res.status(500).json({err})
                 }
 
-                res.status(200).json({message: "tutor removido com sucesso"})
+                res.status(200).json({message: "tutor desativado com sucesso"})
             })
         )
     })

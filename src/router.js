@@ -53,6 +53,7 @@ const { removeMedic } = require("./controllers/clinic/removeMedicController.js")
 const { removeAcountClinic } = require("./controllers/clinic/removeAcountClinicControllers.js");
 const { updateAcountTutor, updateAddressTutor } = require("./controllers/tutor/updateAcountControllers.js");
 const { updateAcountMedic } = require("./controllers/medic/updateAcountMedic.js");
+const { removeAcountMedic } = require("./controllers/medic/removeAcountMedic.js");
 
 
 // Consultas de dados
@@ -130,8 +131,10 @@ router.put('/medic', authMiddlewareMedic, updateAcountMedic)
 router.delete('/ads/:idAd', authMiddlewareClinic, deletePostAd ) // ok
 router.delete('/patient/:idClinic/:idPet', authMiddlewareClinic, removePatient) // ok
 router.delete('/integrar-medico-clinica/:idClinic/:idMedic', authMiddlewareClinic, removeMedic) // ok
-router.delete('/tutor/:idTutor', authMiddlewareTutor, removeAcountTutor)
+
+router.delete('/tutor/:idTutor', authMiddlewareTutor, removeAcountTutor) // ok  
 router.delete('/clinic/:idClinic', authMiddlewareClinic, removeAcountClinic)
+router.delete('/medic/:idMedic', authMiddlewareMedic, removeAcountMedic)
 // remover medico
 
 

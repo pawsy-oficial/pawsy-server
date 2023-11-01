@@ -38,7 +38,7 @@ const getAllAds = (req, res) => {
         if (err) {
             res.status(500).json({ err })
         }
-
+        // console.log(Ads);
         const formatDateAds = Ads.map(ad => (
             { ...ad, tmp_final: dayjs(ad.tmp_final).format("YYYY-MM-DD HH:mm") }
         ))

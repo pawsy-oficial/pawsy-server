@@ -40,13 +40,20 @@ const loginTuto = async (req, res) => {
             //secure: false por enquanto, já que ainda está localhost
             res.cookie('jwtToken', token, { httpOnly: true, secure: false, maxAge: 8 * 60 * 60 * 1000 });
             
-            return res.json({
-                id: storedIdTutor,
-                nome: storedNameTutor,
-                email: storedEmailTutor,
-                celular: storedCelTutor,
-                token: token
-            })
+            if(result[0].bl_disabled){
+                res.status(401).json({
+                    message: "Conta desativada"
+                })
+            }
+            else{
+                res.status(200).json({
+                    id: storedIdTutor,
+                    nome: storedNameTutor,
+                    email: storedEmailTutor,
+                    celular: storedCelTutor,
+                    token: token,
+                })
+            }
 
         } catch (bcryptError) {
             console.log(bcryptError);

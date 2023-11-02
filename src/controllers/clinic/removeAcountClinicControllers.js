@@ -4,7 +4,7 @@ const removeAcountClinic = (req, res) => {
     const {idClinic} = req.params
 
     const querySQL = `SELECT id_clinica FROM clinica WHERE id_clinica = ?`
-    const deleteSQL = `DELETE FROM clinica WHERE id_clinica = ?`
+    const deleteSQL = `UPDATE clinica SET bl_disabled = 1 WHERE id_clinica = ?`
 
     db.query(querySQL, [idClinic], (err, result)=>{
         if(err){

@@ -1,3 +1,4 @@
+const dayjs = require("dayjs");
 const db = require("../db")
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
@@ -253,19 +254,11 @@ const registerVermifuge = (req, res) => {
 const registerVaccine = (req, res) => {
     const { vacina, id_clinic, id_pet, id_medic, dt_retorno } = req.body
 
-    console.log(dt_retorno);
+    const currentDate = dayjs().format("YYYY-MM-DD")
 
-    const date = new Date();
-    const currentDay = date.getDate();
-    const currentYear = date.getFullYear();
-    const currentMonth = date.getMonth();
-    const currentDate = `${currentYear}-${currentMonth+1}-${currentDay}`
+    const insertSQL = "INSERT INTO carteira_vacinas (id_vacina, id_clinica, id_pet, id_medico, dt_aplicacao, dt_retorno) VALUES (?,?,?,?,?,?)"
 
-    // let data = new Date();
-    // let dataFormatada = currentDay + "-" + currentMonth + "-" + currentDay;
-
-    const insertSQL = "insert into carteira_vacinas (nm_vacina, id_clinica, id_pet, id_medico, dt_aplicacao, dt_retorno) values ?"
-    db.query(insertSQL, [[[vacina, id_clinic, id_pet, id_medic, currentDate, dt_retorno]]], (err, result) => {
+    db.query(insertSQL, [vacina, id_clinic, id_pet, id_medic, currentDate, dt_retorno], (err, result) => {
         if (err) {
             res.status(400).json({ erro: "erro ao consultar o banco" + err })
             return;

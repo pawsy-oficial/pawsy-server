@@ -87,6 +87,7 @@ router.get("/getAllTypeAds", getAllTypeAds)
 router.get("/getAllAds/:idClinic", getAllAds)
 router.get("/add-new-vermifuge", authMiddlewareMedic, addNewVermifuge)
 router.get("/get-vaccine/:idPet", authMiddlewareMedic, getVaccines)
+router.get("/get-all-type-vaccines", getAllTypeVaccines)
 
 // Registros
 router.post("/medico", validate(schemaMedic), registerTutor.registerMedic);

@@ -5,10 +5,25 @@ const clinicsPet = async (req, res) => {
     const bd = await createDbConnection();
 
     const selectClinicsPetSQL = `
-      SELECT pet.*, tutor.nm_tutor FROM pacientes
-      JOIN pet ON pet.id_pet = pacientes.id_pet
-      INNER JOIN tutor ON tutor.id_tutor = pet.id_tutor
-      WHERE pacientes.id_clinica = ?
+      SELECT 
+        pt.id_pet as PetID, 
+        rc.nm_raca as BreedName, 
+        pl.tp_pelagem as CoatType, 
+        sx.nm_sexo as Gender, 
+        an.nm_animal as AnimalType, 
+        pt.dt_nascimento as BirthDate, 
+        pt.resumo as Summary, 
+        pt.nm_pet as PetName, 
+        pt.url_img as PetImage, 
+        tutor.nm_tutor as TutorName
+      FROM pacientes pc
+      INNER JOIN pet pt ON pt.id_pet = pc.id_pet
+      INNER JOIN pelagem pl ON pl.id_pelagem = pt.id_pelagem
+      INNER JOIN raca rc ON rc.id_raca = pt.id_raca
+      INNER JOIN sexo sx ON sx.id_sexo = pt.id_sexo
+      INNER JOIN animal an ON an.id_animal = pt.id_animal
+      INNER JOIN tutor ON tutor.id_tutor = pt.id_tutor
+      WHERE pc.id_clinica = ?;
     `
 
     const [results] = await bd.query(selectClinicsPetSQL, [req.Medic.storedIdMedic]);

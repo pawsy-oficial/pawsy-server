@@ -26,13 +26,21 @@ const getAllAds = (req, res) => {
             where mk.id_clinica = ?
     `
 
-    const queryPreview = `
-        select mk.id_marketing as idPost, mk.nm_titulo as title, mk.nm_descricao as description, mk.tmp_final, mk.img_marketing as imgPost, cl.nm_clinica as nameClinic, mk.id_clinica as idClinic, cl.url_imagem as urlImageClinic
-            from marketing mk
-            inner join anuncio an ON an.id_anuncio = mk.id_anuncio
-            inner join clinica cl ON cl.id_clinica = mk.id_clinica
-            where cl.id_clinica = ?
-    `
+    const queryPreview = id != "all" && filter != "vaccine"
+        ? `
+            select mk.id_marketing as idPost, mk.nm_titulo as title, mk.nm_descricao as description, mk.tmp_final, mk.img_marketing as imgPost, cl.nm_clinica as nameClinic, mk.id_clinica as idClinic, cl.url_imagem as urlImageClinic
+                from marketing mk
+                inner join anuncio an ON an.id_anuncio = mk.id_anuncio
+                inner join clinica cl ON cl.id_clinica = mk.id_clinica
+                where cl.id_clinica = ?
+        `
+        : `
+            select mk.id_marketing as idPost, mk.nm_titulo as title, mk.nm_descricao as description, mk.tmp_final, mk.img_marketing as imgPost, cl.nm_clinica as nameClinic, mk.id_clinica as idClinic, cl.url_imagem as urlImageClinic
+                from marketing mk
+                inner join anuncio an ON an.id_anuncio = mk.id_anuncio
+                inner join clinica cl ON cl.id_clinica = mk.id_clinica
+                where an.id_anuncio = 1;
+        `
 
     db.query((filter == "preview" ? queryPreview : query), [id], (err, Ads) => {
         if (err) {
@@ -49,13 +57,13 @@ const getAllAds = (req, res) => {
         if (filter == "preview") {
             const adsPreview = []
             for (let i = 0; i < Ads.length; i++) {
-                if((i+1) <= 20){
+                if ((i + 1) <= 20) {
                     adsPreview.push(Ads[i])
                 }
                 else break
             }
 
-            res.status(200).json({adsPreview})
+            res.status(200).json({ adsPreview })
         }
         else {
             res.status(200).json({ Ads })

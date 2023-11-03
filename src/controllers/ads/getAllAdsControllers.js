@@ -27,11 +27,11 @@ const getAllAds = (req, res) => {
     `
 
     const queryPreview = `
-        select mk.id_marketing as idPost, mk.nm_titulo as title, mk.nm_descricao as description, mk.tmp_final, cl.nm_clinica as nameClinic, mk.id_clinica as idClinic, cl.url_imagem as urlImageClinic
+        select mk.id_marketing as idPost, mk.nm_titulo as title, mk.nm_descricao as description, mk.tmp_final, mk.img_marketing as imgPost, cl.nm_clinica as nameClinic, mk.id_clinica as idClinic, cl.url_imagem as urlImageClinic
             from marketing mk
             inner join anuncio an ON an.id_anuncio = mk.id_anuncio
             inner join clinica cl ON cl.id_clinica = mk.id_clinica
-            where mk.id_anuncio = 1
+            where cl.id_clinica = ?
     `
 
     db.query((filter == "preview" ? queryPreview : query), [id], (err, Ads) => {

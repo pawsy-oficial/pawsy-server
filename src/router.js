@@ -132,11 +132,10 @@ router.delete('/ads/:idAd', authMiddlewareClinic, deletePostAd ) // ok
 router.delete('/patient/:idClinic/:idPet', authMiddlewareClinic, removePatient) // ok
 router.delete('/integrar-medico-clinica/:idClinic/:idMedic', authMiddlewareClinic, removeMedic) // ok
 
-// disabled
+// disabled account
 router.delete('/tutor/:idTutor', authMiddlewareTutor, removeAcountTutor) // ok  
 router.delete('/clinic/:idClinic', authMiddlewareClinic, removeAcountClinic) 
 router.delete('/medic/:idMedic', authMiddlewareMedic, removeAcountMedic) // ok
-// remover medico
 
 
 

@@ -18,6 +18,7 @@ const login = require("./controllers/loginControllers.js")
 const uf = require("./controllers/cepStateControllers.js")
 const integrarMedicoClinica = require("./controllers/integrateMedicClinic.js")
 const integratePatientClinic = require("./controllers/integratePetPatientClinic.js")
+const scheduleRegister = require("./controllers/schedule/clinic/CreateSchedule.js")
 
 // schemas
 const tutorSchema = require("./schemas/tutorSchema.js");
@@ -73,7 +74,10 @@ router.get("/ClinicCoordinates", authMiddlewareTutor, getCoordinate.ClinicCoordi
 router.get("/ClinicPreviews", Previews.ClinicPreview)
 router.get("/get-all-pets/:idTutor", authMiddlewareTutor, getAllPets)
 router.get("/get-tipoConsulta", authMiddlewareClinic, PopulationsControllerSchedule.TipoConsulta)
-router.get("/get-medicosIntegrados", authMiddlewareClinic, PopulationsControllerSchedule.MedicosIntegrados)
+router.get("/get-medicosIntegrados", PopulationsControllerSchedule.MedicosIntegrados) // removi o meddleware dessa rota
+router.get("/getAllPets", authMiddlewareClinic, integratePatientClinic.pets)
+router.get("/getAllPatients/:idClinic", authMiddlewareClinic, integratePatientClinic.getAllPatientsClinic)
+router.get("/countPatients/:idClinic", authMiddlewareClinic, integratePatientClinic.countPatientsClinic)
 router.get("/clinicsMedic", authMiddlewareMedic, clinicsMedic)
 router.get("/clinicsPet", authMiddlewareMedic, clinicsPet)
 router.get("/pets/:petId", authMiddlewareMedic, petInfos)
@@ -120,7 +124,25 @@ router.get('/profileTutor', authMiddlewareTutor, login.getProfileTutor);
 router.get('/profileClinic', authMiddlewareClinic, login.getProfileClinic);
 router.get('/profileMedic', authMiddlewareMedic, login.getProfileMedic);
 
-// updata
+// update
 router.post('/update-pet', updatePet)
+router.post('/update-clinic-profile', updateClinic)
+router.put('/ads', authMiddlewareClinic, updatePostAd)
+router.put('/tutor', authMiddlewareTutor, updateAcountTutor)
+router.put('/tutorAddress', authMiddlewareTutor, updateAddressTutor)
+router.put('/medic', authMiddlewareMedic, updateAcountMedic)
+
+// delete
+router.delete('/ads/:idAd', authMiddlewareClinic, deletePostAd ) // ok
+router.delete('/patient/:idClinic/:idPet', authMiddlewareClinic, removePatient) // ok
+router.delete('/integrar-medico-clinica/:idClinic/:idMedic', authMiddlewareClinic, removeMedic) // ok
+
+// disabled account
+router.delete('/tutor/:idTutor', authMiddlewareTutor, removeAcountTutor) // ok  
+router.delete('/clinic/:idClinic', authMiddlewareClinic, removeAcountClinic) 
+router.delete('/medic/:idMedic', authMiddlewareMedic, removeAcountMedic) // ok
+
+
+
 
 module.exports = router

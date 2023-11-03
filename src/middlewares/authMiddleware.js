@@ -26,7 +26,7 @@ const authMiddlewareTutor = (req, res, next) => {
             }
             
             if (result.length === 0) {
-                res.status(401).send(UnauthorizedError);
+                res.status(401).send('UnauthorizedError');
                 return;
             }
 
@@ -38,6 +38,7 @@ const authMiddlewareTutor = (req, res, next) => {
             const storedCelTutor = result[0].num_celular;
             const storedType = "Tutor";
             const storedImg = result[0].url_imagem;
+            const storedCPF = result[0].cd_cpf;
             
             const queryEndereco = `
                 SELECT 
@@ -72,6 +73,7 @@ const authMiddlewareTutor = (req, res, next) => {
                 const storedEstado = result[0].Estado;
 
                 req.user = {
+                    storedCPF,
                     storedIdTutor, 
                     storedNameTutor, 
                     storedSBTutor,
@@ -146,7 +148,8 @@ const authMiddlewareClinic = (req, res, next) => {
                     e.longitude AS Longitude,
                     b.nm_bairro AS Bairro,
                     c.nm_cidade AS Cidade,
-                    u.nm_estado AS Estado
+                    u.nm_estado AS Estado,
+                    u.id_uf AS IdEstado
                 FROM clinica cl
                     JOIN endereco e ON cl.id_endereco = e.id_endereco
                     JOIN bairro b ON e.id_bairro = b.id_bairro
@@ -167,6 +170,7 @@ const authMiddlewareClinic = (req, res, next) => {
                 const storedBairro = result[0].Bairro;
                 const storedCidade = result[0].Cidade;
                 const storedEstado = result[0].Estado;
+                const storedIdEstado = result[0].IdEstado;
 
             
 
@@ -188,6 +192,7 @@ const authMiddlewareClinic = (req, res, next) => {
                 Bairro: storedBairro,
                 Cidade: storedCidade,
                 Estado: storedEstado,
+                storedIdEstado,
                 storedStatus 
             }
 
@@ -234,8 +239,10 @@ const authMiddlewareMedic = (req, res, next) => {
             const storedCRMVMedic = result[0].cd_crmv;
             const storedImg = result[0].url_imagem;
             const storedType = "Medico";
+            const storedCel = result[0].num_celular
+            const storedLastName = result[0].sb_medico
             
-            req.Medic = {storedIdMedic, storedNameMedic, storedEmailMedic, storedCRMVMedic, storedType, storedImg}
+            req.Medic = {storedIdMedic, storedNameMedic, storedEmailMedic, storedCRMVMedic, storedType, storedImg, storedCel, storedLastName}
 
             next()
         });

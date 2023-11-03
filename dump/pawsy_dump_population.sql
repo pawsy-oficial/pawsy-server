@@ -1,54 +1,6 @@
 SET SQL_SAFE_UPDATES = 0;
 
--- selects para a banca //////
-
-select * from pacientes;
-select * from trabalho;
-select * from tutor;
-select * from medico;
-select * from clinica;
-       
-
-
-
--- SELECT * FROM tutor WHERE id_tutor IN (1, 2);
--- SELECT * FROM raca WHERE id_raca IN (1, 2);
--- SELECT * FROM pelagem WHERE id_pelagem IN (1, 2);
--- SELECT * FROM sexo WHERE id_sexo IN (1, 2);
--- SELECT * FROM animal WHERE id_animal IN (1, 2);
-
--- SELECT 
---            e.cd_cep AS CEP,
---            e.nm_rua AS Rua,
---            e.num_residencia AS Numero,
---            e.complemento AS Complemento,
---            e.latitude AS Latitude,
---            e.longitude AS Longitude,
---            b.nm_bairro AS Bairro,
- --           c.nm_cidade AS Cidade,
---            u.nm_estado AS Estado
---        FROM clinica cl
---        JOIN endereco e ON cl.id_endereco = e.id_endereco
- --       JOIN bairro b ON e.id_bairro = b.id_bairro
- --       JOIN cidade c ON b.id_cidade = c.id_cidade
- --       JOIN uf u ON c.id_uf = u.id_uf
- --       WHERE cl.id_clinica = 7;
-
-
-
-
-    
-
--- 10-08-2023
--- 15-08-2023
-
--- Inserindo 3 endereços fictícios:
-
--- Inserindo 3 médicos fictícios:
-
--- tentando popular aqui
-
-
+## tentando popular aqui
 INSERT INTO cidade (id_uf, nm_cidade)
 VALUES
 (25, 'Santos'),
@@ -94,9 +46,7 @@ VALUES
 ('11060-003', 'Avenida Ana Costa', '383', NULL, '-23.961059', '-46.331878', 11),
 ('11045-003', 'Avenida Conselheiro Nébias', '730', NULL, '-23.966243', '-46.323898', 12);
 
-
-select * from endereco;
-
+-- alter table tutor drop column sb_tutor;
 INSERT INTO tutor (nm_tutor, sb_tutor,cd_cpf, dt_nascimento, nm_email, num_celular, pw_tutor, id_endereco, url_imagem)
 VALUES
 ('Romullo', "melo", '56011132898', '2003-08-24', 'romullomelo013@gmail.com', '12312412312', '$2b$10$CLLqaZ3H4cDDjOzUWFN4DeMWcqRGiF/HOPrmcPShWdgjLHEV/RAta', 1, '1695781169912_pawsy_20221213_033118_Easy-Resize.com.jpg'),
@@ -112,3 +62,6 @@ VALUES
 ('Pets veterinário - Gonzaga', '41250583000196', 'petz@contatos.com', '42523432423', '$2b$10$OtgR63O8tgG/2LGa.Om/9uOq0rzcNTXRac.Uagl1cXhwuFBNBf69C', 11, '43543', '1696257226316_pawsy_petz logos 1.jpg'),
 ('animal vet', '76233982000123', 'vetanimal@gmail.com', '34590983242', '$2b$10$ZIdWNgZx7XGF/9peBQrRTuow836BXkpW9ic5EV4VeG0KiISdZcRqG', 12, '42377', '1696257354003_pawsy_images (2).jpeg');
 
+INSERT INTO medico (nm_medico, cd_cpf, dt_nascimento, nm_email, num_celular, pw_medic, id_especialidade, cd_crmv ,url_imagem)
+VALUES 
+("jaba", "56011132898", "2000-08-24", "romullomelo013@gmail.com", "14232342342", "$2b$10$1ySpHRaXQLwvuDGkmAR7/.zHdRo4Xe9lS6XGlYGwaH.r6fxGmGzl.", 12, "32222", "1698621579157_pawsy_1697517333077_pawsy_doctor.jpg");

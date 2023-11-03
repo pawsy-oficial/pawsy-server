@@ -39,6 +39,21 @@ const updatePet = require("./controllers/tutor/updatePetsControllers.js");
 const clinicsMedic = require("./controllers/medic/clinicsMedic.js");
 const clinicsPet = require("./controllers/medic/clinicsPet.js");
 const petInfos = require("./controllers/medic/petInfos.js");
+const { updateClinic } = require("./controllers/clinic/updateClinicControllers.js");
+const { searchClinicsControllers } = require("./controllers/searchClinicsControllers.js");
+const { postCommentsClinic, getCommentsClinic } = require("./controllers/commentsControllers.js");
+const {getAllTypeAds, getAllAds} = require("./controllers/ads/getAllAdsControllers.js");
+const postAds = require("./controllers/ads/postAds.js");
+const deletePostAd = require("./controllers/ads/deleteController.js");
+const updatePostAd = require("./controllers/ads/updateController.js");
+const { removePatient } = require("./controllers/clinic/removePatientControllers.js");
+const { removeAcountTutor } = require("./controllers/tutor/removeTutorAcountControllers.js");
+const { removeMedic } = require("./controllers/clinic/removeMedicController.js");
+const { removeAcountClinic } = require("./controllers/clinic/removeAcountClinicControllers.js");
+const { updateAcountTutor, updateAddressTutor } = require("./controllers/tutor/updateAcountControllers.js");
+const { updateAcountMedic } = require("./controllers/medic/updateAcountMedic.js");
+const { removeAcountMedic } = require("./controllers/medic/removeAcountMedic.js");
+
 const addNewVermifuge = require("./controllers/medic/addNewVermifuge.js");
 const { getVaccines, getAllTypeVaccines } = require("./controllers/medic/getVaccinesAndVermifuge.js");
 
@@ -62,6 +77,10 @@ router.get("/get-medicosIntegrados", authMiddlewareClinic, PopulationsController
 router.get("/clinicsMedic", authMiddlewareMedic, clinicsMedic)
 router.get("/clinicsPet", authMiddlewareMedic, clinicsPet)
 router.get("/pets/:petId", authMiddlewareMedic, petInfos)
+router.get("/pesquisa", searchClinicsControllers)
+router.get("/comment/:id", getCommentsClinic)
+router.get("/getAllTypeAds", getAllTypeAds)
+router.get("/getAllAds/:idClinic", getAllAds)
 router.get("/add-new-vermifuge", authMiddlewareMedic, addNewVermifuge)
 router.get("/get-vaccine/:idPet", authMiddlewareMedic, getVaccines)
 
@@ -71,6 +90,9 @@ router.post("/clinica", validate(schemaClinic),registerTutor.registerClinic);
 router.post("/tutor-register", validate(tutorSchema), registerTutor.registerTutor);
 router.post("/pet-register", validate(schemaPet) ,registerTutor.registerPet);
 router.post("/vermifuge", registerTutor.registerVermifuge);
+router.post("/comment", authMiddlewareTutor, postCommentsClinic)
+router.post("/ads", authMiddlewareClinic, postAds)
+// router.post("/agenda-register", authMiddlewareClinic, scheduleRegister.CreateSchedule);
 router.post("/vaccine", registerTutor.registerVaccine);
 
 // Integrações

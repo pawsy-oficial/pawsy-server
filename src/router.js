@@ -56,6 +56,8 @@ const { removeAcountMedic } = require("./controllers/medic/removeAcountMedic.js"
 
 const { getVaccines, getAllTypeVaccines, getAllVermifuges } = require("./controllers/medic/getVaccinesAndVermifuge.js");
 const { clinicsPet, getAllPetsTutor } = require("./controllers/medic/clinicsPet.js");
+const postHistory = require("./controllers/history/postHistory.js");
+const getHistory = require("./controllers/history/getHistory.js");
 
 // Consultas de dados
 router.get("/", (req, res)=>{
@@ -88,6 +90,7 @@ router.get("/get-all-vermifuge/:idTutor/:idPet", authMiddlewareMedic, getAllVerm
 router.get("/get-vaccine/:idPet", authMiddlewareMedic, getVaccines)
 router.get("/get-all-type-vaccines", getAllTypeVaccines)
 router.get("/get-all-my-pets/:idClinic/:idTutor", getAllPetsTutor)
+router.get("/history", authMiddlewareTutor, getHistory)
 
 // Registros
 router.post("/medico", validate(schemaMedic), registerTutor.registerMedic);
@@ -99,6 +102,7 @@ router.post("/comment", authMiddlewareTutor, postCommentsClinic)
 router.post("/ads", authMiddlewareClinic, postAds)
 // router.post("/agenda-register", authMiddlewareClinic, scheduleRegister.CreateSchedule);
 router.post("/vaccine", registerTutor.registerVaccine);
+router.post("/history", postHistory)
 
 // Integrações
 router.post("/integrar-medico-clinica", integrarMedicoClinica.integrateMedicClinic)

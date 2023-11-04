@@ -121,7 +121,7 @@ CREATE TABLE IF NOT EXISTS trabalho(
     
     CONSTRAINT pk_trabalho PRIMARY KEY (cd_trabalho),
     CONSTRAINT fk_medico FOREIGN KEY ( cd_medico ) REFERENCES medico(id_medico),
-    CONSTRAINT fk_clinica FOREIGN KEY ( cd_clinica ) REFERENCES clinica(id_clinica) ON DELETE CASCADE
+    CONSTRAINT fk_clinica FOREIGN KEY ( cd_clinica ) REFERENCES clinica(id_clinica)
 );
 
 CREATE TABLE IF NOT EXISTS tutor 
@@ -156,10 +156,10 @@ CREATE TABLE IF NOT EXISTS comentarios (
     CONSTRAINT pk_comentario PRIMARY KEY (cd_comentario),
     CONSTRAINT fk_tutor_comentario 
 		FOREIGN KEY (id_tutor) 
-        REFERENCES tutor(id_tutor) ON DELETE CASCADE,
+        REFERENCES tutor(id_tutor),
 	CONSTRAINT fk_clinica_comentario 
 		FOREIGN KEY (id_clinica) 
-        REFERENCES clinica(id_clinica) ON DELETE CASCADE
+        REFERENCES clinica(id_clinica)
 );
 
 CREATE TABLE IF NOT EXISTS raca 
@@ -202,7 +202,7 @@ CREATE TABLE IF NOT EXISTS pet
     url_img VARCHAR(300),
     CONSTRAINT fk_pet_tutor
         FOREIGN KEY (id_tutor)
-        REFERENCES tutor (id_tutor) ON DELETE CASCADE,
+        REFERENCES tutor (id_tutor),
     CONSTRAINT fk_pet_raca
         FOREIGN KEY (id_raca)
 			REFERENCES raca(id_raca),
@@ -226,7 +226,7 @@ CREATE TABLE IF NOT EXISTS vacinados(
     CONSTRAINT fk_pet 
 		FOREIGN KEY (cd_pet) 
         REFERENCES pet(id_pet),
-	CONSTRAINT fk_clinica_responsavel FOREIGN KEY ( cd_clinica ) REFERENCES clinica(id_clinica) ON DELETE CASCADE
+	CONSTRAINT fk_clinica_responsavel FOREIGN KEY ( cd_clinica ) REFERENCES clinica(id_clinica)
 );
 
 CREATE TABLE IF NOT EXISTS saude 
@@ -252,26 +252,37 @@ CREATE TABLE IF NOT EXISTS agenda
     dt_abertura DATE NOT NULL,  
     dt_fechamento DATE NOT NULL,  
     observacoes VARCHAR(255),  
-    nm_agenda VARCHAR(32) NOT NULL
+    nm_agenda VARCHAR(32) NOT NULL,
+  	status bool
 );
 
-CREATE TABLE IF NOT EXISTS consulta 
+CREATE TABLE IF NOT EXISTS consulta_disponivel 
 ( 
-    id_consulta INT PRIMARY KEY AUTO_INCREMENT,  
+    id_consulta_disp INT PRIMARY KEY AUTO_INCREMENT,  
     dt_consulta DATE NOT NULL,  
     hr_consulta TIME NOT NULL,
-    id_pet INT NOT NULL,
+  	status_consulta bool null,
     id_medico INT NOT NULL,
     id_agenda INT NOT NULL,
-    CONSTRAINT fk_consulta_pet
-        FOREIGN KEY (id_pet)
-        REFERENCES pet (id_pet),
-    CONSTRAINT fk_consulta_medico
+    CONSTRAINT fk_consulta_disp_medico
         FOREIGN KEY (id_medico)
         REFERENCES medico (id_medico),
-	CONSTRAINT fk_agenda_consulta
+    CONSTRAINT fk_consulta_disp_agenda
         FOREIGN KEY (id_agenda)
         REFERENCES agenda (id_agenda)
+);
+
+CREATE TABLE IF NOT EXISTS consulta_agendada 
+( 
+    id_consulta_agendada INT PRIMARY KEY AUTO_INCREMENT,
+    id_consulta_disp INT NOT NULL,
+    id_pet INT NOT NULL,
+    CONSTRAINT fk_consulta_agendada_disp
+        FOREIGN KEY (id_consulta_disp)
+        REFERENCES consulta_disponivel (id_consulta_disp),
+    CONSTRAINT fk_consulta_agendada_pet
+        FOREIGN KEY (id_pet)
+        REFERENCES pet (id_pet)
 );
 
 CREATE TABLE IF NOT EXISTS historico 
@@ -287,7 +298,7 @@ CREATE TABLE IF NOT EXISTS historico
         REFERENCES pet (id_pet),
     CONSTRAINT fk_historico_clinica
         FOREIGN KEY (id_clinica)
-        REFERENCES clinica(id_clinica) ON DELETE CASCADE
+        REFERENCES clinica(id_clinica)
 );
 
 CREATE TABLE IF NOT EXISTS restricao 
@@ -300,14 +311,6 @@ CREATE TABLE IF NOT EXISTS restricao
         REFERENCES agenda (id_agenda)
 );
 
-CREATE TABLE IF NOT EXISTS tipo_consulta
-( 
-	id_tipo int not null auto_increment,
-    nm_tipo varchar(64) not null,
-    
-    CONSTRAINT pk_tipo PRIMARY KEY (id_tipo)
-);
-
 CREATE TABLE IF NOT EXISTS disponibilidade
 ( 
     id_disponibilidade INT PRIMARY KEY AUTO_INCREMENT,  
@@ -315,17 +318,14 @@ CREATE TABLE IF NOT EXISTS disponibilidade
     id_agenda INT NOT NULL,  
     hr_entrada TIME NOT NULL,  
     hr_saida TIME NOT NULL,
-    tp_consulta int not null,
+    tp_consulta VARCHAR(180) NULL,
     tm_intervalo int not null,
     CONSTRAINT fk_disponibilidade_medico
         FOREIGN KEY (id_medico)
         REFERENCES medico (id_medico),
     CONSTRAINT fk_disponibilidade_agenda
         FOREIGN KEY (id_agenda)
-        REFERENCES agenda (id_agenda),
-	CONSTRAINT fk_tp_consulta 
-		FOREIGN KEY (tp_consulta) 
-        REFERENCES tipo_consulta(id_tipo)
+        REFERENCES agenda (id_agenda)
 );
 
 CREATE TABLE IF NOT EXISTS dia_semana (
@@ -355,7 +355,7 @@ CREATE TABLE IF NOT EXISTS pacientes
     
     id_clinica int not null,
     
-    constraint fk_paciente foreign key (id_clinica) references clinica(id_clinica) ON DELETE CASCADE,
+    constraint fk_paciente foreign key (id_clinica) references clinica(id_clinica),
 
     CONSTRAINT fk_pacientes_pet
         FOREIGN KEY (id_pet)
@@ -520,54 +520,9 @@ values
     ("Sexta-feira"),
     ("Sábado");
 
-
-insert into tipo_consulta(nm_tipo)
-values 
-	("consulta - rotina"),
-    ("exame geral"),
-    ("eletrocardiograma"),
-    ("ecocardiograma"),
-    ("ultrassonografia"),
-    ("hemograma"),
-    ("cirurgia"),
-    ("consulta - dentista"),
-    ("consulta - dermatologista"),
-    ("consulta - otorrinolaringologista"),
-    ("consulta - oftalmologista");
-
 alter user 'root'@'localhost' identified with mysql_native_password by 'password';
 
 ALTER TABLE clinica ADD status_loja boolean; 
--- aberto ou fechado
-
--- CREATE TABLE IF NOT EXISTS vacinas 
--- ( 
---     id_vacina INT auto_increment,  
---     nm_vacina VARCHAR(255) NOT NULL,  
---     tp_vacina VARCHAR(3) NOT NULL,
---     CONSTRAINT pk_vacina primary key (id_vacina)
--- );
-
--- CREATE TABLE IF NOT EXISTS carteira_vacinas 
--- ( 
---     id_aplicacao INT PRIMARY KEY AUTO_INCREMENT,  
---     dt_aplicacao DATE NOT NULL,  
---     id_pet INT NOT NULL,
---     id_medico INT NOT NULL,
---     dt_retorno DATE NOT NULL,  
---     id_vacina INT NOT NULL,
---     id_clinica INT NOT NULL,
-    
---     CONSTRAINT fk_carteira_vacinas_pet
---         FOREIGN KEY (id_pet)
---         REFERENCES pet (id_pet),
---     CONSTRAINT fk_carteira_vacinas_medico
---         FOREIGN KEY (id_medico)
---         REFERENCES medico (id_medico),
---     CONSTRAINT fk_carteira_vacinas_vacina
---         FOREIGN KEY (id_vacina)
---         REFERENCES vacinas (id_vacina)
--- );
 
 CREATE TABLE IF NOT EXISTS tp_receita(
     id_TipoReceita INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -638,5 +593,5 @@ CREATE TABLE IF NOT EXISTS MARKETING(
         REFERENCES ANUNCIO (id_anuncio),
 	CONSTRAINT fk_id_clinica
         FOREIGN KEY (id_clinica)
-        REFERENCES clinica (id_clinica) ON DELETE CASCADE
+        REFERENCES clinica (id_clinica)
 );

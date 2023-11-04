@@ -267,11 +267,43 @@ const registerVaccine = (req, res) => {
     })
 }
 
+const registerTupleRevenue = (req, res) => {
+    const { nm_medicamento, concentracao, via_adm, qtd_medicamento, tmp_duracao, posologia } = req.body
+
+    const insertSQL = "INSERT INTO tupla_receita (nm_medicamento, concentracao, via_adm, qtd_medicamento, tmp_duracao, posologia) VALUES (?, ?, ?, ?, ?, ?)"
+
+    db.query(insertSQL, [nm_medicamento, concentracao, via_adm, qtd_medicamento, tmp_duracao, posologia], (err, result) => {
+        if (err) {
+            res.status(400).json({ erro: "erro ao consultar o banco" + err })
+            return;
+        }
+
+        res.status(200).json({ result })
+    })
+}
+
+const registerRevenues = (req, res) => {
+    const { dt_validade, id_TipoReceita, id_TuplaReceita, id_pet } = req.body
+
+    const insertSQL = "INSERT INTO receitas (dt_validade, id_TipoReceita, id_TuplaReceita, id_pet) VALUES (?, ?, ?, ?, ?)"
+
+    db.query(insertSQL, [dt_validade, id_TipoReceita, id_TuplaReceita, id_pet], (err, result) => {
+        if (err) {
+            res.status(400).json({ erro: "erro ao consultar o banco" + err })
+            return;
+        }
+
+        res.status(200).json({ result })
+    })
+}
+
 module.exports = {
     registerTutor,
     registerClinic,
     registerMedic,
     registerPet,
     registerVermifuge,
-    registerVaccine
+    registerVaccine,
+    registerTupleRevenue,
+    registerRevenues
 }

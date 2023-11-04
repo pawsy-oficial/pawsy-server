@@ -7,11 +7,17 @@ const getVaccines = async (req, res) => {
 		const bd = await createDbConnection();
 
 		const selectgetVaccinesSQL = `
-			SELECT cv.id_aplicacao as idAplication, cv.dt_aplicacao as dateAplication, cv.dt_retorno as dateReturn, md.nm_medico as nameMedic, vc.nm_vacina as nameVaccine
+			SELECT 
+				cv.id_aplicacao as idAplication, 
+				cv.dt_aplicacao as dateAplication, 
+				cv.dt_retorno as dateReturn, 
+				CONCAT(md.nm_medico , ' ' , md.sb_medico) as nameMedic,
+				md.cd_crmv as crmv,
+				vc.nm_vacina as nameVaccine
 			FROM carteira_vacinas cv 
-			INNER JOIN vacinas vc ON vc.id_vacina = cv.id_vacina
-			INNER JOIN medico md ON md.id_medico = cv.id_medico 
-			WHERE id_pet = ?
+				INNER JOIN vacinas vc ON vc.id_vacina = cv.id_vacina
+				INNER JOIN medico md ON md.id_medico = cv.id_medico 
+				WHERE id_pet = ?
 		`
 
 		const [results] = await bd.query(selectgetVaccinesSQL, [idPet]);
@@ -41,15 +47,18 @@ const getAllTypeVaccines = async (req, res) => {
 }
 
 const getAllVermifuges = async (req, res) => {
-	const idPet = req.params.idPet
+	const { idPet, idTutor} = req.params
 	try {
 		const bd = await createDbConnection();
 
 		const selectaddNewVermifugeSQL = `
-	  		SELECT * FROM carteira_vermifugo WHERE id_pet = ?
+			SELECT cv.id_aplicacao, cv.nm_vermifugo, cv.dt_aplicacao FROM carteira_vermifugo cv
+			INNER JOIN pet pt ON pt.id_pet = cv.id_pet
+			INNER JOIN tutor tt ON tt.id_tutor = pt.id_tutor
+			WHERE cv.id_pet = ? AND tt.id_tutor = ?
 	  	`
 
-		const [results] = await bd.query(selectaddNewVermifugeSQL, [idPet]);
+		const [results] = await bd.query(selectaddNewVermifugeSQL, [idPet, idTutor]);
 
 		res.status(200).json({ count: results.length, results })
 

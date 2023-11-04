@@ -62,6 +62,6 @@ VALUES
 ('Pets veterinário - Gonzaga', '41250583000196', 'petz@contatos.com', '42523432423', '$2b$10$OtgR63O8tgG/2LGa.Om/9uOq0rzcNTXRac.Uagl1cXhwuFBNBf69C', 11, '43543', '1696257226316_pawsy_petz logos 1.jpg'),
 ('animal vet', '76233982000123', 'vetanimal@gmail.com', '34590983242', '$2b$10$ZIdWNgZx7XGF/9peBQrRTuow836BXkpW9ic5EV4VeG0KiISdZcRqG', 12, '42377', '1696257354003_pawsy_images (2).jpeg');
 
-INSERT INTO medico (nm_medico, cd_cpf, dt_nascimento, nm_email, num_celular, pw_medic, id_especialidade, cd_crmv ,url_imagem)
+INSERT INTO medico (nm_medico, sb_medico, cd_cpf, dt_nascimento, nm_email, num_celular, pw_medic, id_especialidade, cd_crmv ,url_imagem)
 VALUES 
-("jaba", "56011132898", "2000-08-24", "romullomelo013@gmail.com", "14232342342", "$2b$10$1ySpHRaXQLwvuDGkmAR7/.zHdRo4Xe9lS6XGlYGwaH.r6fxGmGzl.", 12, "32222", "1698621579157_pawsy_1697517333077_pawsy_doctor.jpg");
+("otavio", "ota","56011132898", "2000-08-24", "romullomelo013@gmail.com", "14232342342", "$2b$10$1ySpHRaXQLwvuDGkmAR7/.zHdRo4Xe9lS6XGlYGwaH.r6fxGmGzl.", 12, "32222", "1698621579157_pawsy_1697517333077_pawsy_doctor.jpg");

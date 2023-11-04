@@ -15,7 +15,7 @@ const getVaccines = async (req, res) => {
 		`
 
 		const [results] = await bd.query(selectgetVaccinesSQL, [idPet]);
-		
+
 		res.status(200).json({ count: results.length, results })
 
 	} catch (error) {
@@ -26,21 +26,40 @@ const getVaccines = async (req, res) => {
 const getAllTypeVaccines = async (req, res) => {
 	const { breedType } = req.query
 
-    const query = `SELECT id_vacina as idVaccine, nm_vacina as nameVaccine FROM vacinas WHERE tp_vacina = ? OR tp_vacina = "all"`
+	const query = `SELECT id_vacina as idVaccine, nm_vacina as nameVaccine FROM vacinas WHERE tp_vacina = ? OR tp_vacina = "all"`
 
-    db.query(query, [breedType], (error, result)=>{
-        if(error){
-            res.status(500).json({
-                error: error
-            })
-        }
-        res.status(200).json({
-            result
-        })
-    })
+	db.query(query, [breedType], (error, result) => {
+		if (error) {
+			res.status(500).json({
+				error: error
+			})
+		}
+		res.status(200).json({
+			result
+		})
+	})
+}
+
+const getAllVermifuges = async (req, res) => {
+	const idPet = req.params.idPet
+	try {
+		const bd = await createDbConnection();
+
+		const selectaddNewVermifugeSQL = `
+	  		SELECT * FROM carteira_vermifugo WHERE id_pet = ?
+	  	`
+
+		const [results] = await bd.query(selectaddNewVermifugeSQL, [idPet]);
+
+		res.status(200).json({ count: results.length, results })
+
+	} catch (error) {
+		res.status(500).json({ message: "Internal Server Error" })
+	}
 }
 
 module.exports = {
 	getVaccines,
-	getAllTypeVaccines
+	getAllTypeVaccines,
+	getAllVermifuges
 };

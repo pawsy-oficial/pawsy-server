@@ -38,7 +38,6 @@ const schemaVermifuge = require("./schemas/vermifugeSchema.js");
 const getAllPets = require("./controllers/tutor/getMyPetsControllers.js");
 const updatePet = require("./controllers/tutor/updatePetsControllers.js");
 const clinicsMedic = require("./controllers/medic/clinicsMedic.js");
-const clinicsPet = require("./controllers/medic/clinicsPet.js");
 const petInfos = require("./controllers/medic/petInfos.js");
 const { updateClinic } = require("./controllers/clinic/updateClinicControllers.js");
 const { searchClinicsControllers } = require("./controllers/searchClinicsControllers.js");
@@ -55,8 +54,8 @@ const { updateAcountTutor, updateAddressTutor } = require("./controllers/tutor/u
 const { updateAcountMedic } = require("./controllers/medic/updateAcountMedic.js");
 const { removeAcountMedic } = require("./controllers/medic/removeAcountMedic.js");
 
-const addNewVermifuge = require("./controllers/medic/addNewVermifuge.js");
-const { getVaccines, getAllTypeVaccines } = require("./controllers/medic/getVaccinesAndVermifuge.js");
+const { getVaccines, getAllTypeVaccines, getAllVermifuges } = require("./controllers/medic/getVaccinesAndVermifuge.js");
+const { clinicsPet, getAllPetsTutor } = require("./controllers/medic/clinicsPet.js");
 
 // Consultas de dados
 router.get("/", (req, res)=>{
@@ -85,9 +84,10 @@ router.get("/pesquisa", searchClinicsControllers)
 router.get("/comment/:id", getCommentsClinic)
 router.get("/getAllTypeAds", getAllTypeAds)
 router.get("/getAllAds/:idClinic", getAllAds)
-router.get("/add-new-vermifuge", authMiddlewareMedic, addNewVermifuge)
+router.get("/get-all-vermifuge/:idPet", authMiddlewareMedic, getAllVermifuges)
 router.get("/get-vaccine/:idPet", authMiddlewareMedic, getVaccines)
 router.get("/get-all-type-vaccines", getAllTypeVaccines)
+router.get("/get-all-my-pets/:idClinic/:idTutor", getAllPetsTutor)
 
 // Registros
 router.post("/medico", validate(schemaMedic), registerTutor.registerMedic);

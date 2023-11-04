@@ -15,7 +15,8 @@ const clinicsPet = async (req, res) => {
         pt.resumo as Summary, 
         pt.nm_pet as PetName, 
         pt.url_img as PetImage, 
-        tutor.nm_tutor as TutorName
+        tutor.nm_tutor as TutorName,
+        tutor.id_tutor as TutorId
       FROM pacientes pc
       INNER JOIN pet pt ON pt.id_pet = pc.id_pet
       INNER JOIN pelagem pl ON pl.id_pelagem = pt.id_pelagem
@@ -34,4 +35,28 @@ const clinicsPet = async (req, res) => {
   }
 }
 
-module.exports = clinicsPet;
+const getAllPetsTutor = async (req, res) => {
+  const { idTutor, idClinic } = req.params
+  
+  try {
+    const bd = await createDbConnection()
+
+    const selectPetsTutorSQL = `
+      SELECT pt.nm_pet, pt.url_img, tt.nm_tutor, pt.id_pet, tt.url_imagem FROM pacientes pc
+        INNER JOIN pet pt ON pt.id_pet = pc.id_pet
+        INNER JOIN tutor tt ON tt.id_tutor = pt.id_tutor
+        WHERE pc.id_clinica = ? AND tt.id_tutor = ?;
+    `
+    const [ results ] = await bd.query(selectPetsTutorSQL, [idClinic, idTutor])
+
+    res.status(200).json({results})
+    
+  } catch (error) {
+    res.status(500).json({error})
+  }
+}
+
+module.exports = {
+  clinicsPet,
+  getAllPetsTutor
+};

@@ -195,17 +195,17 @@ CREATE TABLE IF NOT EXISTS pet
     id_pelagem INT,  
     id_sexo INT,  
     id_animal INT,  
-    num_peso DECIMAL(4,2),  
+    num_peso DECIMAL(4,2) default 0,  
     dt_nascimento DATE,  
     resumo VARCHAR(255),       
     nm_pet VARCHAR(255) NOT NULL,  
     url_img VARCHAR(300),
     
-	tx_alergia VARCHAR(264),
+	tx_alergia VARCHAR(264) default "não informado",
     bl_castrado BOOL,
-    tx_comportamento VARCHAR(64),
-    tx_tratamento VARCHAR(264),
-    num_altura DECIMAL(4,2),
+    tx_comportamento VARCHAR(64) default "não informado",
+    tx_tratamento VARCHAR(264) default "não informado",
+    num_altura DECIMAL(4,2) default 0,
     CONSTRAINT fk_pet_tutor
         FOREIGN KEY (id_tutor)
         REFERENCES tutor (id_tutor),

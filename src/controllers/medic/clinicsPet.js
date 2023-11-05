@@ -14,7 +14,15 @@ const clinicsPet = async (req, res) => {
         pt.dt_nascimento as BirthDate, 
         pt.resumo as Summary, 
         pt.nm_pet as PetName, 
-        pt.url_img as PetImage, 
+        pt.url_img as PetImage,
+
+        pt.num_peso as weight,
+        pt.num_altura as height,
+        pt.tx_alergia as allergy,
+        pt.bl_castrado as castrated,
+        pt.tx_comportamento as behavior,
+        pt.tx_tratamento as treatment,
+
         tutor.nm_tutor as TutorName,
         tutor.id_tutor as TutorId
       FROM pacientes pc

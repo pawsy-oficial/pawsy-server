@@ -2,12 +2,30 @@ const db = require("../../db")
 
 const getAllPets = (req, res)=>{
     const idTutor = req.params.idTutor
-    const queryAllPets = `select rc.nm_raca, pl.tp_pelagem, an.nm_animal, pt.num_peso, pt.dt_nascimento, pt.resumo, pt.nm_pet, pt.url_img, pt.id_pet as id_pawsy, sx.nm_sexo as sexo from pet pt
-    inner join raca rc ON rc.id_raca = pt.id_raca
-    inner join pelagem pl ON pl.id_pelagem = pt.id_pelagem
-    inner join animal an ON an.id_animal = pt.id_animal 
-    inner join sexo sx ON sx.id_sexo = pt.id_sexo
-    where pt.id_tutor = ?;`
+    const queryAllPets = `
+        SELECT 
+            rc.nm_raca, 
+            pl.tp_pelagem, 
+            an.nm_animal, 
+            pt.num_peso, 
+            pt.dt_nascimento, 
+            pt.resumo, 
+            pt.nm_pet, 
+            pt.url_img, 
+            pt.id_pet as id_pawsy,
+            pt.tx_alergia,
+            pt.bl_castrado,
+            pt.tx_comportamento,
+            pt.tx_tratamento,
+            pt.num_altura, 
+            sx.nm_sexo as sexo
+        FROM pet pt
+            INNER JOIN raca rc ON rc.id_raca = pt.id_raca
+            INNER JOIN pelagem pl ON pl.id_pelagem = pt.id_pelagem
+            INNER JOIN animal an ON an.id_animal = pt.id_animal 
+            INNER JOIN sexo sx ON sx.id_sexo = pt.id_sexo
+        WHERE pt.id_tutor = ?
+    `
     
     try {
         db.query(queryAllPets, [idTutor], (err, result)=>{

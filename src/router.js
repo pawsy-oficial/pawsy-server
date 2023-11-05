@@ -90,7 +90,6 @@ router.get("/get-all-vermifuge/:idTutor/:idPet", authMiddlewareMedic, getAllVerm
 router.get("/get-vaccine/:idPet", authMiddlewareMedic, getVaccines)
 router.get("/get-all-type-vaccines", getAllTypeVaccines)
 router.get("/get-all-my-pets/:idClinic/:idTutor", getAllPetsTutor)
-router.get("/history", authMiddlewareTutor, getHistory)
 
 // Registros
 router.post("/medico", validate(schemaMedic), registerTutor.registerMedic);

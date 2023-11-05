@@ -156,8 +156,14 @@ const registerClinic = (req, res) => {
 const registerMedic = (req, res) => {
     const { firstNameMedic, lastNameMedic, crmv, email, cpf, cell, birthDate, specialty, password, urlProfile } = req.body
 
-    const selectEmailMedicSQL = "select nm_email, num_celular, cd_cpf from medico where nm_email = ? or num_celular = ? or cd_cpf = ?"
-    const insertMedicSQL = "INSERT INTO medico (nm_medico, cd_cpf, dt_nascimento, nm_email, num_celular, pw_medic, id_especialidade, cd_crmv, url_imagem) VALUES (?,?,?,?,?,?,?,?,?)"
+    const selectEmailMedicSQL = `
+        SELECT nm_email, num_celular, cd_cpf, cd_crmv FROM medico 
+        WHERE nm_email = ? or num_celular = ? or cd_cpf = ? OR cd_crmv = ?
+    `
+    const insertMedicSQL = `
+        INSERT INTO medico (nm_medico, sb_medico, cd_cpf, dt_nascimento, nm_email, num_celular, pw_medic, id_especialidade, cd_crmv, url_imagem) VALUES (?,?,?,?,?,?,?,?,?,?)
+    `
+
 
     const cpfFormat = cpf.replace(/[^\d]+/g, '');
     const cellFormat = cell.replace(/[^\d]+/g, '');
@@ -165,14 +171,14 @@ const registerMedic = (req, res) => {
 
     bcrypt.hash(password, saltRounds)
         .then(hash => {
-            db.query(selectEmailMedicSQL, [email, cellFormat, cpfFormat], (error, results) => {
+            db.query(selectEmailMedicSQL, [email, cellFormat, cpfFormat, crmvFormat], (error, results) => {
                 if (error) {
                     res.status(400).json({ Message: error })
                     return
                 }
                 if (results.length === 0) {
 
-                    db.query(insertMedicSQL, [firstNameMedic, cpfFormat, birthDate, email, cellFormat, hash, specialty, crmvFormat, urlProfile], function (error, results) {
+                    db.query(insertMedicSQL, [firstNameMedic, lastNameMedic, cpfFormat, birthDate, email, cellFormat, hash, specialty, crmvFormat, urlProfile], function (error, results) {
                         if (error) {
                             res.status(400).json({
                                 Mensage: error

@@ -1,6 +1,6 @@
 const db = require("../../db")
 
-const getAllPets = (req, res)=>{
+const getAllPets = async (req, res) => {
     const idTutor = req.params.idTutor
     const queryAllPets = `
         SELECT 
@@ -26,17 +26,44 @@ const getAllPets = (req, res)=>{
             INNER JOIN sexo sx ON sx.id_sexo = pt.id_sexo
         WHERE pt.id_tutor = ?
     `
-    
+    const queryHistorySQL = `
+        SELECT 
+            hs.descricao as description,
+            hs.dt_visita as dateVisit,
+            cl.nm_clinica as nameClinic
+        FROM historico hs
+        INNER JOIN clinica cl ON cl.id_clinica = hs.id_clinica
+        WHERE hs.id_pet = ?    
+    `
+
     try {
-        db.query(queryAllPets, [idTutor], (err, result)=>{
-            if(err){
-                res.status(400).json({error: err})
+        db.query(queryAllPets, [idTutor], (err, result) => {
+            if (err) {
+                res.status(400).json({ error: err })
             }
-    
-            res.status(200).json({myPets: result})
+
+            const petPromises = result.map(pet => {
+                return new Promise((resolve, reject) => { // crii uma nova promise
+                    db.query(queryHistorySQL, [pet.id_pawsy], (err, history) => {
+                        if (err) {
+                            reject(err);
+                        } else {
+                            resolve({ pet: pet, history: [...history] });
+                        }
+                    });
+                });
+            });
+        
+            Promise.all(petPromises)
+                .then(results => {
+                    res.status(200).json({ myPets: results });
+                })
+                .catch(error => {
+                    res.status(500).json({ error });
+                });
         })
     } catch (error) {
-        res.status(500).json({error: "Ocorreu um erro interno"})
+        res.status(500).json({ error: "Ocorreu um erro interno" })
     }
 }
 

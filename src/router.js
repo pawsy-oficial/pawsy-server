@@ -57,8 +57,7 @@ const { removeAcountMedic } = require("./controllers/medic/removeAcountMedic.js"
 const { getVaccines, getAllTypeVaccines, getAllVermifuges } = require("./controllers/medic/getVaccinesAndVermifuge.js");
 const { clinicsPet, getAllPetsTutor } = require("./controllers/medic/clinicsPet.js");
 const postHistory = require("./controllers/history/postHistory.js");
-const getHistory = require("./controllers/history/getHistory.js");
-
+    
 // Consultas de dados
 router.get("/", (req, res)=>{
     res.status(200).send("Welcome to Pawsy")

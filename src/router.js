@@ -18,7 +18,11 @@ const login = require("./controllers/loginControllers.js")
 const uf = require("./controllers/cepStateControllers.js")
 const integrarMedicoClinica = require("./controllers/integrateMedicClinic.js")
 const integratePatientClinic = require("./controllers/integratePetPatientClinic.js")
+const schendule = require("./controllers/schenduleControllers.js")
 const scheduleRegister = require("./controllers/schedule/clinic/CreateSchedule.js")
+const GenerateAvailableConsultations = require("./controllers/schedule/clinic/GenerateAvailableConsultations.js")
+const ListClinicsForConsultations = require("./controllers/schedule/tutor/ListClinicPreview.js")
+const CreateAppointment = require("./controllers/schedule/tutor/CreateAppointment.js")
 
 // schemas
 const tutorSchema = require("./schemas/tutorSchema.js");
@@ -28,14 +32,16 @@ const schemaMedic = require("./schemas/medicSchema.js");
 const getSpecialty = require("./controllers/especialty.js");
 const getAllRaces = require("./controllers/racesControllers.js")
 const verifyPet = require("./controllers/verifyPetControllers.js")
-const getAllMedics = require("./controllers/getAllMedicsControllers.js")
 const getCoordinate = require("./controllers/coordinatesControllers.js")
 const Previews = require("./controllers/previewControllers.js")
 const PopulationsControllerSchedule = require("./controllers/schedule/clinic/PopulationsController.js")
+const GetConsultationsMarked = require("./controllers/schedule/tutor/GetConsultationsMarked.js")
+const GetConsultations = require("./controllers/schedule/clinic/GetConsultations.js")
+const WellbeingAlgorithm = require("./controllers/WellbeingAlgorithm.js")
 
 const { sendRecoveryCodeTutor, verifyAndResetPasswordTutor, sendRecoveryCodeClinica, verifyAndResetPasswordClinica, sendRecoveryCodeMedico, verifyAndResetPasswordMedico } = require('./services/passwordRecoveryService.js');
 const schemaVermifuge = require("./schemas/vermifugeSchema.js");
-const getAllPets = require("./controllers/tutor/getMyPetsControllers.js");
+// const getAllPets = require("./controllers/tutor/getMyPetsControllers.js");
 const updatePet = require("./controllers/tutor/updatePetsControllers.js");
 const clinicsMedic = require("./controllers/medic/clinicsMedic.js");
 const clinicsPet = require("./controllers/medic/clinicsPet.js");
@@ -54,7 +60,12 @@ const { removeAcountClinic } = require("./controllers/clinic/removeAcountClinicC
 const { updateAcountTutor, updateAddressTutor } = require("./controllers/tutor/updateAcountControllers.js");
 const { updateAcountMedic } = require("./controllers/medic/updateAcountMedic.js");
 const { removeAcountMedic } = require("./controllers/medic/removeAcountMedic.js");
-
+const { getAllConsultation, getAllMyPets, getAllMedics } = require("./controllers/getAllControllers.js");
+const ListScheduleClinic = require("./controllers/schedule/clinic/ListSchedulesClinic.js")
+const VerifyStatusSchedule = require("./controllers/schedule/clinic/VerifyStatusSchedule.js")
+const ListSchedulesActives = require("./controllers/schedule/tutor/ListSchedulesActives.js")
+const ListFreeConsultations = require("./controllers/schedule/tutor/ListFreeConsultations.js")
+const GetTypesConsultationsSchedule = require("./controllers/schedule/tutor/GetTypesConsultationsSchedule.js")
 
 // Consultas de dados
 router.get("/", (req, res)=>{
@@ -65,16 +76,13 @@ router.get("/especialidade", getSpecialty)
 router.get("/uf", uf)
 router.get("/raca", getAllRaces)
 router.get("/tutor/:id", authMiddlewareTutor, verifyPet)
-router.get("/medico", authMiddlewareClinic, getAllMedics)
 router.use("/files", express.static(`${__dirname}/libs/uploads`))
 router.get("/coordinates", authMiddlewareTutor, getCoordinate.tutorCoordinates)
 router.get("/ClinicCoordinates", authMiddlewareTutor, getCoordinate.ClinicCoordinates)
 router.get("/ClinicPreviews", Previews.ClinicPreview)
-router.get("/get-all-pets/:idTutor", authMiddlewareTutor, getAllPets)
 router.get("/get-tipoConsulta", authMiddlewareClinic, PopulationsControllerSchedule.TipoConsulta)
 router.get("/get-medicosIntegrados", PopulationsControllerSchedule.MedicosIntegrados) // removi o meddleware dessa rota
-router.get("/getAllPets", authMiddlewareClinic, integratePatientClinic.pets)
-router.get("/getAllPatients/:idClinic", authMiddlewareClinic, integratePatientClinic.getAllPatientsClinic)
+router.get("/get-medicosIntegrados-schedule", authMiddlewareTutor, PopulationsControllerSchedule.MedicosIntegrados) // melhorar essa rota - ver se é possivel deixar ela dinamica
 router.get("/countPatients/:idClinic", authMiddlewareClinic, integratePatientClinic.countPatientsClinic)
 router.get("/clinicsMedic", authMiddlewareMedic, clinicsMedic)
 router.get("/clinicsPet", authMiddlewareMedic, clinicsPet)
@@ -83,6 +91,31 @@ router.get("/pesquisa", searchClinicsControllers)
 router.get("/comment/:id", getCommentsClinic)
 router.get("/getAllTypeAds", getAllTypeAds)
 router.get("/getAllAds/:idClinic", getAllAds)
+router.get("/getAllPets", authMiddlewareClinic, integratePatientClinic.pets)
+router.get("/getAllPatients/:idClinic", authMiddlewareClinic, integratePatientClinic.getAllPatientsClinic)
+// get all
+router.get("/get-all-consultation", getAllConsultation)
+router.get("/get-all-pets/:idTutor", authMiddlewareTutor, getAllMyPets)
+router.get("/medico", authMiddlewareClinic, getAllMedics)
+
+//bem-estar
+router.get("/bem-estar/:id", authMiddlewareTutor, WellbeingAlgorithm.WellbeingAlgorithm)
+
+//shedules
+router.get("/list-schedules/:id", ListScheduleClinic.ListScheduleClinic)
+router.get("/schedules-ativas/:id", ListSchedulesActives.ListSchedulesActives)
+router.get("/list-clinics-consultations", ListClinicsForConsultations.ListClinicPreview)
+router.get("/list-free-consultations/:id", authMiddlewareTutor,ListFreeConsultations.ListFreeConsultations)
+router.get("/get-tipos-consultas-schedule/:id", authMiddlewareTutor, GetTypesConsultationsSchedule.GetTypesConsultationsSchedule)
+router.get("/get-medicos-schedule/:id", authMiddlewareTutor, GetTypesConsultationsSchedule.GetMedicsSchedule)
+router.get("/get-pets-tutor/:id", authMiddlewareTutor, GetTypesConsultationsSchedule.GetPetsTutor)
+router.get("/get-info-clinic/:id", authMiddlewareTutor, GetTypesConsultationsSchedule.GetClinicsInfo)
+router.post("/marcar-consulta", authMiddlewareTutor, CreateAppointment.CreateAppointment)
+router.get("/get-consultas-tutor/:id", authMiddlewareTutor, GetConsultationsMarked.GetConsultationsMarked)
+router.get("/get-consultas-agenda/:id", authMiddlewareClinic, GetConsultations.GetConsultations)
+
+// verify(middleware)
+router.get("/status-schedule/:id", authMiddlewareClinic, VerifyStatusSchedule.VerifyStatusSchedule)
 
 // Registros
 router.post("/medico", validate(schemaMedic), registerTutor.registerMedic);
@@ -92,17 +125,19 @@ router.post("/pet-register", validate(schemaPet) ,registerTutor.registerPet);
 router.post("/vermifuge", registerTutor.registerVermifuge);
 router.post("/comment", authMiddlewareTutor, postCommentsClinic)
 router.post("/ads", authMiddlewareClinic, postAds)
-// router.post("/agenda-register", authMiddlewareClinic, scheduleRegister.CreateSchedule);
+router.post("/agenda-register", authMiddlewareClinic, scheduleRegister.CreateSchedule);
 
 // Integrações
 router.post("/integrar-medico-clinica", integrarMedicoClinica.integrateMedicClinic)
 router.post("/integrar-paciente-clinica", integratePatientClinic.integratePetPatientClinic)
 
+//Consultas
+router.post("/gerar-consultas", authMiddlewareClinic, GenerateAvailableConsultations.GenerateAvailableConsultations)
+
 // Logins
 router.post('/loginTutor', login.loginTuto);
 router.post('/loginClinic', login.loginClinic);
 router.post('/loginMedic', login.loginMedic)
-
 
 // Recuperação de senha
 router.post('/sendCodeTutor', sendRecoveryCodeTutor)
@@ -119,6 +154,11 @@ router.get('/profileTutor', authMiddlewareTutor, login.getProfileTutor);
 router.get('/profileClinic', authMiddlewareClinic, login.getProfileClinic);
 router.get('/profileMedic', authMiddlewareMedic, login.getProfileMedic);
 
+// register schendule
+
+router.post('/newSchendule', authMiddlewareClinic, schendule.registerNewSchendule)
+
+module.exports = router
 // update
 router.post('/update-pet', updatePet)
 router.post('/update-clinic-profile', updateClinic)

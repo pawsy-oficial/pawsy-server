@@ -57,6 +57,7 @@ const { removeAcountMedic } = require("./controllers/medic/removeAcountMedic.js"
 const { getVaccines, getAllTypeVaccines, getAllVermifuges } = require("./controllers/medic/getVaccinesAndVermifuge.js");
 const { clinicsPet, getAllPetsTutor } = require("./controllers/medic/clinicsPet.js");
 const postHistory = require("./controllers/history/postHistory.js");
+const updatePassword = require("./controllers/updatePasswordController.js");
     
 // Consultas de dados
 router.get("/", (req, res)=>{
@@ -136,6 +137,7 @@ router.put('/ads', authMiddlewareClinic, updatePostAd)
 router.put('/tutor', authMiddlewareTutor, updateAcountTutor)
 router.put('/tutorAddress', authMiddlewareTutor, updateAddressTutor)
 router.put('/medic', authMiddlewareMedic, updateAcountMedic)
+router.put('/password', updatePassword)
 
 // delete
 router.delete('/ads/:idAd', authMiddlewareClinic, deletePostAd ) // ok

@@ -52,8 +52,8 @@ const GenerateAvailableConsultations = async (req, res) => {
                     const hrEnd = timeToJsDate(disponibilidade.hr_saida);
                     
                     while (hr < hrEnd) {
-                        sql = "INSERT INTO consulta_disponivel (dt_consulta, hr_consulta, id_medico, id_agenda) VALUES (?, ?, ?, ?)";
-                        await db.query(sql, [dt, `${hr.getHours()}:${hr.getMinutes()}:00`, disponibilidade.id_medico, idAgenda]);
+                        sql = "INSERT INTO consulta_disponivel (dt_consulta, hr_consulta, id_medico, id_agenda, status_consulta) VALUES (?, ?, ?, ?, ?)";
+                        await db.query(sql, [dt, `${hr.getHours()}:${hr.getMinutes()}:00`, disponibilidade.id_medico, idAgenda, true]);
                         hr.setMinutes(hr.getMinutes() + disponibilidade.tm_intervalo);
                     }
                 }

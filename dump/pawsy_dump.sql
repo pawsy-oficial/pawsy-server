@@ -73,6 +73,7 @@ CREATE TABLE IF NOT EXISTS clinica
 recoveryCodeExpiry DATETIME,
  ds_sobre varchar(680),
  cd_rede int,
+ bl_disabled boolean default(false),
  
  constraint primary key (id_clinica, cd_crmv),  
  UNIQUE (cnpj_clinica,email_clinica,tl_clinica),
@@ -88,6 +89,7 @@ CREATE TABLE IF NOT EXISTS medico
 ( 
  id_medico INT NOT NULL auto_increment,  
  nm_medico VARCHAR(255) NOT NULL,  
+ sb_medico VARCHAR(64) NULL,
  cd_cpf CHAR(11) NOT NULL,  
  dt_nascimento DATE NOT NULL,  
  nm_email VARCHAR(255) NOT NULL,  
@@ -96,6 +98,7 @@ CREATE TABLE IF NOT EXISTS medico
  id_especialidade INT,
  id_endereco INT,  
  cd_crmv INT NOT NULL,
+ bl_disabled boolean default(false),
  url_imagem VARCHAR(300) not null,
 	recoveryCode VARCHAR(8) NULL,
 	recoveryCodeExpiry DATETIME NULL,
@@ -135,6 +138,7 @@ CREATE TABLE IF NOT EXISTS tutor
     url_imagem VARCHAR(300) not null,
     recoveryCode VARCHAR(8),
 	recoveryCodeExpiry DATETIME,
+    bl_disabled boolean default(false),
     CONSTRAINT pk_tutor PRIMARY KEY (id_tutor),
     CONSTRAINT fk_tutor_endereco
         FOREIGN KEY (id_endereco)
@@ -248,38 +252,16 @@ CREATE TABLE IF NOT EXISTS agenda
     dt_abertura DATE NOT NULL,  
     dt_fechamento DATE NOT NULL,  
     observacoes VARCHAR(255),  
-    nm_agenda VARCHAR(32) NOT NULL
+    nm_agenda VARCHAR(32) NOT NULL,
+  	status bool
 );
-
-ALTER TABLE agenda 
-	add column status bool;
-
-/*
-CREATE TABLE IF NOT EXISTS consulta 
-( 
-    id_consulta INT PRIMARY KEY AUTO_INCREMENT,  
-    dt_consulta DATE NOT NULL,  
-    hr_consulta TIME NOT NULL,
-    id_pet INT NOT NULL,
-    id_medico INT NOT NULL,
-    id_agenda INT NOT NULL,
-    CONSTRAINT fk_consulta_pet
-        FOREIGN KEY (id_pet)
-        REFERENCES pet (id_pet),
-    CONSTRAINT fk_consulta_medico
-        FOREIGN KEY (id_medico)
-        REFERENCES medico (id_medico),
-	CONSTRAINT fk_agenda_consulta
-        FOREIGN KEY (id_agenda)
-        REFERENCES agenda (id_agenda)
-);
-*/
 
 CREATE TABLE IF NOT EXISTS consulta_disponivel 
 ( 
     id_consulta_disp INT PRIMARY KEY AUTO_INCREMENT,  
     dt_consulta DATE NOT NULL,  
-    hr_consulta TIME NOT NULL, 
+    hr_consulta TIME NOT NULL,
+  	status_consulta bool null,
     id_medico INT NOT NULL,
     id_agenda INT NOT NULL,
     CONSTRAINT fk_consulta_disp_medico
@@ -329,16 +311,6 @@ CREATE TABLE IF NOT EXISTS restricao
         REFERENCES agenda (id_agenda)
 );
 
-CREATE TABLE IF NOT EXISTS tipo_consulta
-( 
-	id_tipo int not null auto_increment,
-    nm_tipo varchar(64) not null,
-    
-    CONSTRAINT pk_tipo PRIMARY KEY (id_tipo)
-);
-
-drop table tipo_consulta;
-
 CREATE TABLE IF NOT EXISTS disponibilidade
 ( 
     id_disponibilidade INT PRIMARY KEY AUTO_INCREMENT,  
@@ -346,7 +318,7 @@ CREATE TABLE IF NOT EXISTS disponibilidade
     id_agenda INT NOT NULL,  
     hr_entrada TIME NOT NULL,  
     hr_saida TIME NOT NULL,
-    tp_consulta int not null,
+    tp_consulta VARCHAR(180) NULL,
     tm_intervalo int not null,
     CONSTRAINT fk_disponibilidade_medico
         FOREIGN KEY (id_medico)
@@ -355,9 +327,6 @@ CREATE TABLE IF NOT EXISTS disponibilidade
         FOREIGN KEY (id_agenda)
         REFERENCES agenda (id_agenda)
 );
-
-ALTER TABLE disponibilidade
-MODIFY COLUMN tp_consulta VARCHAR(180) NULL;
 
 CREATE TABLE IF NOT EXISTS dia_semana (
 	id_dia int not null auto_increment,
@@ -551,54 +520,9 @@ values
     ("Sexta-feira"),
     ("Sábado");
 
-
--- insert into tipo_consulta(nm_tipo)
--- values 
--- 	   ("consulta - rotina"),
---     ("exame geral"),
---     ("eletrocardiograma"),
---     ("ecocardiograma"),
---     ("ultrassonografia"),
---     ("hemograma"),
---     ("cirurgia"),
---     ("consulta - dentista"),
---     ("consulta - dermatologista"),
---     ("consulta - otorrinolaringologista"),
---     ("consulta - oftalmologista");
-
 alter user 'root'@'localhost' identified with mysql_native_password by 'password';
 
 ALTER TABLE clinica ADD status_loja boolean; 
--- aberto ou fechado
-
--- CREATE TABLE IF NOT EXISTS vacinas 
--- ( 
---     id_vacina INT auto_increment,  
---     nm_vacina VARCHAR(255) NOT NULL,  
---     tp_vacina VARCHAR(3) NOT NULL,
---     CONSTRAINT pk_vacina primary key (id_vacina)
--- );
-
--- CREATE TABLE IF NOT EXISTS carteira_vacinas 
--- ( 
---     id_aplicacao INT PRIMARY KEY AUTO_INCREMENT,  
---     dt_aplicacao DATE NOT NULL,  
---     id_pet INT NOT NULL,
---     id_medico INT NOT NULL,
---     dt_retorno DATE NOT NULL,  
---     id_vacina INT NOT NULL,
---     id_clinica INT NOT NULL,
-    
---     CONSTRAINT fk_carteira_vacinas_pet
---         FOREIGN KEY (id_pet)
---         REFERENCES pet (id_pet),
---     CONSTRAINT fk_carteira_vacinas_medico
---         FOREIGN KEY (id_medico)
---         REFERENCES medico (id_medico),
---     CONSTRAINT fk_carteira_vacinas_vacina
---         FOREIGN KEY (id_vacina)
---         REFERENCES vacinas (id_vacina)
--- );
 
 CREATE TABLE IF NOT EXISTS tp_receita(
     id_TipoReceita INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -633,6 +557,15 @@ CREATE TABLE IF NOT EXISTS RECEITAS(
          REFERENCES tupla_receita (id_TuplaReceita)
 );
 
+insert into tp_receita(nm_TipoReceita)
+values
+    ('Simples'),
+    ('Controle especial'),
+    ('Receita azul'),
+    ('Receita amarela'),
+    ('Receita branca de Talidomida'),
+    ('Receita branca de Retinóides');
+    
 CREATE TABLE IF NOT EXISTS ANUNCIO(
 	id_anuncio INT NOT NULL auto_increment primary key,
     nm_anuncio varchar(50) NOT NULL
@@ -652,17 +585,24 @@ CREATE TABLE IF NOT EXISTS MARKETING(
     tmp_inicial datetime null,
     tmp_final datetime null,
     img_marketing varchar(300) not null,
+    tm_qnt_dias int not null,
     id_anuncio int not null,
+    id_clinica int not null,
     CONSTRAINT fk_id_anuncio
         FOREIGN KEY (id_anuncio)
-        REFERENCES ANUNCIO (id_anuncio)
+        REFERENCES ANUNCIO (id_anuncio),
+	CONSTRAINT fk_id_clinica
+        FOREIGN KEY (id_clinica)
+        REFERENCES clinica (id_clinica)
 );
 
-insert into tp_receita(nm_TipoReceita)
-values
-    ('Simples'),
-    ('Controle especial'),
-    ('Receita azul'),
-    ('Receita amarela'),
-    ('Receita branca de Talidomida'),
-    ('Receita branca de Retinóides');
+ALTER TABLE pet
+	ADD COLUMN tx_alergia VARCHAR(264) default "não informado",
+    ADD COLUMN bl_castrado BOOL,
+    ADD COLUMN tx_comportamento VARCHAR(64) default "não informado",
+    ADD COLUMN tx_tratamento VARCHAR(264) default "não informado",
+    ADD COLUMN num_altura DECIMAL(4,2) default 0,
+    MODIFY COLUMN num_peso DECIMAL(4,2) default 0;
+    
+ALTER TABLE pet 
+	ADD COLUMN passeio DATETIME null;

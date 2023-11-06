@@ -551,6 +551,7 @@ CREATE TABLE IF NOT EXISTS RECEITAS(
     id_TipoReceita INT NOT NULL,
     id_TuplaReceita INT NOT NULL,
     id_pet INT NOT NULL,
+    id_medico INT NOT NULL,
 
     CONSTRAINT fk_pet_Receita
         FOREIGN KEY (id_pet)
@@ -560,7 +561,10 @@ CREATE TABLE IF NOT EXISTS RECEITAS(
          REFERENCES tp_receita (id_TipoReceita),
      CONSTRAINT fk_TuplaReceita_Receita
          FOREIGN KEY (id_TuplaReceita)
-         REFERENCES tupla_receita (id_TuplaReceita)
+         REFERENCES tupla_receita (id_TuplaReceita),
+	 CONSTRAINT fk_TuplaReceita_Medico
+         FOREIGN KEY (id_medico)
+         REFERENCES medico (id_medico)
 );
 
 insert into tp_receita(nm_TipoReceita)

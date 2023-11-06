@@ -289,11 +289,11 @@ const registerTupleRevenue = (req, res) => {
 }
 
 const registerRevenues = (req, res) => {
-    const { dt_validade, id_TipoReceita, id_TuplaReceita, id_pet } = req.body
+    const { dt_validade, id_TipoReceita, id_TuplaReceita, id_pet, id_medic } = req.body
 
-    const insertSQL = "INSERT INTO receitas (dt_validade, id_TipoReceita, id_TuplaReceita, id_pet) VALUES (?, ?, ?, ?, ?)"
+    const insertSQL = "INSERT INTO receitas (dt_validade, id_TipoReceita, id_TuplaReceita, id_pet, id_medic) VALUES (?, ?, ?, ?, ?, ?)"
 
-    db.query(insertSQL, [dt_validade, id_TipoReceita, id_TuplaReceita, id_pet], (err, result) => {
+    db.query(insertSQL, [dt_validade, id_TipoReceita, id_TuplaReceita, id_pet, id_medic], (err, result) => {
         if (err) {
             res.status(400).json({ erro: "erro ao consultar o banco" + err })
             return;

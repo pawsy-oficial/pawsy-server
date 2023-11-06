@@ -58,6 +58,7 @@ const { getVaccines, getAllTypeVaccines, getAllVermifuges } = require("./control
 const { clinicsPet, getAllPetsTutor } = require("./controllers/medic/clinicsPet.js");
 const postHistory = require("./controllers/history/postHistory.js");
 const updatePassword = require("./controllers/updatePasswordController.js");
+const { getAllTypeRevenue, getRevenues } = require("./controllers/medic/getRevenues.js");
     
 // Consultas de dados
 router.get("/", (req, res)=>{
@@ -90,6 +91,8 @@ router.get("/get-all-vermifuge/:idTutor/:idPet", authMiddlewareMedic, getAllVerm
 router.get("/get-vaccine/:idPet", authMiddlewareMedic, getVaccines)
 router.get("/get-all-type-vaccines", getAllTypeVaccines)
 router.get("/get-all-my-pets/:idClinic/:idTutor", getAllPetsTutor)
+router.get("/get-type-revenue", getAllTypeRevenue)
+router.get("/get-revenues", getRevenues)
 
 // Registros
 router.post("/medico", validate(schemaMedic), registerTutor.registerMedic);

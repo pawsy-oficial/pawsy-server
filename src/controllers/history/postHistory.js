@@ -1,7 +1,7 @@
 const db = require("../../db")
 
 const postHistory = (req, res)=>{
-    const { idPet, idClinic, description } = req.body
+    const { id_pet, id_clinic, description } = req.body
 
     const insertHistorySQL = 
     `
@@ -9,7 +9,7 @@ const postHistory = (req, res)=>{
     `
     const currentDate = new Date()
 
-    db.query(insertHistorySQL, [ idPet, idClinic, description, currentDate ], (err, result)=>{
+    db.query(insertHistorySQL, [ id_pet, id_clinic, description, currentDate ], (err, result)=>{
         if(err){
             res.status(500).json({err})
         }

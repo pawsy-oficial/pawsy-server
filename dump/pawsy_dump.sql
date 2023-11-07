@@ -121,7 +121,7 @@ CREATE TABLE IF NOT EXISTS trabalho(
     
     CONSTRAINT pk_trabalho PRIMARY KEY (cd_trabalho),
     CONSTRAINT fk_medico FOREIGN KEY ( cd_medico ) REFERENCES medico(id_medico),
-    CONSTRAINT fk_clinica FOREIGN KEY ( cd_clinica ) REFERENCES clinica(id_clinica) ON DELETE CASCADE
+    CONSTRAINT fk_clinica FOREIGN KEY ( cd_clinica ) REFERENCES clinica(id_clinica)
 );
 
 CREATE TABLE IF NOT EXISTS tutor 
@@ -156,10 +156,10 @@ CREATE TABLE IF NOT EXISTS comentarios (
     CONSTRAINT pk_comentario PRIMARY KEY (cd_comentario),
     CONSTRAINT fk_tutor_comentario 
 		FOREIGN KEY (id_tutor) 
-        REFERENCES tutor(id_tutor) ON DELETE CASCADE,
+        REFERENCES tutor(id_tutor),
 	CONSTRAINT fk_clinica_comentario 
 		FOREIGN KEY (id_clinica) 
-        REFERENCES clinica(id_clinica) ON DELETE CASCADE
+        REFERENCES clinica(id_clinica)
 );
 
 CREATE TABLE IF NOT EXISTS raca 
@@ -195,14 +195,20 @@ CREATE TABLE IF NOT EXISTS pet
     id_pelagem INT,  
     id_sexo INT,  
     id_animal INT,  
-    num_peso INT,  
+    num_peso DECIMAL(4,2) default 0,  
     dt_nascimento DATE,  
     resumo VARCHAR(255),       
     nm_pet VARCHAR(255) NOT NULL,  
     url_img VARCHAR(300),
+    
+	tx_alergia VARCHAR(264) default "não informado",
+    bl_castrado BOOL,
+    tx_comportamento VARCHAR(64) default "não informado",
+    tx_tratamento VARCHAR(264) default "não informado",
+    num_altura DECIMAL(4,2) default 0,
     CONSTRAINT fk_pet_tutor
         FOREIGN KEY (id_tutor)
-        REFERENCES tutor (id_tutor) ON DELETE CASCADE,
+        REFERENCES tutor (id_tutor),
     CONSTRAINT fk_pet_raca
         FOREIGN KEY (id_raca)
 			REFERENCES raca(id_raca),
@@ -226,7 +232,7 @@ CREATE TABLE IF NOT EXISTS vacinados(
     CONSTRAINT fk_pet 
 		FOREIGN KEY (cd_pet) 
         REFERENCES pet(id_pet),
-	CONSTRAINT fk_clinica_responsavel FOREIGN KEY ( cd_clinica ) REFERENCES clinica(id_clinica) ON DELETE CASCADE
+	CONSTRAINT fk_clinica_responsavel FOREIGN KEY ( cd_clinica ) REFERENCES clinica(id_clinica)
 );
 
 CREATE TABLE IF NOT EXISTS saude 
@@ -298,7 +304,7 @@ CREATE TABLE IF NOT EXISTS historico
         REFERENCES pet (id_pet),
     CONSTRAINT fk_historico_clinica
         FOREIGN KEY (id_clinica)
-        REFERENCES clinica(id_clinica) ON DELETE CASCADE
+        REFERENCES clinica(id_clinica)
 );
 
 CREATE TABLE IF NOT EXISTS restricao 
@@ -355,7 +361,7 @@ CREATE TABLE IF NOT EXISTS pacientes
     
     id_clinica int not null,
     
-    constraint fk_paciente foreign key (id_clinica) references clinica(id_clinica) ON DELETE CASCADE,
+    constraint fk_paciente foreign key (id_clinica) references clinica(id_clinica),
 
     CONSTRAINT fk_pacientes_pet
         FOREIGN KEY (id_pet)
@@ -545,6 +551,7 @@ CREATE TABLE IF NOT EXISTS RECEITAS(
     id_TipoReceita INT NOT NULL,
     id_TuplaReceita INT NOT NULL,
     id_pet INT NOT NULL,
+    id_medico INT NOT NULL,
 
     CONSTRAINT fk_pet_Receita
         FOREIGN KEY (id_pet)
@@ -554,7 +561,10 @@ CREATE TABLE IF NOT EXISTS RECEITAS(
          REFERENCES tp_receita (id_TipoReceita),
      CONSTRAINT fk_TuplaReceita_Receita
          FOREIGN KEY (id_TuplaReceita)
-         REFERENCES tupla_receita (id_TuplaReceita)
+         REFERENCES tupla_receita (id_TuplaReceita),
+	 CONSTRAINT fk_TuplaReceita_Medico
+         FOREIGN KEY (id_medico)
+         REFERENCES medico (id_medico)
 );
 
 insert into tp_receita(nm_TipoReceita)
@@ -596,13 +606,13 @@ CREATE TABLE IF NOT EXISTS MARKETING(
         REFERENCES clinica (id_clinica)
 );
 
-ALTER TABLE pet
-	ADD COLUMN tx_alergia VARCHAR(264) default "não informado",
-    ADD COLUMN bl_castrado BOOL,
-    ADD COLUMN tx_comportamento VARCHAR(64) default "não informado",
-    ADD COLUMN tx_tratamento VARCHAR(264) default "não informado",
-    ADD COLUMN num_altura DECIMAL(4,2) default 0,
-    MODIFY COLUMN num_peso DECIMAL(4,2) default 0;
+-- ALTER TABLE pet
+-- 	ADD COLUMN tx_alergia VARCHAR(264) default "não informado",
+--     ADD COLUMN bl_castrado BOOL,
+--     ADD COLUMN tx_comportamento VARCHAR(64) default "não informado",
+--     ADD COLUMN tx_tratamento VARCHAR(264) default "não informado",
+--     ADD COLUMN num_altura DECIMAL(4,2) default 0,
+--     MODIFY COLUMN num_peso DECIMAL(4,2) default 0;
     
 ALTER TABLE pet 
 	ADD COLUMN passeio DATETIME null;

@@ -264,35 +264,67 @@ const registerVaccine = (req, res) => {
     })
 }
 
-const registerTupleRevenue = (req, res) => {
-    const { nm_medicamento, concentracao, via_adm, qtd_medicamento, tmp_duracao, posologia } = req.body
+// const registerTupleRevenue = (req, res) => {
+//     const { nm_medicamento, concentracao, via_adm, qtd_medicamento, tmp_duracao, posologia } = req.body
 
-    const insertSQL = "INSERT INTO tupla_receita (nm_medicamento, concentracao, via_adm, qtd_medicamento, tmp_duracao, posologia) VALUES (?, ?, ?, ?, ?, ?)"
+//     const insertSQL = "INSERT INTO tupla_receita (nm_medicamento, concentracao, via_adm, qtd_medicamento, tmp_duracao, posologia) VALUES (?, ?, ?, ?, ?, ?)"
 
-    db.query(insertSQL, [nm_medicamento, concentracao, via_adm, qtd_medicamento, tmp_duracao, posologia], (err, result) => {
-        if (err) {
-            res.status(400).json({ erro: "erro ao consultar o banco" + err })
-            return;
-        }
+//     db.query(insertSQL, [nm_medicamento, concentracao, via_adm, qtd_medicamento, tmp_duracao, posologia], (err, result) => {
+//         if (err) {
+//             res.status(400).json({ erro: "erro ao consultar o banco" + err })
+//             return;
+//         }
 
-        res.status(200).json({ result })
-    })
-}
+//         res.status(200).json({ result })
+//     })
+// }
 
 const registerRevenues = (req, res) => {
-    const { dt_validade, id_TipoReceita, id_TuplaReceita, id_pet, id_medic } = req.body
+    let { date, typeRevenues, idPet, idMedic, drug } = req.body;
+    console.log(drug);
+    date = dayjs(date).format("YYYY-MM-DD");
 
-    const insertSQL = "INSERT INTO receitas (dt_validade, id_TipoReceita, id_TuplaReceita, id_pet, id_medic) VALUES (?, ?, ?, ?, ?, ?)"
+    const insertRevenuesSQL = `
+      INSERT INTO receitas (dt_validade, id_TipoReceita, id_pet, id_medico) VALUES (?,?,?,?)
+    `;
 
-    db.query(insertSQL, [dt_validade, id_TipoReceita, id_TuplaReceita, id_pet, id_medic], (err, result) => {
-        if (err) {
-            res.status(400).json({ erro: "erro ao consultar o banco" + err })
-            return;
-        }
+    const insertTuplaSQL = `
+      INSERT INTO tupla_receita (nm_medicamento, concentracao, via_adm, qtd_medicamento, tmp_duracao, posologia, id_receita) VALUES (?, ?, ?, ?, ?, ?, ?)
+    `;
 
-        res.status(200).json({ result })
-    })
-}
+    db.query(insertRevenuesSQL, [date, typeRevenues, idPet, idMedic])
+        .then((result) => {
+            const insertId = result.insertId;
+            const promises = [];
+
+            for (let i = 0; i < drug.length; i++) {
+                const promise = new Promise((resolve, reject) => {
+                    db.query(
+                        insertTuplaSQL,
+                        [drug[i].drugName, drug[i].concentration, drug[i].route, drug[i].amount, drug[i].time, drug[i].dosage, insertId],
+                        (err, result) => {
+                            if (err) {
+                                reject(err);
+                            } else {
+                                resolve();
+                            }
+                        }
+                    );
+                });
+
+                promises.push(promise);
+            }
+
+            return Promise.all(promises);
+        })
+        .then(() => {
+            res.status(200).json({ message: "Inserções concluídas com sucesso" });
+        })
+        .catch((err) => {
+            res.status(400).json({ erro: "Erro ao consultar o banco: " + err });
+        });
+};
+
 
 module.exports = {
     registerTutor,
@@ -301,6 +333,6 @@ module.exports = {
     registerPet,
     registerVermifuge,
     registerVaccine,
-    registerTupleRevenue,
+    // registerTupleRevenue,
     registerRevenues
 }

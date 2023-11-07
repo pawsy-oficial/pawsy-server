@@ -616,3 +616,16 @@ CREATE TABLE IF NOT EXISTS MARKETING(
     
 ALTER TABLE pet 
 	ADD COLUMN passeio DATETIME null;
+    
+    
+    
+ALTER TABLE receitas
+DROP FOREIGN KEY fk_TuplaReceita_Receita,
+drop column id_tuplaReceita;
+
+ALTER TABLE tupla_receita
+add column id_receita int not null,
+ADD CONSTRAINT fk_Receita_TuplaReceita
+FOREIGN KEY (id_receita)
+REFERENCES receitas (id_receita),
+modify column tmp_duracao int not null;

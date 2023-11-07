@@ -140,7 +140,7 @@ router.post("/agenda-register", authMiddlewareClinic, scheduleRegister.CreateSch
 router.post("/vaccine", registerTutor.registerVaccine);
 router.post("/history", postHistory)
 router.post("/revenues", registerTutor.registerRevenues);
-router.post("/tupleRevenue", registerTutor.registerTupleRevenue);
+// router.post("/tupleRevenue", registerTutor.registerTupleRevenue);
 
 // Integrações
 router.post("/integrar-medico-clinica", integrarMedicoClinica.integrateMedicClinic)

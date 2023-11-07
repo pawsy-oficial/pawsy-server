@@ -2,7 +2,7 @@ const db = require("../../db")
 const { createDbConnection } = require("../../db/mysql2")
 
 const getRevenues = async (req, res) => {
-	const { idPet } = req.params
+	const { idRevenues } = req.params
 
 
 	const headerQuery = `
@@ -26,18 +26,18 @@ const getRevenues = async (req, res) => {
 			INNER JOIN tutor tt ON tt.id_tutor = pt.id_tutor
 			INNER JOIN medico md ON md.id_medico = rc.id_medico
 			INNER JOIN tp_receita tpr ON tpr.id_TipoReceita = rc.id_TipoReceita
-		  WHERE id_receita = 6;
+		  WHERE id_receita = ?;
 		`;
 
 	// Consulta para os medicamentos
 	const medicamentosQuery = `
-		  SELECT * FROM tupla_receita WHERE id_receita = 6;
+		  SELECT * FROM tupla_receita WHERE id_receita = ?;
 		`;
 
 	const result = {};
 
 	// Executar a consulta do cabeçalho
-	db.query(headerQuery, (err, headerData) => {
+	db.query(headerQuery, [ idRevenues ], (err, headerData) => {
 		if (err) {
 			console.log('Erro na consulta do cabeçalho: ' + err);
 			res.status(500).json({ error: 'Erro no servidor' });
@@ -47,7 +47,7 @@ const getRevenues = async (req, res) => {
 		result.header = headerData;
 
 		// Executar a consulta dos medicamentos
-		db.query(medicamentosQuery, (err, medicamentosData) => {
+		db.query(medicamentosQuery, [ idRevenues ], (err, medicamentosData) => {
 			if (err) {
 				console.log('Erro na consulta dos medicamentos: ' + err);
 				res.status(500).json({ error: 'Erro no servidor' });
@@ -64,6 +64,24 @@ const getRevenues = async (req, res) => {
 
 }
 
+const getAllRevenues = (req, res) => {
+	const { idPet } = req.params
+
+	const selectSQL = `
+		SELECT rc.*, CONCAT(md.nm_medico, " ", md.sb_medico) as nm_medico FROM receitas rc
+			INNER JOIN medico md ON md.id_medico = rc.id_medico
+		where id_pet = ?
+	`
+
+	db.query(selectSQL, [ idPet ], (err, result)=>{
+		if(err){
+			res.status(500).json({err})
+		}
+
+		res.status(200).json({result})
+	})
+}
+
 const getAllTypeRevenue = async (req, res) => {
 	try {
 		const bd = await createDbConnection();
@@ -78,4 +96,4 @@ const getAllTypeRevenue = async (req, res) => {
 	}
 }
 
-module.exports = { getAllTypeRevenue, getRevenues };
+module.exports = { getAllTypeRevenue, getRevenues, getAllRevenues };

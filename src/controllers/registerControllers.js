@@ -286,7 +286,7 @@ const registerRevenues = (req, res) => {
     const currentDate = dayjs().format("YYYY-MM-DD")
 
     const insertRevenuesSQL = `
-      INSERT INTO receitas (dt_validade, id_TipoReceita, id_pet, id_medico, dt_emisao) VALUES (?,?,?,?)
+      INSERT INTO receitas (dt_validade, id_TipoReceita, id_pet, id_medico, dt_emisao) VALUES (?,?,?,?,?)
     `;
 
     const insertTuplaSQL = `

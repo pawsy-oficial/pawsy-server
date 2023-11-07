@@ -69,7 +69,7 @@ const { getVaccines, getAllTypeVaccines, getAllVermifuges } = require("./control
 const { clinicsPet, getAllPetsTutor } = require("./controllers/medic/clinicsPet.js");
 const postHistory = require("./controllers/history/postHistory.js");
 const updatePassword = require("./controllers/updatePasswordController.js");
-const { getAllTypeRevenue, getRevenues } = require("./controllers/medic/getRevenues.js");
+const { getAllTypeRevenue, getRevenues, getAllRevenues } = require("./controllers/medic/getRevenues.js");
 const getAllPets = require("./controllers/tutor/getMyPetsControllers.js");
     
 // Consultas de dados
@@ -126,8 +126,8 @@ router.get("/get-vaccine/:idPet", getVaccines)
 router.get("/get-all-type-vaccines", getAllTypeVaccines)
 router.get("/get-all-my-pets/:idClinic/:idTutor", getAllPetsTutor)
 router.get("/get-type-revenue", getAllTypeRevenue)
-router.get("/get-revenues/:idPet", getRevenues)
-
+router.get("/get-revenues/:idRevenues", getRevenues)
+router.get("/get-all-revenues/:idPet", getAllRevenues)
 // Registros
 router.post("/medico", validate(schemaMedic), registerTutor.registerMedic);
 router.post("/clinica", validate(schemaClinic),registerTutor.registerClinic);

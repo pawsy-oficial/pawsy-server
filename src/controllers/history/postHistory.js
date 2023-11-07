@@ -9,9 +9,14 @@ const postHistory = (req, res)=>{
     `
     const currentDate = new Date()
 
+    if(!id_pet || !id_clinic || !description){
+        res.status(403).json({message: "nn deu bao"})
+        return
+    }
     db.query(insertHistorySQL, [ id_pet, id_clinic, description, currentDate ], (err, result)=>{
         if(err){
             res.status(500).json({err})
+            return
         }
 
         res.status(200).json({ message: "acao registrada" })

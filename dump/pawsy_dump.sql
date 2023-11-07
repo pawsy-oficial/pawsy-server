@@ -620,6 +620,7 @@ ALTER TABLE pet
     
     
 ALTER TABLE receitas
+add column dt_emisao date,
 DROP FOREIGN KEY fk_TuplaReceita_Receita,
 drop column id_tuplaReceita;
 

@@ -281,18 +281,19 @@ const registerVaccine = (req, res) => {
 
 const registerRevenues = (req, res) => {
     let { date, typeRevenues, idPet, idMedic, drug } = req.body;
-    console.log(drug);
+
     date = dayjs(date).format("YYYY-MM-DD");
+    const currentDate = dayjs().format("YYYY-MM-DD")
 
     const insertRevenuesSQL = `
-      INSERT INTO receitas (dt_validade, id_TipoReceita, id_pet, id_medico) VALUES (?,?,?,?)
+      INSERT INTO receitas (dt_validade, id_TipoReceita, id_pet, id_medico, dt_emisao) VALUES (?,?,?,?)
     `;
 
     const insertTuplaSQL = `
       INSERT INTO tupla_receita (nm_medicamento, concentracao, via_adm, qtd_medicamento, tmp_duracao, posologia, id_receita) VALUES (?, ?, ?, ?, ?, ?, ?)
     `;
 
-    db.query(insertRevenuesSQL, [date, typeRevenues, idPet, idMedic])
+    db.query(insertRevenuesSQL, [date, typeRevenues, idPet, idMedic, currentDate])
         .then((result) => {
             const insertId = result.insertId;
             const promises = [];

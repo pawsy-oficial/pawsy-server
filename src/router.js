@@ -126,7 +126,7 @@ router.get("/get-vaccine/:idPet", getVaccines)
 router.get("/get-all-type-vaccines", getAllTypeVaccines)
 router.get("/get-all-my-pets/:idClinic/:idTutor", getAllPetsTutor)
 router.get("/get-type-revenue", getAllTypeRevenue)
-router.get("/get-revenues", getRevenues)
+router.get("/get-revenues/:idPet", getRevenues)
 
 // Registros
 router.post("/medico", validate(schemaMedic), registerTutor.registerMedic);

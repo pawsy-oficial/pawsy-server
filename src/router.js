@@ -70,6 +70,7 @@ const { clinicsPet, getAllPetsTutor } = require("./controllers/medic/clinicsPet.
 const postHistory = require("./controllers/history/postHistory.js");
 const updatePassword = require("./controllers/updatePasswordController.js");
 const { getAllTypeRevenue, getRevenues } = require("./controllers/medic/getRevenues.js");
+const getAllPets = require("./controllers/tutor/getMyPetsControllers.js");
     
 // Consultas de dados
 router.get("/", (req, res)=>{
@@ -99,7 +100,7 @@ router.get("/getAllPets", authMiddlewareClinic, integratePatientClinic.pets)
 router.get("/getAllPatients/:idClinic", authMiddlewareClinic, integratePatientClinic.getAllPatientsClinic)
 // get all
 router.get("/get-all-consultation", getAllConsultation)
-router.get("/get-all-pets/:idTutor", authMiddlewareTutor, getAllMyPets)
+router.get("/get-all-pets/:idTutor", authMiddlewareTutor, getAllPets)
 router.get("/medico", authMiddlewareClinic, getAllMedics)
 
 //bem-estar
@@ -120,8 +121,8 @@ router.get("/get-consultas-agenda/:id", authMiddlewareClinic, GetConsultations.G
 
 // verify(middleware)
 router.get("/status-schedule/:id", authMiddlewareClinic, VerifyStatusSchedule.VerifyStatusSchedule)
-router.get("/get-all-vermifuge/:idTutor/:idPet", authMiddlewareMedic, getAllVermifuges)
-router.get("/get-vaccine/:idPet", authMiddlewareMedic, getVaccines)
+router.get("/get-all-vermifuge/:idTutor/:idPet", getAllVermifuges)
+router.get("/get-vaccine/:idPet", getVaccines)
 router.get("/get-all-type-vaccines", getAllTypeVaccines)
 router.get("/get-all-my-pets/:idClinic/:idTutor", getAllPetsTutor)
 router.get("/get-type-revenue", getAllTypeRevenue)

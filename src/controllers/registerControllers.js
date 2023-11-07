@@ -235,19 +235,10 @@ const registerPet = (req, res) => {
 const registerVermifuge = (req, res) => {
     const { vermifuge, id_pet, id_medic } = req.body
 
-
-
-    const date = new Date();
-    const currentDay = date.getDate();
-    const currentYear = date.getFullYear();
-    const currentMonth = date.getMonth();
-    const currentDate = `${currentYear}-${currentMonth+1}-${currentDay}`
-
-
-    // let data = new Date();
-    // let dataFormatada = currentDay + "-" + currentMonth + "-" + currentDay;
+    const currentDate = dayjs().format("YYYY-MM-DD")
 
     const insertSQL = "insert into carteira_vermifugo (nm_vermifugo, id_pet, id_medico, dt_aplicacao) values (?,?,?,?)"
+
     db.query(insertSQL, [vermifuge, id_pet, id_medic, currentDate], (err, result) => {
         if (err) {
             res.status(400).json({ erro: "erro ao consultar o banco" + err })
@@ -261,10 +252,10 @@ const registerVaccine = (req, res) => {
     const { vacina, id_clinic, id_pet, id_medic, dt_retorno } = req.body
 
     const currentDate = dayjs().format("YYYY-MM-DD")
-
+    const dateReturn = dayjs(dt_retorno).format("YYYY-MM-DD")
     const insertSQL = "INSERT INTO carteira_vacinas (id_vacina, id_clinica, id_pet, id_medico, dt_aplicacao, dt_retorno) VALUES (?,?,?,?,?,?)"
 
-    db.query(insertSQL, [vacina, id_clinic, id_pet, id_medic, currentDate, dt_retorno], (err, result) => {
+    db.query(insertSQL, [vacina, id_clinic, id_pet, id_medic, currentDate, dateReturn], (err, result) => {
         if (err) {
             res.status(400).json({ erro: "erro ao consultar o banco" + err })
             return;

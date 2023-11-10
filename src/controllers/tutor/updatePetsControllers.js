@@ -6,7 +6,7 @@ const updatePet = (req, res) => {
     
         if (note == "true") {
             const { behavior, castrated, drug, height, treatment, weight, idPet } = req.body
-    
+            console.log(behavior, castrated, drug, height, treatment, weight, idPet);
             let updatePet = `
                 UPDATE pet SET tx_comportamento = ?, bl_castrado = ?, tx_alergia = ?, num_altura = ?, tx_tratamento = ?, num_peso = ?
                 WHERE id_pet = ?
@@ -15,9 +15,10 @@ const updatePet = (req, res) => {
             db.query(updatePet, [ behavior, castrated, drug, height, treatment, weight, idPet ], (err, result) => {
                 if (err) {
                     res.status(400).json({ error: err })
+                    return
                 }
     
-                res.status(200).json({ res: "deu bao" })
+                return res.status(200).json({ res: "deu bao" })
             })
         }
         else {
@@ -31,9 +32,10 @@ const updatePet = (req, res) => {
             db.query(updatePet, [url_imagem, sexo, idade, resumo, namePet, idPet], (err, result) => {
                 if (err) {
                     res.status(400).json({ error: err })
+                    return
                 }
     
-                res.status(200).json({ res: "deu bao" })
+                return res.status(200).json({ res: "deu bao" })
     
             })
         }

@@ -70,8 +70,8 @@ const getAllRevenues = (req, res) => {
 	const selectSQL = `
 		SELECT rc.*, CONCAT(md.nm_medico, " ", md.sb_medico) as nm_medico FROM receitas rc
 			INNER JOIN medico md ON md.id_medico = rc.id_medico
-		where id_pet = ?
-	`
+		where id_pet = ? AND is_valid <> 0
+ 	`
 
 	db.query(selectSQL, [ idPet ], (err, result)=>{
 		if(err){

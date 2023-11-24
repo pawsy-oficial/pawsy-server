@@ -188,7 +188,7 @@ router.put('/password', updatePassword)
 router.delete('/ads/:idAd', authMiddlewareClinic, deletePostAd ) // ok
 router.delete('/patient/:idClinic/:idPet', authMiddlewareClinic, removePatient) // ok
 router.delete('/integrar-medico-clinica/:idClinic/:idMedic', authMiddlewareClinic, removeMedic) // o
-router.delete('/delete-revenues', authMiddlewareMedic, deleteRevenues)
+router.delete('/delete-revenues/:idMedic', authMiddlewareMedic, deleteRevenues)
 
 // disabled account
 router.delete('/tutor/:idTutor', authMiddlewareTutor, removeAcountTutor) // ok  

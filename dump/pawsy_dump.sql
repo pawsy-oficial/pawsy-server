@@ -1,3 +1,5 @@
+DROP DATABASE IF EXISTS PAWSY_DATABASE;
+
 CREATE DATABASE pawsy_database;
 
 USE pawsy_database;
@@ -190,11 +192,11 @@ CREATE TABLE IF NOT EXISTS animal
 CREATE TABLE IF NOT EXISTS pet 
 ( 
     id_pet INT PRIMARY KEY AUTO_INCREMENT,  
-    id_tutor INT,  
-    id_raca INT,  
-    id_pelagem INT,  
-    id_sexo INT,  
-    id_animal INT,  
+    id_tutor INT,
+    id_raca INT,
+    id_pelagem INT,
+    id_sexo INT,
+    id_animal INT,
     num_peso DECIMAL(4,2) default 0,  
     dt_nascimento DATE,  
     resumo VARCHAR(255),       
@@ -546,25 +548,30 @@ CREATE TABLE IF NOT EXISTS tupla_receita(
 );
 
 CREATE TABLE IF NOT EXISTS RECEITAS(
-    id_receita INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    dt_validade DATE NOT NULL,
+    id_receita INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+    dt_validade DATE NOT NULL ,
     id_TipoReceita INT NOT NULL,
     id_TuplaReceita INT NOT NULL,
     id_pet INT NOT NULL,
     id_medico INT NOT NULL,
+    is_valid BOOLEAN,
 
     CONSTRAINT fk_pet_Receita
         FOREIGN KEY (id_pet)
-        REFERENCES pet (id_pet),
+        REFERENCES pet (id_pet)
+        ON DELETE CASCADE,
     CONSTRAINT fk_TipoReceita_Receita
          FOREIGN KEY (id_TipoReceita)
-         REFERENCES tp_receita (id_TipoReceita),
+         REFERENCES tp_receita (id_TipoReceita)
+         ON DELETE CASCADE,
      CONSTRAINT fk_TuplaReceita_Receita
          FOREIGN KEY (id_TuplaReceita)
-         REFERENCES tupla_receita (id_TuplaReceita),
+         REFERENCES tupla_receita (id_TuplaReceita)
+         ON DELETE CASCADE,
 	 CONSTRAINT fk_TuplaReceita_Medico
          FOREIGN KEY (id_medico)
          REFERENCES medico (id_medico)
+         ON DELETE CASCADE
 );
 
 insert into tp_receita(nm_TipoReceita)

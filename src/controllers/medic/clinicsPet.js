@@ -2,7 +2,6 @@ const { createDbConnection } = require("../../db/mysql2")
 
 const clinicsPet = async (req, res) => {
   const idClinic = req.params.idClinic
-  console.log(idClinic);
   try {
     const bd = await createDbConnection();
 

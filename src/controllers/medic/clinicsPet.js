@@ -1,6 +1,8 @@
 const { createDbConnection } = require("../../db/mysql2")
 
 const clinicsPet = async (req, res) => {
+  const idClinic = req.params.idClinic
+  console.log(idClinic);
   try {
     const bd = await createDbConnection();
 
@@ -35,7 +37,7 @@ const clinicsPet = async (req, res) => {
       WHERE pc.id_clinica = ?;
     `
 
-    const [results] = await bd.query(selectClinicsPetSQL, [req.Medic.storedIdMedic]);
+    const [results] = await bd.query(selectClinicsPetSQL, [idClinic]);
 
     res.status(200).json({ count: results.length, results })
   } catch (error) {

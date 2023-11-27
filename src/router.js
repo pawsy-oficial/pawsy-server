@@ -91,7 +91,7 @@ router.get("/get-medicosIntegrados", PopulationsControllerSchedule.MedicosIntegr
 router.get("/get-medicosIntegrados-schedule", authMiddlewareTutor, PopulationsControllerSchedule.MedicosIntegrados) // melhorar essa rota - ver se é possivel deixar ela dinamica
 router.get("/countPatients/:idClinic", authMiddlewareClinic, integratePatientClinic.countPatientsClinic)
 router.get("/clinicsMedic", authMiddlewareMedic, clinicsMedic)
-router.get("/clinicsPet", authMiddlewareMedic, clinicsPet)
+router.get("/clinicsPet/:idClinic", authMiddlewareMedic, clinicsPet)
 router.get("/pets/:petId", authMiddlewareMedic, petInfos)
 router.get("/pesquisa", searchClinicsControllers)
 router.get("/comment/:id", getCommentsClinic)

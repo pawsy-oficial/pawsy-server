@@ -72,6 +72,8 @@ const updatePassword = require("./controllers/updatePasswordController.js");
 const { getAllTypeRevenue, getRevenues, getAllRevenues } = require("./controllers/medic/getRevenues.js");
 const getAllPets = require("./controllers/tutor/getMyPetsControllers.js");
 const { deleteRevenues } = require("./controllers/medic/deleteRevenues.js");
+const { deleteVaccine } = require("./controllers/medic/deleteVaccine");
+const { deleteVermifuge } = require("./controllers/medic/deleteVermifuge.js");
     
 // Consultas de dados
 router.get("/", (req, res)=>{
@@ -188,7 +190,9 @@ router.put('/password', updatePassword)
 router.delete('/ads/:idAd', authMiddlewareClinic, deletePostAd ) // ok
 router.delete('/patient/:idClinic/:idPet', authMiddlewareClinic, removePatient) // ok
 router.delete('/integrar-medico-clinica/:idClinic/:idMedic', authMiddlewareClinic, removeMedic) // o
-router.delete('/delete-revenues/:idMedic', authMiddlewareMedic, deleteRevenues)
+router.delete('/delete-revenues/:idRevenue', authMiddlewareMedic, deleteRevenues)
+router.delete('delete-vacina', authMiddlewareMedic, deleteVaccine)
+router.delete('delete-vermifugo/:idVermifugo', authMiddlewareMedic, deleteVermifuge)
 
 // disabled account
 router.delete('/tutor/:idTutor', authMiddlewareTutor, removeAcountTutor) // ok  

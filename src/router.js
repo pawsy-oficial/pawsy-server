@@ -191,8 +191,8 @@ router.delete('/ads/:idAd', authMiddlewareClinic, deletePostAd ) // ok
 router.delete('/patient/:idClinic/:idPet', authMiddlewareClinic, removePatient) // ok
 router.delete('/integrar-medico-clinica/:idClinic/:idMedic', authMiddlewareClinic, removeMedic) // o
 router.delete('/delete-revenues/:idRevenue', authMiddlewareMedic, deleteRevenues)
-router.delete('delete-vacina', authMiddlewareMedic, deleteVaccine)
-router.delete('delete-vermifugo/:idVermifugo', authMiddlewareMedic, deleteVermifuge)
+router.delete('/delete-vacina/:idVaccine', authMiddlewareMedic, deleteVaccine)
+router.delete('/delete-vermifugo/:idVermifugo', authMiddlewareMedic, deleteVermifuge)
 
 // disabled account
 router.delete('/tutor/:idTutor', authMiddlewareTutor, removeAcountTutor) // ok  

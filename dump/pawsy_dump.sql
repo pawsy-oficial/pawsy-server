@@ -558,20 +558,16 @@ CREATE TABLE IF NOT EXISTS RECEITAS(
 
     CONSTRAINT fk_pet_Receita
         FOREIGN KEY (id_pet)
-        REFERENCES pet (id_pet)
-        ON DELETE CASCADE,
+        REFERENCES pet (id_pet),
     CONSTRAINT fk_TipoReceita_Receita
          FOREIGN KEY (id_TipoReceita)
-         REFERENCES tp_receita (id_TipoReceita)
-         ON DELETE CASCADE,
+         REFERENCES tp_receita (id_TipoReceita),
      CONSTRAINT fk_TuplaReceita_Receita
          FOREIGN KEY (id_TuplaReceita)
-         REFERENCES tupla_receita (id_TuplaReceita)
-         ON DELETE CASCADE,
+         REFERENCES tupla_receita (id_TuplaReceita),
 	 CONSTRAINT fk_TuplaReceita_Medico
          FOREIGN KEY (id_medico)
          REFERENCES medico (id_medico)
-         ON DELETE CASCADE
 );
 
 insert into tp_receita(nm_TipoReceita)

@@ -28,6 +28,7 @@ const getAllPets = async (req, res) => {
     `
     const queryHistorySQL = `
         SELECT 
+            hs.cd_historico as id,
             hs.descricao as description,
             hs.dt_visita as dateVisit,
             cl.nm_clinica as nameClinic

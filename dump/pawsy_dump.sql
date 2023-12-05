@@ -309,6 +309,12 @@ CREATE TABLE IF NOT EXISTS historico
         REFERENCES clinica(id_clinica)
 );
 
+ALTER TABLE historico ADD 
+	COLUMN id_consulta int not null;
+
+ALTER TABLE historico ADD
+	FOREIGN KEY (id_consulta) REFERENCES consulta_agendada(id_consulta_agendada);
+
 CREATE TABLE IF NOT EXISTS restricao 
 ( 
     id_restricao INT PRIMARY KEY AUTO_INCREMENT,  
@@ -619,8 +625,6 @@ CREATE TABLE IF NOT EXISTS MARKETING(
     
 ALTER TABLE pet 
 	ADD COLUMN passeio DATETIME null;
-    
-    
     
 ALTER TABLE receitas
 add column dt_emisao date,

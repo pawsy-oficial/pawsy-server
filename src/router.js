@@ -38,6 +38,8 @@ const PopulationsControllerSchedule = require("./controllers/schedule/clinic/Pop
 const GetConsultationsMarked = require("./controllers/schedule/tutor/GetConsultationsMarked.js")
 const GetConsultations = require("./controllers/schedule/clinic/GetConsultations.js")
 const WellbeingAlgorithm = require("./controllers/WellbeingAlgorithm.js")
+const getInfosBem = require("./controllers/WellbeingAlgorithm.js")
+const Passeio = require("./controllers/WellbeingAlgorithm.js")
 
 const { sendRecoveryCodeTutor, verifyAndResetPasswordTutor, sendRecoveryCodeClinica, verifyAndResetPasswordClinica, sendRecoveryCodeMedico, verifyAndResetPasswordMedico } = require('./services/passwordRecoveryService.js');
 const schemaVermifuge = require("./schemas/vermifugeSchema.js");
@@ -108,6 +110,8 @@ router.get("/medico", authMiddlewareClinic, getAllMedics)
 
 //bem-estar
 router.get("/bem-estar/:id", authMiddlewareTutor, WellbeingAlgorithm.WellbeingAlgorithm)
+router.get("/get-bem-estar/:id", authMiddlewareTutor, getInfosBem.getInfosBem)
+router.post("/passeio/:id", Passeio.Passeio)
 
 //shedules
 router.get("/list-schedules/:id", ListScheduleClinic.ListScheduleClinic)

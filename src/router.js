@@ -76,6 +76,8 @@ const getAllPets = require("./controllers/tutor/getMyPetsControllers.js");
 const { deleteRevenues } = require("./controllers/medic/deleteRevenues.js");
 const { deleteVaccine } = require("./controllers/medic/deleteVaccine");
 const { deleteVermifuge } = require("./controllers/medic/deleteVermifuge.js");
+const statusClinic = require("./controllers/clinic/statusClinic.js")
+const viewStatusClinic = require("./controllers/clinic/statusClinic.js")
     
 // Consultas de dados
 router.get("/", (req, res)=>{
@@ -103,6 +105,9 @@ router.get("/getAllTypeAds", getAllTypeAds)
 router.get("/getAllAds/:idClinic", getAllAds)
 router.get("/getAllPets", authMiddlewareClinic, integratePatientClinic.pets)
 router.get("/getAllPatients/:idClinic", authMiddlewareClinic, integratePatientClinic.getAllPatientsClinic)
+router.get("/getStatus-clinica/:id", viewStatusClinic.viewStatusClinic)
+router.post("/openClose-clinica/:id", statusClinic.statusClinic)
+
 // get all
 router.get("/get-all-consultation", getAllConsultation)
 router.get("/get-all-pets/:idTutor", authMiddlewareTutor, getAllPets)

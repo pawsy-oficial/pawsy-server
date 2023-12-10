@@ -297,7 +297,7 @@ CREATE TABLE IF NOT EXISTS historico
 ( 
     cd_historico INT AUTO_INCREMENT,  
     id_pet INT NOT NULL,  
-    descricao VARCHAR(255) NOT NULL,  
+    descricao VARCHAR(255) NULL,  
     dt_visita DATE NOT NULL,  
     id_clinica INT,
     CONSTRAINT pk_historico PRIMARY KEY (cd_historico),
@@ -308,12 +308,6 @@ CREATE TABLE IF NOT EXISTS historico
         FOREIGN KEY (id_clinica)
         REFERENCES clinica(id_clinica)
 );
-
-ALTER TABLE historico ADD 
-	COLUMN id_consulta int not null;
-
-ALTER TABLE historico ADD
-	FOREIGN KEY (id_consulta) REFERENCES consulta_agendada(id_consulta_agendada);
 
 CREATE TABLE IF NOT EXISTS restricao 
 ( 
@@ -637,3 +631,9 @@ ADD CONSTRAINT fk_Receita_TuplaReceita
 FOREIGN KEY (id_receita)
 REFERENCES receitas (id_receita),
 modify column tmp_duracao int not null;
+
+ALTER TABLE historico ADD 
+	COLUMN id_consulta int not null;
+
+ALTER TABLE historico ADD
+	FOREIGN KEY (id_consulta) REFERENCES consulta_agendada(id_consulta_agendada);

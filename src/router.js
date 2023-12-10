@@ -78,6 +78,8 @@ const { deleteVaccine } = require("./controllers/medic/deleteVaccine");
 const { deleteVermifuge } = require("./controllers/medic/deleteVermifuge.js");
 const statusClinic = require("./controllers/clinic/statusClinic.js")
 const viewStatusClinic = require("./controllers/clinic/statusClinic.js")
+const CancelConsultation = require("./controllers/schedule/clinic/CancelConsultation.js")
+const HistoricoConsultation = require("./controllers/schedule/clinic/CancelConsultation.js")
     
 // Consultas de dados
 router.get("/", (req, res)=>{
@@ -130,6 +132,8 @@ router.get("/get-info-clinic/:id", authMiddlewareTutor, GetTypesConsultationsSch
 router.post("/marcar-consulta", authMiddlewareTutor, CreateAppointment.CreateAppointment)
 router.get("/get-consultas-tutor/:id", authMiddlewareTutor, GetConsultationsMarked.GetConsultationsMarked)
 router.get("/get-consultas-agenda/:id", authMiddlewareClinic, GetConsultations.GetConsultations)
+router.post("/cancelar-consulta/:ag/:disp", authMiddlewareClinic, CancelConsultation.CancelConsultation)
+router.post("/historico-consulta/:pet/:cli/:ag", authMiddlewareClinic, HistoricoConsultation.HistoricoConsultation)
 
 // verify(middleware)
 router.get("/status-schedule/:id", authMiddlewareClinic, VerifyStatusSchedule.VerifyStatusSchedule)

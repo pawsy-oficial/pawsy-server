@@ -11,7 +11,7 @@ const ClinicPreview = async (req, res) => {
 			cli.ds_sobre as storedDescriptionClinica,
 			cli.email_clinica as storedEmailClinica,
 			cli.tl_clinica as storedTellClinica,
-			cli.bl_disabled as bl_disabled,
+			cli.status_loja as status_loja,
 			e.cd_cep AS CEP,
 			e.nm_rua AS Rua,
 			e.num_residencia AS Numero,
@@ -50,7 +50,7 @@ const ClinicPreview = async (req, res) => {
 		const storedBairro = result[0].Bairro;
 		const storedCidade = result[0].Cidade;
 		const storedEstado = result[0].Estado;
-		const storedStatusClinic = result[0].bl_disabled;
+		const storedStatusClinic = result[0].status_loja;
 
 		var status
 

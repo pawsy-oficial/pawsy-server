@@ -13,7 +13,7 @@ const GetConsultationsMarked = async (req, res) => {
       esp.nm_especialidade,
       med.nm_medico
   FROM consulta_agendada ca
-    inner join consulta_disponivel cd ON ca.id_consulta_disp = cd.id_consulta_disp
+    inner join consulta_disponivel cd ON ca.id_consulta_disp = cd.id_consulta_disp AND cd.status_consulta = 0
     inner join agenda ag ON ag.id_agenda = cd.id_agenda
     inner join clinica cli ON cli.id_clinica = ag.id_clinica
     inner join pet p ON p.id_pet = ca.id_pet

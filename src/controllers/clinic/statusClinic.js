@@ -5,7 +5,7 @@ const statusClinic = async (req, res) => {
   const idClinic = req.params.id;
 
   let query = `
-    SELECT bl_disabled FROM clinica WHERE id_clinica = ?
+    SELECT status_loja FROM clinica WHERE id_clinica = ?
   `;
 
   await db.query(query, [idClinic], async (err, result) => {
@@ -14,9 +14,9 @@ const statusClinic = async (req, res) => {
         return res.status(500).json(err)
       }
       
-      if (result[0].bl_disabled == true){
+      if (result[0].status_loja == true){
         let sql = `
-          UPDATE clinica SET bl_disabled = 0 WHERE id_clinica = ?
+          UPDATE clinica SET status_loja = 0 WHERE id_clinica = ?
         `;
 
         await db.query(sql, [idClinic], async (errr, resultt) => {
@@ -28,7 +28,7 @@ const statusClinic = async (req, res) => {
         });
       } else{
         let sql = `
-          UPDATE clinica SET bl_disabled = 1 WHERE id_clinica = ?
+          UPDATE clinica SET status_loja = 1 WHERE id_clinica = ?
         `;
 
         await db.query(sql, [idClinic], async (errr, resultt) => {
@@ -52,7 +52,7 @@ const viewStatusClinic = async (req, res) => {
   const idClinic = req.params.id;
 
   let query = `
-    SELECT bl_disabled FROM clinica WHERE id_clinica = ?
+    SELECT status_loja FROM clinica WHERE id_clinica = ?
   `;
 
   await db.query(query, [idClinic], async (err, result) => {
@@ -61,7 +61,7 @@ const viewStatusClinic = async (req, res) => {
         return res.status(500).json(err)
       }
 
-      if (result[0].bl_disabled == true){
+      if (result[0].status_loja == true){
         return res.status(200).json(true)
       } else{
         return res.status(200).json(false)

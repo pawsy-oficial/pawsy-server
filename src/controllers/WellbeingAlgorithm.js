@@ -94,7 +94,7 @@ const getInfosBem = async (req, res) => {
     LEFT JOIN carteira_vermifugo cv ON cv.id_pet = p.id_pet
     LEFT JOIN animal an ON an.id_animal = p.id_animal
     LEFT JOIN consulta_disponivel cdd ON cdd.id_consulta_disp = ca.id_consulta_disp AND cdd.status_consulta = 0
-    LEFT JOIN historico his ON his.id_consulta = ca.id_consulta_agendada = his.id_consulta
+    LEFT JOIN historico his ON his.id_consulta = ca.id_consulta_agendada
   WHERE p.id_pet = ?;
   `
 

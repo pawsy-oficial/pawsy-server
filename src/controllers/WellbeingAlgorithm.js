@@ -15,12 +15,12 @@ const WellbeingAlgorithm = async (req, res) => {
   MAX(cv.nm_vermifugo) AS nm_vermifugo,
   MAX(an.nm_animal) AS nm_animal
 FROM pet p
-INNER JOIN consulta_agendada ca ON ca.id_pet = p.id_pet
-INNER JOIN consulta_disponivel cd ON cd.id_consulta_disp = ca.id_consulta_disp
-INNER JOIN carteira_vacinas va ON va.id_pet = p.id_pet
-INNER JOIN vacinas vac ON vac.id_vacina = va.id_vacina
-INNER JOIN carteira_vermifugo cv ON cv.id_pet = p.id_pet
-INNER JOIN animal an ON an.id_animal = p.id_animal
+LEFT JOIN consulta_agendada ca ON ca.id_pet = p.id_pet
+LEFT JOIN consulta_disponivel cd ON cd.id_consulta_disp = ca.id_consulta_disp
+LEFT JOIN carteira_vacinas va ON va.id_pet = p.id_pet
+LEFT JOIN vacinas vac ON vac.id_vacina = va.id_vacina
+LEFT JOIN carteira_vermifugo cv ON cv.id_pet = p.id_pet
+LEFT JOIN animal an ON an.id_animal = p.id_animal
 WHERE p.id_pet = ?;
 
   `;

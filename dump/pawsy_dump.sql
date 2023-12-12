@@ -637,3 +637,5 @@ ALTER TABLE historico ADD
 
 ALTER TABLE historico ADD
 	FOREIGN KEY (id_consulta) REFERENCES consulta_agendada(id_consulta_agendada);
+    
+-- teste
